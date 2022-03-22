@@ -18,3 +18,11 @@ def home(request):
                'accounts': accounts, 'cardType': cardTypes, }
     return render(request, '../templates/home.html', context)
 
+
+def registration(request):
+    users = User.objects.order_by('userID')
+    usersStatus = UserStatus.objects.order_by('userStatusID')
+    userTypes = UserType.objects.order_by('userTypeID')
+    context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes, }
+    return render(request, '../templates/registration.html', context)
+
