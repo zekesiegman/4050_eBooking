@@ -3,13 +3,8 @@ from django.db import models
 # Create your models here.
 
 
-class Customer(models.Model): #test model
-    first_name = models.CharField(max_length=100)
-    last_name = models.CharField(max_length=100)
-
-
 class User(models.Model):
-    userID = models.IntegerField()
+    userID = models.IntegerField(primary_key=True, default=1)
     firstName = models.CharField(max_length=45)
     lastName = models.CharField(max_length=45)
     email = models.CharField(max_length=100)
@@ -21,37 +16,37 @@ class User(models.Model):
 
 
 class UserStatus(models.Model):
-    userStatusID = models.IntegerField()
+    userStatusID = models.IntegerField(primary_key=True)
     status = models.CharField(max_length=45)
-    user_userID = models.IntegerField()
+    user_userID = models.ForeignKey('User', on_delete=models.CASCADE)
 
 
 class UserType(models.Model):
-    userTypeID = models.IntegerField()
+    userTypeID = models.IntegerField(primary_key=True)
     userTypeName = models.CharField(max_length=45)
-    user_userID = models.IntegerField()
+    user_userID = models.ForeignKey('User', on_delete=models.CASCADE)
+
+
+class CardType(models.Model):
+    cardTypeID = models.IntegerField(primary_key=True)
+    type = models.CharField(max_length=45)
 
 
 class Account(models.Model):
-    accountID = models.IntegerField()
-    carNO = models.IntegerField()
+    accountID = models.IntegerField(primary_key=True)
+    carNo = models.IntegerField()
     userID = models.IntegerField()
     type = models.CharField(max_length=45)
     expirationDate = models.DateField()
     billingAdd = models.CharField(max_length=45)
-    user_userID = models.IntegerField()
-    cardtype_cardTypeID = models.IntegerField()
-
-
-class CardType(models.Model):
-    cardTypeID = models.IntegerField()
-    type = models.CharField(max_length=45)
+    user_userID = models.ForeignKey('User', on_delete=models.CASCADE)
+    cardtype_cardTypeID = models.ForeignKey('CardType', on_delete=models.CASCADE)
 
 
 class Promotion(models.Model):
-    promotionID = models.IntegerField()
+    promotionID = models.IntegerField(primary_key=True)
     promotionType = models.CharField(max_length=45)
     startDate = models.DateField()
     durationDay = models.IntegerField()
-    booking_bookingID = models.IntegerField()
-    user_userID = models.IntegerField()
+    # booking_bookingID = models.ForeignKey('Booking') add once Booking model is added
+    # user_userID = models.ForeignKey('User', on_delete=models.CASCADE)
