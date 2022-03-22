@@ -26,3 +26,5 @@ def registration(request):
     context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes, }
     return render(request, '../templates/registration.html', context)
 
+def user_profile(request):
+    return render(request, '../templates/user-profile.html')
