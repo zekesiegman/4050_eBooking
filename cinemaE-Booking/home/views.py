@@ -34,3 +34,5 @@ def registration_success(request):
 
 def editprofile(request):
     return render(request, '../templates/editprofile.html')
+def index(request):
+    return render(request, '../templates/index.html')
