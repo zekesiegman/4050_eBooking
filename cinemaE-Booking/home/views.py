@@ -4,7 +4,6 @@ from .models import UserStatus
 from .models import UserType
 from .models import Account
 from .models import CardType
-from .models import Promotion
 
 # Create your views here.
 
@@ -15,8 +14,7 @@ def home(request):
     userTypes = UserType.objects.order_by('userTypeID')
     accounts = Account.objects.order_by('accountID')
     cardTypes = CardType.objects.order_by('cardTypeID')
-    promotions = Promotion.objects.order_by('promotionID')
     context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes,
-               'accounts': accounts, 'cardType': cardTypes, 'promotions': promotions, }
+               'accounts': accounts, 'cardType': cardTypes, }
     return render(request, '../templates/home.html', context)
 
