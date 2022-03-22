@@ -28,3 +28,9 @@ def registration(request):
 
 def user_profile(request):
     return render(request, '../templates/user-profile.html')
+
+def registration_success(request):
+    return render(request, '../templates/registration_success.html')
+
+def editprofile(request):
+    return render(request, '../templates/editprofile.html')
