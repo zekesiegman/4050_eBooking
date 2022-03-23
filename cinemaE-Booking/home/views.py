@@ -24,7 +24,18 @@ def registration(request):
     usersStatus = UserStatus.objects.order_by('userStatusID')
     userTypes = UserType.objects.order_by('userTypeID')
     context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes, }
-    return render(request, '../templates/registration.html', context)
+    if request.method == 'POST':
+        user = User()
+        tempName = request.POST.get('name')
+        nameArr = tempName.split()
+        user.firstName = nameArr[0]
+        user.lastName = nameArr[1]
+        user.email = request.POST.get('email')
+        user.password = request.POST.get('password')
+        user.save()
+        return render(request, '../templates/registration.html', context)
+    else:
+        return render(request, '../templates/registration.html', context)
 
 
 def registration_success(request):
