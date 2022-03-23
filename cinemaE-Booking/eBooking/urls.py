@@ -27,5 +27,5 @@ urlpatterns = [
     path('user-profile', include('home.urls')),
     path('registration_success', include('home.urls')),
     path('editprofile', include('home.urls')),
-
+    path('adminpage', include('home.urls')),
 ]

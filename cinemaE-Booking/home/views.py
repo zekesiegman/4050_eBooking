@@ -47,3 +47,7 @@ def editprofile(request):
 
 def index(request):
     return render(request, '../templates/index.html')
+
+
+def adminpage(request):
+    return render(request, '../templates/admin.html')
