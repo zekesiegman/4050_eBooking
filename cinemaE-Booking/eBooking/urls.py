@@ -28,4 +28,5 @@ urlpatterns = [
     path('registration_success', include('home.urls')),
     path('editprofile', include('home.urls')),
     path('adminpage', include('home.urls')),
+    path('logoutpage', include('home.urls')),
 ]
