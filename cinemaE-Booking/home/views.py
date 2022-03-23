@@ -8,17 +8,6 @@ from .models import CardType
 # Create your views here.
 
 
-def home(request):
-    users = User.objects.order_by('userID')
-    usersStatus = UserStatus.objects.order_by('userStatusID')
-    userTypes = UserType.objects.order_by('userTypeID')
-    accounts = Account.objects.order_by('accountID')
-    cardTypes = CardType.objects.order_by('cardTypeID')
-    context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes,
-               'accounts': accounts, 'cardType': cardTypes, }
-    return render(request, '../templates/home.html', context)
-
-
 def registration(request):
     users = User.objects.order_by('userID')
     usersStatus = UserStatus.objects.order_by('userStatusID')

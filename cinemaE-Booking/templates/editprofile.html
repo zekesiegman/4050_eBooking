@@ -57,15 +57,12 @@
           background-color: #f2ecee;
       
           border-radius: 2.5px;
-         
         }
         .details{
           width: 97.5%;
           
           margin: 2.5px auto;
         }
-      
-      
         span.fa-envelope{
           position: absolute;
           top: 22%;
@@ -119,10 +116,8 @@
           width: 200px;
           border: 0;
         }
-        
         span.name,span.links > h3,h4{
           font-family: Poppins;
-    
         }
         span.name{
           position: absolute;
@@ -155,7 +150,6 @@
           opacity: 1;
           color: #fff;
           background-color: #1c2e4a;
-       
         }
         .profile:hover .btn{
             opacity: 1;
@@ -164,7 +158,6 @@
           display: inline-block;
           margin: 0;
         }
-        
         div.circles{
           width: 100%;
           margin: 0 auto;
@@ -187,8 +180,6 @@
           background-color: #f2ecee;
           border-radius: 2.5px;
         }
-        
-    
         .myCircle #tabs ul li:nth-child(1){
           margin: 0;
           padding: 0px 5px 10px;
@@ -210,9 +201,6 @@
           padding: 0;
           margin: 0;
         }
-
-        
-
         fieldset textarea,input{
           font-family: Open Sans;
           font-size: 15px;
@@ -235,14 +223,10 @@
        
           background-color: #fff;
         }
-     
-        
         .grid-35{
           width: 35%;
           float: left;
           font-weight: 500;
-
-
         }
         .grid-65{
           position: relative;
@@ -252,18 +236,11 @@
           font-weight: 300;
           font-size: 17px;
         }
-        
-    
-    
-      
-   
         .clear:after{
           content: " ";
           display: table;
           clear: both;
         }
-        
-      
         .content h1{
           text-align: center;
           color: #555;
@@ -272,14 +249,11 @@
           font-weight: 200;
           margin: 5px auto 15px auto;
         }
-     
         fieldset{
           text-align: center;
         
           margin-bottom: 5px;
           padding: 5px;
-        
-         
         }
         fieldset:last-child{
           border-bottom: none;
@@ -295,16 +269,10 @@
           color: #fff;
           cursor: pointer;
           background-color: #1c2e4a;
-        
         }
         input.Btn:hover{
           background-color:#1c2e4a;
         }
-        
-    
-        
-        
-     
         @media only screen and (min-width: 768px){ 
           .profile{ 
             width: 450px;
@@ -326,8 +294,8 @@
         <div class="profile">
           <div class="content">
             <h1>Edit Profile</h1>
-            <form action="">
-    
+            <form action="" method="POST">
+              {% csrf_token %}
               <fieldset>
                 <div class="grid-35">
                   <label for="avatar">Your Photo</label>
@@ -342,7 +310,7 @@
                   <label for="fname">First Name</label>
                 </div>
                 <div class="grid-65">
-                  <input type="text" id="fname" tabindex="1" />
+                  <input type="text" id="fname" name="fname" tabindex="1" />
                 </div>
               </fieldset>
               <fieldset>
@@ -350,16 +318,7 @@
                   <label for="lname">Last Name</label>
                 </div>
                 <div class="grid-65">
-                  <input type="text" id="lname" tabindex="2" />
-                </div>
-              </fieldset>
-
-              <fieldset>
-                <div class="grid-35">
-                  <label for="description">About you</label>
-                </div>
-                <div class="grid-65">
-                  <textarea name="" id="" cols="30" rows="auto" tabindex="3"></textarea>
+                  <input type="text" id="lname" name="lname" tabindex="2" />
                 </div>
               </fieldset>
     
@@ -374,15 +333,25 @@
           
               <fieldset>
                 <div class="grid-35">
-                  <label for="email">Email Address</label>
+                  <label for="password">Password</label>
                 </div>
                 <div class="grid-65">
-                  <input type="email" id="email" tabindex="6" />
+                  <input type="text" id="password" name="password" tabindex="6" />
+                </div>
+              </fieldset>
+
+              <fieldset>
+                <div class="grid-35">
+                  <p>Enroll for Promotions:</p>
+                  <input type="radio" id="yes" name="promotion" value="Yes">
+                  <label for="yes">Yes</label><br>
+                  <input type="radio" id="no" name="promotion" value="No">
+                  <label for="no">No</label><br>
                 </div>
               </fieldset>
              
               <fieldset>
-                <input type="button" class="Btn cancel" value="Cancel" />
+                <a href="{% url 'user-profile' %}"></a><input type="button" class="Btn cancel" value="Cancel" />
                 <div><a href="{% url 'user-profile' %}"/><input type="submit" class="Btn" value="Save Changes"></a></div>
               </fieldset>
       

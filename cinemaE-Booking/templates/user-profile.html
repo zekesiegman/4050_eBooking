@@ -13,7 +13,7 @@
     <div class="wrapper">
     <div class="left">
         <img src="images/favorite/f2.jpg" alt="user" width="300px"height="300px">
-        <h2>Brad Smith</h2>
+        <h2>{{ user.firstName }} {{ user.lastName }}</h2>
     </div>
     <div class="right">
         <div class="info">
@@ -21,11 +21,11 @@
             <div class="info_data">
                  <div class="data">
                     <h2>Email</h2>
-                    <p>brad@gmail.com</p>
+                    <p>{{ user.email }}</p>
                  </div>
                  <div class="data">
                    <h2>Phone</h2>
-                    <p>0001-213-998761</p>
+                    <p>{{ user.phone }}</p>
               </div>
               
             </div>

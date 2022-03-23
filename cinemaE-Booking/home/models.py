@@ -5,7 +5,7 @@ from django.contrib.auth.models import User as us
 
 
 class User(models.Model):
-    # userObj = models.OneToOneField(us, on_delete=models.CASCADE)
+    # userObj = models.OneToOneField(us, on_delete=models.CASCADE, default='')
     userID = models.AutoField(primary_key=True)
     firstName = models.CharField(max_length=45)
     lastName = models.CharField(max_length=45)
