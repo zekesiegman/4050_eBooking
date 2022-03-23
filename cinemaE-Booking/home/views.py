@@ -26,13 +26,24 @@ def registration(request):
     context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes, }
     return render(request, '../templates/registration.html', context)
 
-def user_profile(request):
-    return render(request, '../templates/user-profile.html')
 
 def registration_success(request):
     return render(request, '../templates/registration_success.html')
 
+
+def user_profile(request):
+    users = User.objects.order_by('userID')
+    accounts = Account.objects.order_by('accountID')
+    context = {'users': users, 'accounts': accounts, }
+    return render(request, '../templates/user-profile.html', context)
+
+
 def editprofile(request):
-    return render(request, '../templates/editprofile.html')
+    users = User.objects.order_by('userID')
+    accounts = Account.objects.order_by('accountID')
+    context = {'users': users, 'accounts': accounts, }
+    return render(request, '../templates/editprofile.html', context)
+
+
 def index(request):
     return render(request, '../templates/index.html')

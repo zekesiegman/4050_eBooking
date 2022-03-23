@@ -12,20 +12,19 @@ class User(models.Model):
     email = models.CharField(max_length=100)
     password = models.CharField(max_length=45)
     phone = models.IntegerField()
-    status = models.IntegerField()
-    enrollForPromotions = models.CharField(max_length=45)
+    status = models.ForeignKey('UserStatus', on_delete=models.CASCADE, default=1)
+    type = models.ForeignKey('UserType', on_delete=models.CASCADE, default=1)
+    enrollForPromotions = models.BooleanField(),
 
 
 class UserStatus(models.Model):
-    userStatusID = models.IntegerField(primary_key=True)
+    userStatusID = models.IntegerField(primary_key=True, default=1)
     status = models.CharField(max_length=45)
-    user_userID = models.ForeignKey('User', on_delete=models.CASCADE, default=1)
 
 
 class UserType(models.Model):
-    userTypeID = models.IntegerField(primary_key=True)
+    userTypeID = models.IntegerField(primary_key=True, default=1)
     userTypeName = models.CharField(max_length=45)
-    user_userID = models.ForeignKey('User', on_delete=models.CASCADE, default=1)
 
 
 class Account(models.Model):
@@ -39,6 +38,6 @@ class Account(models.Model):
 
 
 class CardType(models.Model):
-    cardTypeID = models.IntegerField(primary_key=True)
+    cardTypeID = models.IntegerField(primary_key=True, default=1)
     type = models.CharField(max_length=45)
     account_accountID = models.ForeignKey('Account', on_delete=models.CASCADE, default=1)
