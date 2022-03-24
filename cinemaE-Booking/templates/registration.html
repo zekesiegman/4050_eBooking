@@ -57,6 +57,10 @@
                 <form action="#" method="POST">
                     {% csrf_token %}
                     <div class="input-field">
+                        <input type="text" name="username" placeholder="Enter your username *" required>
+                        <i class="uil uil-user"></i>
+                    </div>
+                    <div class="input-field">
                         <input type="text" name="name" placeholder="Enter your name *" required>
                         <i class="uil uil-user"></i>
                     </div>

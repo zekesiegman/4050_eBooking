@@ -1,20 +1,15 @@
 from django.shortcuts import render, redirect
 from .models import User
-from .models import UserStatus
-from .models import UserType
 from .models import Account
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth import logout
+from django.contrib.auth.models import User as us
 
 # Create your views here.
 
 
 def registration(request):
-    users = User.objects.order_by('userID')
-    usersStatus = UserStatus.objects.order_by('userStatusID')
-    userTypes = UserType.objects.order_by('userTypeID')
-    context = {'users': users, 'userStatus': usersStatus, 'userType': userTypes, }
 
     if request.GET.get('login_now') == "Login Now":
         if request.user.is_authenticated:
@@ -34,17 +29,20 @@ def registration(request):
             return render(request, '../templates/registration.html', {'form': form})
 
     if request.method == 'POST':
-        user = User()
+        username = request.POST.get('username')
         tempName = request.POST.get('name')
         nameArr = tempName.split()
-        user.firstName = nameArr[0]
-        user.lastName = nameArr[1]
-        user.email = request.POST.get('email')
-        user.password = request.POST.get('password')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        user = us.objects.create_user(username, email, password)
+        user.first_name = nameArr[0]
+        user.last_name = nameArr[1]
+        user.is_staff = False
+        user.is_active = False
         user.save()
-        return render(request, '../templates/registration.html', context)
+        return render(request, '../templates/registration.html')
     else:
-        return render(request, '../templates/registration.html', context)
+        return render(request, '../templates/registration.html')
 
 
 def registration_success(request):
@@ -60,7 +58,7 @@ def logoutpage(request):
 
 
 def user_profile(request):
-    users = User.objects.order_by('userID')
+    users = User.objects.order_by('userId')
     accounts = Account.objects.order_by('accountID')
     context = {'users': users, 'accounts': accounts, }
     return render(request, '../templates/user-profile.html', context)
