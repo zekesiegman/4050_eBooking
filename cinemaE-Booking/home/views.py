@@ -52,8 +52,11 @@ def registration_success(request):
 
 
 def logoutpage(request):
-    logout(request)
-    return render(request, '../templates/logout.html')
+    if request.user.is_authenticated:
+        logout(request)
+        return render(request, '../templates/logout.html')
+    else:
+        return render(request, '../templates/index.html')
 
 
 def user_profile(request):
