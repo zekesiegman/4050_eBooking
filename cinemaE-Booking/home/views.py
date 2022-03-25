@@ -5,15 +5,15 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User as us
-
+from .forms import RegisterForm
 # Create your views here.
 
 def registration2(response):
     if response.method == "POST":
-        form = UserCreationForm(response.POST)
+        form = RegisterForm(response.POST)
         if form.is_valid():
             form.save()
-    form = UserCreationForm()
+    form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form":form})
 
 
