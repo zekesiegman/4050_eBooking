@@ -29,4 +29,6 @@ urlpatterns = [
     path('editprofile', include('home.urls')),
     path('adminpage', include('home.urls')),
     path('logoutpage', include('home.urls')),
+    path('registration2', include('home.urls')),
+    path('', include("django.contrib.auth.urls"))
 ]

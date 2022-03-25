@@ -2,12 +2,15 @@ from django.shortcuts import render, redirect
 from .models import User
 from .models import Account
 from django.contrib.auth import authenticate, login
-from django.contrib.auth.forms import AuthenticationForm
+from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User as us
 
 # Create your views here.
 
+def registration2(response):
+    form = UserCreationForm()
+    return render(response, "../templates/registration2.html", {"form":form})
 
 def registration(request):
 
