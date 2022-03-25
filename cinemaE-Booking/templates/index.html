@@ -69,11 +69,17 @@
                               </div>
                              <a href="{% url 'user-profile' %}"><div class="media-body ml-3">
                                 <h6 class="mb-0" >Profile</h6>
-                              </div></a> 
-                              <a href="{% url 'registration' %}"><div class="media-body ml-3">
+                              </div></a>
+                                {% block content %}
+                                {% if user.is_authenticated %}
+                                <h6 class="mb-0">Hi {{ user.username }}!</h6>
+                                {% else %}
+                                <a href="{% url 'registration2' %}"><div class="media-body ml-3">
                                 <h6 class="mb-0">Signup/Login</h6>
                               </div></a>
-                              <a href="{% url 'logoutpage' %}"><div class="media-body ml-3">
+                              {% endif %}
+                              {% endblock %}
+                              <a href="{% url 'logout' %}"><div class="media-body ml-3">
                                 <h6 class="mb-0">Logout</h6>
                               </div></a>
                             </div>

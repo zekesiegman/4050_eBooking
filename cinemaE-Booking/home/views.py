@@ -9,8 +9,13 @@ from django.contrib.auth.models import User as us
 # Create your views here.
 
 def registration2(response):
+    if response.method == "POST":
+        form = UserCreationForm(response.POST)
+        if form.is_valid():
+            form.save()
     form = UserCreationForm()
     return render(response, "../templates/registration2.html", {"form":form})
+
 
 def registration(request):
 
