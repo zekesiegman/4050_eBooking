@@ -6,15 +6,24 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
+from verify_email.email_handler import send_verification_email
+
 # Create your views here.
+
 
 def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
+            # inactiveUser = send_verification_email(response, form)
             form.save()
+            return response(response, "../templates/registration2.html", {'form": form'})
     form = RegisterForm()
-    return render(response, "../templates/registration2.html", {"form":form})
+    return render(response, "../templates/registration2.html", {"form": form})
+
+
+def login(response):
+    return render(response, "../templates/login.html")
 
 
 def registration(request):

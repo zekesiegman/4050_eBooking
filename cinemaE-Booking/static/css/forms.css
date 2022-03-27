@@ -25,12 +25,13 @@ body{
     box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
     overflow: hidden;
     margin: 0 20px;
+    height: 800px;
 }
 
 .container .forms{
     display: flex;
     align-items: center;
-    height: 440px;
+    height: 700px;
     width: 200%;
     transition: height 0.2s ease;
 }
@@ -41,6 +42,7 @@ body{
     padding: 30px;
     background-color: #fff;
     transition: margin-left 0.18s ease;
+    height: 800px;
 }
 
 .container.active .login{
@@ -59,7 +61,7 @@ body{
 }
 
 .container.active .forms{
-    height: 600px;
+    height: 800px;
 }
 .container .form .title{
     position: relative;

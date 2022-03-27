@@ -5,8 +5,8 @@ from django.contrib.auth.models import User as us
 
 
 class User(models.Model):
-    userId = models.IntegerField(primary_key=True, default=1)
-    userObj = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
+    user = models.OneToOneField(us, on_delete=models.CASCADE, default=1)
+    userId = models.AutoField(primary_key=True, default=1)
     phone = models.IntegerField(default=20000000000)
     enrollForPromotions = models.BooleanField(null=True)
 
@@ -27,5 +27,5 @@ class Account(models.Model):
 
 
 class CardType(models.Model):
-    cardTypeID = models.IntegerField(primary_key=True, default=1)
+    cardTypeID = models.AutoField(primary_key=True, default=1)
     type = models.CharField(max_length=45)
