@@ -19,7 +19,7 @@ class User(models.Model):
 
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True, default=1)
-    carNo = models.IntegerField()
+    carNo = models.IntegerField(default= 1)
     expirationDate = models.DateField()
     billingAdd = models.CharField(max_length=45)
     type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)

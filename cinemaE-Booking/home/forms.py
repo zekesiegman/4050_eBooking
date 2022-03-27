@@ -2,6 +2,7 @@ from django import forms
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
+from .models import Account
 
 
 class RegisterForm(UserCreationForm):
@@ -22,6 +23,10 @@ class RegisterForm(UserCreationForm):
             user.save()
         return user
 
-#class UserForm(forms.ModelForm):
- #   class Meta:
-  #      model = User
+class AccountForm(forms.ModelForm):
+    CarNo = forms.IntegerField()
+    expirationDate = forms.DateField()
+    billingAdd = forms.CharField()
+    class Meta:
+       model = Account
+       fields = ('CarNo', 'expirationDate', 'billingAdd', )
