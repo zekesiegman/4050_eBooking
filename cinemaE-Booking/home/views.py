@@ -11,6 +11,10 @@ from cryptography.fernet import Fernet
 from django.conf import settings
 from verify_email.email_handler import send_verification_email
 
+# global variable for Fernet key
+key = Fernet.generate_key()
+fernet = Fernet(key)
+
 # Create your views here.
 
 
@@ -26,9 +30,6 @@ def registration2(response):
     form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form": form,})
 
-
-#def login(response):
- #   return render(response, "../templates/registration/login.html")
 
 # old registration, no longer used but kept for reference
 def registration(request):
@@ -70,6 +71,7 @@ def registration(request):
 def registration_success(request):
     return render(request, '../templates/registration_success.html')
 
+
 def forgotpassword(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
@@ -81,6 +83,7 @@ def forgotpassword(request):
     except us.DoesNotExist:
         user = None
     return render(request, "../templates/forgotpassword.html")
+
 
 def logoutpage(request):
     if request.user.is_authenticated:
@@ -114,16 +117,15 @@ def editprofile(request):
         p = request.POST.get('password')
         if len(p) != 0:
             user.set_password(request.POST.get('password'))
-            update_session_auth_hash(request,us)
+            update_session_auth_hash(request, us)
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
         if cardno is not None and exp is not None and address is not None:
             account = Account()
 
-            # encrypt card number with Fenet
-            key = Fernet.generate_key()
-            fernet = Fernet(key)
+            # encrypt card number with Fernet
+            global fernet
             cardNoEnc = fernet.encrypt(cardno.encode())
             account.cardNo = cardNoEnc
 
@@ -133,7 +135,7 @@ def editprofile(request):
             account.user_userID = user
             account.save()
         user.save()
-        #enrollForPromotions = request.POST.get('promotion')
+        # enrollForPromotions = request.POST.get('promotion')
         return redirect('/')
     return render(request, '../templates/editprofile.html', context)
 
