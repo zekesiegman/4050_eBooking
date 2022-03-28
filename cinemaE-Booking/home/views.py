@@ -121,7 +121,7 @@ def editprofile(request):
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
-        if cardno is not None and exp is not None and address is not None:
+        if len(cardno) != 0 and len(exp) != 0 and len(address) != 0:
             account = Account()
 
             # encrypt card number with Fernet
@@ -131,7 +131,6 @@ def editprofile(request):
 
             account.expirationDate = exp
             account.billingAdd = address
-            account.type = 1
             account.user_userID = user
             account.save()
         user.save()

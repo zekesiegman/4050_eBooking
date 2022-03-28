@@ -18,10 +18,10 @@ class User(models.Model):
 
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
-    cardNo = models.IntegerField(default=1)
+    cardNo = models.CharField(max_length=250)
     expirationDate = models.DateField()
     billingAdd = models.CharField(max_length=45)
-    type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)
+    # type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)
     user_userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
 
