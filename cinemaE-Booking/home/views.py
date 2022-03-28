@@ -118,6 +118,10 @@ def editprofile(request):
         if len(p) != 0:
             user.set_password(request.POST.get('password'))
             update_session_auth_hash(request, us)
+        enrollForPromotions = request.POST.get('promotion')
+        if enrollForPromotions is not None:
+            User.user.enrollForPromotions = True
+
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
@@ -134,7 +138,6 @@ def editprofile(request):
             account.user_userID = user
             account.save()
         user.save()
-        # enrollForPromotions = request.POST.get('promotion')
         return redirect('/')
     return render(request, '../templates/editprofile.html', context)
 

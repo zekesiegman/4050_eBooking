@@ -9,6 +9,7 @@ class RegisterForm(UserCreationForm):
     email = forms.EmailField()
     first_name = forms.CharField()
     last_name = forms.CharField()
+    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style': 'height: 50px;'}))
 
     class Meta(UserCreationForm.Meta):
         model = User

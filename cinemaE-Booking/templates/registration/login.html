@@ -24,12 +24,19 @@
                 <div class="input-field">
                     {{ form.password|as_crispy_field }}
                 </div>
-                <div class="input field">
+                <div class="input-field button">
                     <button type="submit" class = "btn btn-success">Login</button>
-                </form>
                 </div>
-                    <p>Don't have an account?<a href="{% url 'registration2' %}"/>Create one </a></p>
-                <a href="{% url 'forgotpassword' %}"/>Forgot Password </a>
+                </form>
+                <div class="login-signup">
+                    <span class="text">Already a user?
+                        <a href="{% url 'registration2' %}">Create one</a>
+                    </span><br>
+                    <span class="text">Forgot password?
+                        <a href="{% url 'forgotpassword' %}">Reset here</a>
+                    </span>
+                </div>
+
             </div>
         </div>
     </div>

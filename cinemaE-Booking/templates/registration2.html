@@ -30,10 +30,18 @@
                     <div class="input-field">
                         {{ form.email|as_crispy_field }}
                     </div>
-                    <div class="input-field">
-                        {{ form.password1|as_crispy_field }}
+                    <div class="input-field" style="">
+                           {{ form.password1|as_crispy_field }}
+                    </div><br><br>
+                    <div>
+                        <ul style="font-size: 12px">
+                            <li>Your password can't be too similar to your other personal information</li>
+                            <li>Your password must contain at least 8 characters</li>
+                            <li>Your password can't be a commonly used password</li>
+                            <li>Your password can't be entirely numeric</li>
+                        </ul>
                     </div>
-                    <div class="input-field" id="custom">
+                    <div class="input-field">
                         {{ form.password2|as_crispy_field }}
                     </div>
                     <div class="input-field">

@@ -10,7 +10,7 @@ class User(models.Model):
     user = models.OneToOneField(us, on_delete=models.CASCADE, default=1)
     userId = models.AutoField(primary_key=True)
     phone = models.IntegerField(default=20000000000)
-    enrollForPromotions = models.BooleanField(null=True)
+    enrollForPromotions = models.BooleanField(default=False)
 
     def __str__(self):
         return self.user.username
