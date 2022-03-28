@@ -130,6 +130,8 @@ STATICFILES_DIRS = [
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
+# AUTH_USER_MODEL = 'home.User'
+
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 ACCOUNT_AUTHENTICATION_METHOD = 'email'
 ACCOUNT_USER_MODEL_USERNAME_FIELD = None

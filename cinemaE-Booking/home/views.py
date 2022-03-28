@@ -27,7 +27,7 @@ def registration2(response):
 #def login(response):
  #   return render(response, "../templates/registration/login.html")
 
-
+# old registration, no longer used but kept for reference
 def registration(request):
 
     if request.GET.get('login_now') == "Login Now":
@@ -71,7 +71,7 @@ def forgotpassword(request):
     username = request.POST.get('username')
     password = request.POST.get('password')
     try:
-        user = us.objects.get(username= username)
+        user = us.objects.get(username=username)
         user.set_password(password)
         user.save()
         return redirect('/')
@@ -112,6 +112,17 @@ def editprofile(request):
         if len(p) != 0:
             user.set_password(request.POST.get('password'))
             update_session_auth_hash(request,us)
+        cardno = request.POST.get('cardno')
+        exp = request.POST.get('exp')
+        address = request.POST.get('address')
+        if cardno is not None and exp is not None and address is not None:
+            account = Account()
+            account.cardNo = cardno
+            account.expirationDate = exp
+            account.billingAdd = address
+            account.type = 1
+            account.user_userID = user
+            account.save()
         user.save()
         #enrollForPromotions = request.POST.get('promotion')
         return redirect('/')
