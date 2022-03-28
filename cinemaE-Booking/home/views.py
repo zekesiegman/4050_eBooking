@@ -3,9 +3,10 @@ from .models import User
 from .models import Account
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth import logout
+from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
+from django.conf import settings
 from verify_email.email_handler import send_verification_email
 
 # Create your views here.
@@ -17,7 +18,8 @@ def registration2(response):
         if form.is_valid():
             # inactiveUser = send_verification_email(response, form)
             form.save()
-            return response(response, "../templates/registration2.html", {'form': form})
+            return redirect('/')
+            #return response(response, "../templates/registr.html", {'form': form})
     form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form": form,})
 
@@ -72,6 +74,7 @@ def forgotpassword(request):
         user = us.objects.get(username= username)
         user.set_password(password)
         user.save()
+        return redirect('/')
     except us.DoesNotExist:
         user = None
     return render(request, "../templates/forgotpassword.html")
@@ -96,12 +99,22 @@ def editprofile(request):
     # users = User.objects.order_by('userID')
     accounts = Account.objects.order_by('accountID')
     context = {'accounts': accounts, }
+
     if request.method == 'POST':
-        us.first_name = request.POST.get('fname')
-        us.last_name = request.POST.get('fname')
-        us.password = request.POST.get('password')
-        #User.us.enrollForPromotions = request.POST.get('promotion')
-        return render(request, '../templates/editprofile.html', context)
+        user = request.user
+        f = request.POST.get('fname')
+        if len(f) != 0:
+            user.first_name = request.POST.get('fname')
+        l = request.POST.get('lname')
+        if len(l) != 0:
+            user.last_name = request.POST.get('lname')
+        p = request.POST.get('password')
+        if len(p) != 0:
+            user.set_password(request.POST.get('password'))
+            update_session_auth_hash(request,us)
+        user.save()
+        #enrollForPromotions = request.POST.get('promotion')
+        return redirect('/')
     return render(request, '../templates/editprofile.html', context)
 
 
