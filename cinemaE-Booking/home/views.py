@@ -26,19 +26,19 @@ def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            template = render_to_string('../templates/email_template.html', {'name': 'Brian'})
+            # inactiveUser = send_verification_email(response, form)
+            # inactiveUser.save()
+            form.save()
+            name = form.cleaned_data['first_name']
+            template = render_to_string('../templates/email_template.html', {'name':name})
             email = EmailMessage(
                 'Thanks for signing up for our movie site!',
                 template,
                 settings.EMAIL_HOST_USER,
-                ['georgeedih@gmail.com']
-
+                [form.cleaned_data['email']]
             )
             email.fail_silently = False
             email.send()
-            # inactiveUser = send_verification_email(response, form)
-            # inactiveUser.save()
-            form.save()
             return redirect('/')
             # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
