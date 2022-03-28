@@ -11,10 +11,8 @@ class User(models.Model):
     enrollForPromotions = models.BooleanField(null=True)
 
     def __str__(self):
-        return self.enrollForPromotions
+        return self.user.username
 
-    def __str__(self):
-        return self.phone
 
 
 class Account(models.Model):

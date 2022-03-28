@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout
 from django.contrib.auth.models import User as us
-from .forms import RegisterForm , AccountForm
+from .forms import RegisterForm
 from verify_email.email_handler import send_verification_email
 
 # Create your views here.
@@ -14,17 +14,12 @@ from verify_email.email_handler import send_verification_email
 def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
-        account_form = AccountForm(response.POST)
-        if form.is_valid() and account_form.is_valid():
+        if form.is_valid():
             # inactiveUser = send_verification_email(response, form)
-            user = form.save()
-            account = account_form.save(commit=False)
-            account.save()
-            return response(response, "../templates/registration2.html", {'form': form, "account_form": account_form})
+            form.save()
+            return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
-    account_form = AccountForm()
-
-    return render(response, "../templates/registration2.html", {"form": form, "account_form" : account_form})
+    return render(response, "../templates/registration2.html", {"form": form,})
 
 
 def login(response):
@@ -87,9 +82,9 @@ def user_profile(request):
 
 
 def editprofile(request):
-    users = User.objects.order_by('userID')
+    #users = User.objects.order_by('userID')
     accounts = Account.objects.order_by('accountID')
-    context = {'users': users, 'accounts': accounts, }
+    context = {'accounts': accounts, }
     return render(request, '../templates/editprofile.html', context)
 
 

@@ -22,11 +22,3 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
-
-class AccountForm(forms.ModelForm):
-    CarNo = forms.IntegerField()
-    expirationDate = forms.DateField()
-    billingAdd = forms.CharField()
-    class Meta:
-       model = Account
-       fields = ('CarNo', 'expirationDate', 'billingAdd', )
