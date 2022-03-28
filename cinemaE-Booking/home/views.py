@@ -6,6 +6,8 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
+from cryptography.fernet import Fernet
+
 from django.conf import settings
 from verify_email.email_handler import send_verification_email
 
@@ -17,6 +19,7 @@ def registration2(response):
         form = RegisterForm(response.POST)
         if form.is_valid():
             # inactiveUser = send_verification_email(response, form)
+            # inactiveUser.save()
             form.save()
             return redirect('/')
             # return response(response, "../templates/registration2.html", {'form': form})
@@ -117,7 +120,13 @@ def editprofile(request):
         address = request.POST.get('address')
         if cardno is not None and exp is not None and address is not None:
             account = Account()
-            account.cardNo = cardno
+
+            # encrypt card number with Fenet
+            key = Fernet.generate_key()
+            fernet = Fernet(key)
+            cardNoEnc = fernet.encrypt(cardno.encode())
+            account.cardNo = cardNoEnc
+
             account.expirationDate = exp
             account.billingAdd = address
             account.type = 1

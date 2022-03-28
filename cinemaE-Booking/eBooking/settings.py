@@ -143,6 +143,10 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 LOGIN_REDIRECT_URL = "/"
 LOGOUT_REDIRECT_URL = "/"
 
+# redirect user to login page after they verify email
+LOGIN_URL = "/templates/registration/login.html"
+VERIFICATION_SUCCESS_TEMPLATE = None
+
 # email verification
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
