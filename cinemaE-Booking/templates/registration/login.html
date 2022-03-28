@@ -1,15 +1,37 @@
-{% block title %}
-Login Here
-{% endblock %}
-
-{% load crispy_forms_tags %}
-
-{%block content %}
-    <form method="post" class="form-group">
-            {% csrf_token %}
-            {{form|crispy}}
-            <button type="submit" class = "btn btn-success">Login</button>
-            <p>Don't have an account?<a href="{% url 'registration2' %}"/>Create one </a></p>
-            <a href="{% url 'forgotpassword' %}"/>Forgot Password </a>
-    </form>
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+    {%block content %}
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                 <div class="input-field">
+                     {{ form.username|as_crispy_field }}
+                 </div>
+                <div class="input-field">
+                    {{ form.password|as_crispy_field }}
+                </div>
+                <div class="input field">
+                    <button type="submit" class = "btn btn-success">Login</button>
+                </div>
+                    <p>Don't have an account?<a href="{% url 'registration2' %}"/>Create one </a></p>
+                <a href="{% url 'forgotpassword' %}"/>Forgot Password </a>
+                </form>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</body>
+</html>
