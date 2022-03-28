@@ -23,7 +23,7 @@ def registration2(response):
 
 
 def login(response):
-    return render(response, "../templates/login.html")
+    return render(response, "../templates/registration/login.html")
 
 
 def registration(request):
@@ -75,6 +75,7 @@ def logoutpage(request):
 
 
 def user_profile(request):
+
     users = User.objects.order_by('userId')
     accounts = Account.objects.order_by('accountID')
     context = {'users': users, 'accounts': accounts, }
@@ -82,9 +83,15 @@ def user_profile(request):
 
 
 def editprofile(request):
-    #users = User.objects.order_by('userID')
+    # users = User.objects.order_by('userID')
     accounts = Account.objects.order_by('accountID')
     context = {'accounts': accounts, }
+    if request.method == 'POST':
+        us.first_name = request.POST.get('fname')
+        us.last_name = request.POST.get('fname')
+        us.password = request.POST.get('password')
+        #User.us.enrollForPromotions = request.POST.get('promotion')
+        return render(request, '../templates/editprofile.html', context)
     return render(request, '../templates/editprofile.html', context)
 
 

@@ -67,7 +67,12 @@
                               <div class="right-icon">
                                 <i class="fa fa-user text-primary"></i>
                               </div>
+                              {% if user.is_staff %}
+                              <a href="{% url 'adminpage' %}"><div class="media-body ml-3">
+                                {% endif %}
+                                {% if not user.is_staff %}
                              <a href="{% url 'user-profile' %}"><div class="media-body ml-3">
+                               {% endif %}
                                 <h6 class="mb-0" >Profile</h6>
                               </div></a>
                                 {% block content %}
