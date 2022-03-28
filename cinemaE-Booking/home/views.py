@@ -22,8 +22,8 @@ def registration2(response):
     return render(response, "../templates/registration2.html", {"form": form,})
 
 
-def login(response):
-    return render(response, "../templates/registration/login.html")
+#def login(response):
+ #   return render(response, "../templates/registration/login.html")
 
 
 def registration(request):
@@ -65,6 +65,16 @@ def registration(request):
 def registration_success(request):
     return render(request, '../templates/registration_success.html')
 
+def forgotpassword(request):
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    try:
+        user = us.objects.get(username= username)
+        user.set_password(password)
+        user.save()
+    except us.DoesNotExist:
+        user = None
+    return render(request, "../templates/forgotpassword.html")
 
 def logoutpage(request):
     if request.user.is_authenticated:
