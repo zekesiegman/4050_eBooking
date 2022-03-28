@@ -7,8 +7,9 @@ from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
 from cryptography.fernet import Fernet
-
+from django.core.mail import EmailMessage
 from django.conf import settings
+from django.template.loader import render_to_string
 from verify_email.email_handler import send_verification_email
 
 # global variable for Fernet key
@@ -17,11 +18,24 @@ fernet = Fernet(key)
 
 # Create your views here.
 
+#def success(request,uid):
+
+  #  return render(request, "/")
 
 def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
+            template = render_to_string('../templates/email_template.html', {'name': 'Brian'})
+            email = EmailMessage(
+                'Thanks for signing up for our movie site!',
+                template,
+                settings.EMAIL_HOST_USER,
+                ['georgeedih@gmail.com']
+
+            )
+            email.fail_silently = False
+            email.send()
             # inactiveUser = send_verification_email(response, form)
             # inactiveUser.save()
             form.save()
