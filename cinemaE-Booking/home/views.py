@@ -19,7 +19,7 @@ def registration2(response):
             # inactiveUser = send_verification_email(response, form)
             form.save()
             return redirect('/')
-            #return response(response, "../templates/registr.html", {'form': form})
+            # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form": form,})
 
