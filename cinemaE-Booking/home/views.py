@@ -22,6 +22,7 @@ fernet = Fernet(key)
 
   #  return render(request, "/")
 
+
 def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
@@ -43,43 +44,6 @@ def registration2(response):
             # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form": form,})
-
-
-# old registration, no longer used but kept for reference
-def registration(request):
-
-    if request.GET.get('login_now') == "Login Now":
-        if request.user.is_authenticated:
-            return render(request, '../templates/index.html')
-        if request.method == "GET":
-            username = request.GET.get('loginEmail')
-            password = request.GET.get('loginPass')
-            user = authenticate(request, username=username, password=password)
-            if user is not None:
-                login(request, user)
-                return redirect('/')
-            else:
-                form = AuthenticationForm(request.GET)
-                return render(request, '../templates/registration.html', {'form': form})
-        else:
-            form = AuthenticationForm()
-            return render(request, '../templates/registration.html', {'form': form})
-
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        tempName = request.POST.get('name')
-        nameArr = tempName.split()
-        email = request.POST.get('email')
-        password = request.POST.get('password')
-        user = us.objects.create_user(username, email, password)
-        user.first_name = nameArr[0]
-        user.last_name = nameArr[1]
-        user.is_staff = False
-        user.is_active = False
-        user.save()
-        return render(request, '../templates/registration.html')
-    else:
-        return render(request, '../templates/registration.html')
 
 
 def registration_success(request):
