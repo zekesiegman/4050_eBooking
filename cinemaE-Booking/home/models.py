@@ -28,3 +28,28 @@ class Account(models.Model):
 class CardType(models.Model):
     cardTypeID = models.AutoField(primary_key=True)
     type = models.CharField(max_length=45)
+
+
+class Movie(models.Model):
+    movieID = models.AutoField(primary_key=True)
+    title = models.CharField(max_length=100)
+    director = models.CharField(max_length=100)
+    producer = models.CharField(max_length=100)
+    synopsis = models.CharField(max_length=500)
+    rating = models.CharField(max_length=5)
+    playing_now = models.BooleanField(default=True)  # if movie is playing now or coming soon
+    # reviews = ?
+    trailer_picture = models.ImageField(upload_to=None)
+    trailer_video = models.URLField(max_length=250)
+    category = models.ForeignKey('MovieCategory', on_delete=models.CASCADE, default=1)
+    showtime = models.ForeignKey('Showtime', on_delete=models.CASCADE, default=1)
+
+
+class Showtime(models.Model):
+    showtimeID = models.AutoField(primary_key=True)
+    time = models.DateTimeField(auto_now=False)
+
+
+class MovieCategory(models.Model):
+    categoryID = models.AutoField(primary_key=True)
+    category = models.CharField(max_length=100)

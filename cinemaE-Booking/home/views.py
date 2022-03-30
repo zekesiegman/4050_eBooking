@@ -31,6 +31,7 @@ def registration2(response):
             # inactiveUser.save()
             form.save()
             name = form.cleaned_data['first_name']
+            # send confirmation video
             template = render_to_string('../templates/email_template.html', {'name':name})
             email = EmailMessage(
                 'Thanks for signing up for our movie site!',
@@ -43,7 +44,7 @@ def registration2(response):
             return redirect('/')
             # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
-    return render(response, "../templates/registration2.html", {"form": form,})
+    return render(response, "../templates/registration2.html", {"form": form})
 
 
 def registration_success(request):
@@ -53,6 +54,7 @@ def registration_success(request):
 def forgotpassword(request):
     username = request.POST.get('username')
     newpassword = request.POST.get('newpassword')
+    # try to find user with matching email and change password
     try:
         user = us.objects.get(username=username)
         user.set_password(newpassword)
@@ -84,9 +86,11 @@ def editprofile(request):
     accounts = Account.objects.order_by('accountID')
     context = {'accounts': accounts, }
 
+    # update user info
     if request.method == 'POST':
         user = request.user
         f = request.POST.get('fname')
+        # if form element is filled out, update info
         if len(f) != 0:
             user.first_name = request.POST.get('fname')
         l = request.POST.get('lname')
@@ -103,6 +107,7 @@ def editprofile(request):
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
+        # if card info is filled out, create new account and save it
         if len(cardno) != 0 and len(exp) != 0 and len(address) != 0:
             account = Account()
 
