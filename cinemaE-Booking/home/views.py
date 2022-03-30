@@ -52,13 +52,11 @@ def registration_success(request):
 
 def forgotpassword(request):
     username = request.POST.get('username')
-    oldpassword = request.POST.get('oldpassword')
     newpassword = request.POST.get('newpassword')
     try:
         user = us.objects.get(username=username)
-        if user.check_password(oldpassword):
-            user.set_password(newpassword)
-            user.save()
+        user.set_password(newpassword)
+        user.save()
         return redirect('/')
     except us.DoesNotExist:
         user = None
