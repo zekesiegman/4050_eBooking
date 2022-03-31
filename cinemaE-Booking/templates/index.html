@@ -45,15 +45,18 @@
                     <a href="#" class="search-toggle device-search">
                       <i class="fa fa-search"></i>
                     </a>
+                    {% block content %}
                     <div class="search-box iq-search-bar d-search">
-                      <form action="#" class="searchbox">
+                      <form action="#" class="searchbox" method="POST">
+                        {% csrf_token %}
                         <div class="form-group position-relative">
-                          <input type="text" class="text search-input font-size-12"
+                          <input type="text" name="search" class="text search-input font-size-12"
                             placeholder="type here to search..." />
-                          <i class="search-link fa fa-search"></i>
+                          <button type="submit" class="search-link fa fa-search"></button>
                         </div>
                       </form>
                     </div>
+                    {% endblock %}
                   </li>
                   <li class="nav-item nav-icon">
                     <a href="#" class="iq-user-dropdown search-toggle d-flex align-items-center p-0">

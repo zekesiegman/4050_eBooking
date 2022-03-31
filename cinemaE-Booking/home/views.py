@@ -1,6 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import User
 from .models import Account
+from .models import Movie
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
@@ -126,7 +127,16 @@ def editprofile(request):
 
 
 def index(request):
-    return render(request, '../templates/index.html')
+    movies = Movie.objects.all()
+    context = {'movies': movies}
+
+    if request.method == 'POST':
+        searchStr = request.POST.get('search')
+        movieSearch = Movie.objects.filter(title=searchStr)
+        context2 = {'movies': movieSearch}
+        return render(request, '../templates.search.html', context2)
+
+    return render(request, '../templates/index.html', context)
 
 
 def adminpage(request):
