@@ -41,7 +41,7 @@ class Movie(models.Model):
     # reviews = ?
     trailer_picture = models.ImageField(upload_to=None, blank=True)
     trailer_video = models.URLField(max_length=250, blank=True)
-    category = models.ForeignKey('MovieCategory', on_delete=models.CASCADE, default='Action')
+    cat = models.ForeignKey('MovieCategory', on_delete=models.CASCADE, default='Action')
     # showtime = models.ForeignKey('Showtime', on_delete=models.CASCADE, default=1, null=True)
 
 
