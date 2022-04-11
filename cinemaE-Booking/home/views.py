@@ -128,19 +128,6 @@ def editprofile(request):
     return render(request, '../templates/editprofile.html', context)
 
 
-def index(request):
-    movies = Movie.objects.all()
-    context = {'movies': movies}
-
-    if request.method == 'POST':
-        searchStr = request.POST.get('search')
-        movieSearch = Movie.objects.filter(title=searchStr)
-        context2 = {'movies': movieSearch}
-        return render(request, '../templates.search.html', context2)
-
-    return render(request, '../templates/index.html', context)
-
-
 def adminpage(request):
     if request.method == "POST":
         form = AddMovie(request.POST)
@@ -152,3 +139,21 @@ def adminpage(request):
     else:
         form = AddMovie()
         return render(request, '../templates/admin.html', {'form': form})
+
+
+def index(request):
+    movies = Movie.objects.all()
+    context = {'movies': movies}
+
+    if request.method == 'POST':
+        searchStr = request.POST.get('search')
+        movieSearch = Movie.objects.filter(title=searchStr)
+        context2 = {'movies': movieSearch}
+        return render(request, '../templates/search.html', context2)
+
+    return render(request, '../templates/index.html', context)
+
+
+def search(request, context2):
+    context = context2
+    return render(request, '../templates/search.html', context)

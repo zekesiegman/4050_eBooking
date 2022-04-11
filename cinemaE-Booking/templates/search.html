@@ -103,6 +103,19 @@
         </div>
       </div>
     </div>
+    {% block list %}
+    {% for movie in movies %}
+    <div id="movie">
+      <div id="movie_left">
+        <img src="{{ movie.trailer_picture }}">
+      </div>
+      <div id="movie_right">
+        <h5>{{ movie.title }}</h5>
+        <p>{{ movie.rating }}</p>
+      </div>
+    </div>
+    {% endfor %}
+    {% endblock %}
   </header>
 
 
