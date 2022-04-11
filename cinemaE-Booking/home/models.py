@@ -29,6 +29,7 @@ class CardType(models.Model):
     cardTypeID = models.AutoField(primary_key=True)
     type = models.CharField(max_length=45)
 
+
 # null=True is temp for commented lines
 class Movie(models.Model):
     movieID = models.AutoField(primary_key=True)
@@ -39,7 +40,7 @@ class Movie(models.Model):
     rating = models.CharField(max_length=5)
     playing_now = models.BooleanField(default=True)  # if movie is playing now or coming soon
     # reviews = ?
-    trailer_picture = models.ImageField(upload_to=None, blank=True)
+    trailer_picture = models.URLField(max_length=300, blank=True)
     trailer_video = models.URLField(max_length=250, blank=True)
     cat = models.ForeignKey('MovieCategory', on_delete=models.CASCADE, default='Action')
     # showtime = models.ForeignKey('Showtime', on_delete=models.CASCADE, default=1, null=True)

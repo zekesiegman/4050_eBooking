@@ -143,43 +143,45 @@
 			<div class="table-data">
 				<div class="order">
 					<div class="head">
-
+						{% load crispy_forms_tags %}
+    					{% block addmovie %}
 						<h3>Add Movies</h3></div>
 							<div class="content">
-							  <form action="#">
+							  <form action="#", method="POST">
+								{% csrf_token %}
 								<div class="user-details">
 								  <div class="input-box">
-									<span class="details">Movie Name</span>
-									<input type="text" placeholder="Enter the movie name" required>
+									{{ form.title|as_crispy_field }}
 								  </div>
 								  <div class="input-box">
-									<span class="details">Movie trailer url</span>
-									<input type="text" placeholder="Enter youtube link" required>
+									{{ form.director|as_crispy_field }}
 								  </div>
 								  <div class="input-box">
-									<span class="details">Category</span>
-									<input type="text" placeholder="Enter movie genres" required>
+									{{ form.producer|as_crispy_field }}
 								  </div>
 								  <div class="input-box">
-									<span class="details">Number of Shows</span>
-									<input type="text" placeholder="Shows allocated" required>
+									{{ form.synopsis|as_crispy_field }}
 								  </div>
 								  <div class="input-box">
-									<span class="details">Release Date</span>
-									<input type="date" placeholder="Movie release date" required>
+									{{ form.rating|as_crispy_field }}
 								  </div>
 								  <div class="input-box">
-									<span class="details">Display Image</span>
-									<input type="file" accept="image/png,image/jpeg" style="padding-top: 10px;" required>
+									{{ form.picture|as_crispy_field }}
+								  </div>
+								  <div class="input-box">
+									{{ form.trailer|as_crispy_field }}
+								  </div>
+								  <div class="input-box">
+									{{ form.category|as_crispy_field }}
 								  </div>
 								</div>
 								<div class="button">
-								  <input type="submit" value="Register">
+								  <input type="submit" value="Submit">
 								</div>
 							  </form>
 							</div>
 						  </div>
-
+						{% endblock %}
 				</div>
 			</div>
 		</main>

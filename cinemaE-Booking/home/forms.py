@@ -3,6 +3,8 @@ from django.contrib.auth import login, authenticate
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Account
+from .models import Movie
+from .models import MovieCategory
 
 
 class RegisterForm(UserCreationForm):
@@ -23,3 +25,29 @@ class RegisterForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
+
+class AddMovie(forms.Form):
+    title = forms.CharField()
+    director = forms.CharField()
+    producer = forms.CharField()
+    synopsis = forms.CharField()
+    rating = forms.CharField()
+    picture = forms.URLField()
+    trailer = forms.URLField()
+    category = forms.ModelChoiceField(queryset=MovieCategory.objects.all())
+
+    class Meta():
+        model = Movie
+        fields = ('title', 'director', 'producer', 'synopsis', 'rating', 'picture',
+                  'trailer', 'category')
+
+    def save(self, commit=True):
+        data = self.cleaned_data
+        movie = Movie(title=data['title'], director=data['director'],
+                    producer=data['producer'], synopsis=data['synopsis'],
+                    rating=data['rating'], trailer_picture=data['picture'],
+                    playing_now=True, trailer_video=data['trailer'], cat=data['category'])
+        if commit:
+            movie.save()
+        return movie

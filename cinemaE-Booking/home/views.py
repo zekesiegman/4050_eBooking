@@ -7,11 +7,13 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
+from .forms import AddMovie
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
 from verify_email.email_handler import send_verification_email
+from django.contrib import messages
 
 # global variable for Fernet key
 key = Fernet.generate_key()
@@ -140,4 +142,13 @@ def index(request):
 
 
 def adminpage(request):
-    return render(request, '../templates/admin.html')
+    if request.method == "POST":
+        form = AddMovie(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, '../templates/admin.html', {'form': form})
+        else :
+            messages.error(request, 'Please fill out all fields')
+    else:
+        form = AddMovie()
+        return render(request, '../templates/admin.html', {'form': form})
