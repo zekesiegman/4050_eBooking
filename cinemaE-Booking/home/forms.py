@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 from .models import Account
 from .models import Movie
 from .models import MovieCategory
+from .models import Showtime
 
 
 class RegisterForm(UserCreationForm):
@@ -51,3 +52,23 @@ class AddMovie(forms.Form):
         if commit:
             movie.save()
         return movie
+
+
+class ScheduleMovie(forms.Form):
+    time = forms.DateTimeField(input_formats=['%m/%d/%y %H:%M'],
+                               widget=forms.TextInput(attrs={'placeholder': '00/00/00 00:00'}))
+    movie = forms.ModelChoiceField(queryset=Movie.objects.all())
+
+    class Meta():
+        model = Showtime
+        fields = ('time', 'movie')
+
+    def save(self, commit=True):
+        data = self.cleaned_data
+        showtime = Showtime(time=data['time'], movieID=data['movie'])
+        if commit:
+            showtime.save()
+        return showtime
+
+
+

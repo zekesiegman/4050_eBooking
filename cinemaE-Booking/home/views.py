@@ -8,6 +8,7 @@ from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
 from .forms import AddMovie
+from .forms import ScheduleMovie
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -131,14 +132,26 @@ def editprofile(request):
 def adminpage(request):
     if request.method == "POST":
         form = AddMovie(request.POST)
+        form2 = ScheduleMovie(request.POST)
         if form.is_valid():
             form.save()
-            return render(request, '../templates/admin.html', {'form': form})
-        else :
-            messages.error(request, 'Please fill out all fields')
+            form = AddMovie()
+            return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
+        if form2.is_valid():
+            # check that show time doesnt exist already
+
+            form2.save()
+
+            # update movie info to now playing once movie is scheduled
+            movie = form.cleaned_data['movie']
+            movie.playing_now = True
+
+            form2 = ScheduleMovie()
+            return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
     else:
         form = AddMovie()
-        return render(request, '../templates/admin.html', {'form': form})
+        form2 = ScheduleMovie()
+        return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
 
 
 def index(request):
