@@ -147,7 +147,7 @@ def index(request):
 
     if request.method == 'POST':
         searchStr = request.POST.get('search')
-        movieSearch = Movie.objects.filter(title=searchStr)
+        movieSearch = Movie.objects.filter(title__icontains=searchStr)
         context2 = {'movies': movieSearch}
         return render(request, '../templates/search.html', context2)
 
