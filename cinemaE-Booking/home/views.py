@@ -154,7 +154,14 @@ def index(request):
     return render(request, '../templates/index.html', context)
 
 
-def search(request, context2):
-    context = context2
+def search(request, new_context):
+    context = new_context
+
+    if request.method == 'POST':
+        searchStr = request.POST.get('search')
+        movieSearch = Movie.objects.filter(title__icontains=searchStr)
+        context2 = {'movies': movieSearch}
+        return render(request, '../templates/search.html', context2)
+
     return render(request, '../templates/search.html', context)
 
