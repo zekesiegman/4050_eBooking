@@ -157,3 +157,4 @@ def index(request):
 def search(request, context2):
     context = context2
     return render(request, '../templates/search.html', context)
+
