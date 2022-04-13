@@ -140,17 +140,17 @@ def adminpage(request):
             return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
         if form2.is_valid():
             # check that show time doesn't exist already
-            showtime = form.cleaned_data['time']
-            if Showtime.objects.filter(time=showtime) is not None:
-                messages.error('A movie is already scheduled for this showtime')
-                return redirect(request, '../templates/admin.html', {'form': form, 'form2': form2})
+            time = request.POST.get('time')
+            count = Showtime.objects.filter(time=time).count()
+            if count != 0:
+                # error message
+                return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
 
             form2.save()
-
             # update movie info to now playing once movie is scheduled
-           # movietitle = form.cleaned_data['movie']
-            #mo
-            #movie.playing_now = True
+            movietime = form2.cleaned_data['movie']
+            movie = Movie.objects.filter(title=movietime)
+            movie.playing_now = True
 
             form2 = ScheduleMovie()
             return render(request, '../templates/admin.html', {'form': form, 'form2': form2})

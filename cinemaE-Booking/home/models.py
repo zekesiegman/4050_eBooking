@@ -45,7 +45,7 @@ class Movie(models.Model):
 
 
 class Showtime(models.Model):
-    time = models.DateTimeField(auto_now=False, primary_key=True, default='12/12/12 12:12')
+    time = models.CharField(primary_key=True, max_length=50, default='12/12/12 12:12')
     movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')
 
 

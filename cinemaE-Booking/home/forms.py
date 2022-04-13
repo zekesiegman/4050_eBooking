@@ -55,8 +55,7 @@ class AddMovie(forms.Form):
 
 
 class ScheduleMovie(forms.Form):
-    time = forms.DateTimeField(input_formats=['%m/%d/%y %H:%M'],
-                               widget=forms.TextInput(attrs={'placeholder': '00/00/00 00:00'}))
+    time = forms.CharField(widget=forms.TextInput(attrs={'placeholder': 'MM/DD/YY HH:MM'}))
     movie = forms.ModelChoiceField(queryset=Movie.objects.all())
 
     class Meta():
