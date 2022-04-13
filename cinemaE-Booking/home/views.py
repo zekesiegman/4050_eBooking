@@ -2,6 +2,7 @@ from django.shortcuts import render, redirect
 from .models import User
 from .models import Account
 from .models import Movie
+from .models import Showtime
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
@@ -138,7 +139,11 @@ def adminpage(request):
             form = AddMovie()
             return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
         if form2.is_valid():
-            # check that show time doesnt exist already
+            # check that show time doesn't exist already
+            showtime = form.cleaned_data['time']
+            if Showtime.objects.filter(time=showtime) is not None:
+                messages.error('A movie is already scheduled for this showtime')
+                return redirect(request, '../templates/admin.html', {'form': form, 'form2': form2})
 
             form2.save()
 
