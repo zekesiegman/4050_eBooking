@@ -143,8 +143,9 @@ def adminpage(request):
             form2.save()
 
             # update movie info to now playing once movie is scheduled
-            movie = form.cleaned_data['movie']
-            movie.playing_now = True
+           # movietitle = form.cleaned_data['movie']
+            #mo
+            #movie.playing_now = True
 
             form2 = ScheduleMovie()
             return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
