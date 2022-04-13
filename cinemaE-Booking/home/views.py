@@ -133,11 +133,18 @@ def editprofile(request):
 def adminpage(request):
     if request.method == "POST":
         form = AddMovie(request.POST)
-        form2 = ScheduleMovie(request.POST)
+        form2 = ScheduleMovie()
         if form.is_valid():
             form.save()
             form = AddMovie()
             return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
+    else:
+        form = AddMovie()
+        form2 = ScheduleMovie()
+        return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
+    if request.method == "POST" and not form.is_valid():
+        form = AddMovie()
+        form2 = ScheduleMovie(request.POST)
         if form2.is_valid():
             # check that show time doesn't exist already
             time = request.POST.get('time')
@@ -183,4 +190,3 @@ def search(request, new_context):
         return render(request, '../templates/search.html', context2)
 
     return render(request, '../templates/search.html', context)
-

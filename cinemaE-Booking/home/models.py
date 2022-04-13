@@ -51,3 +51,9 @@ class Showtime(models.Model):
 
 class MovieCategory(models.Model):
     category = models.CharField(primary_key=True, max_length=50)
+
+
+class Promotion(models.Model):
+    promoID = models.AutoField(primary_key=True)
+    amount = models.IntegerField()
+    valid_thru = models.DateField(auto_now=False)
