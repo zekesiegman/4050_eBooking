@@ -20,7 +20,7 @@
     #movie {
       margin-left: 50px;
       margin-bottom: 40px;
-      width: 700px;
+      width: 800px;
       border: 2px solid black;
     }
     #movie_left {
@@ -33,14 +33,6 @@
     img {
       height: 300px;
       width: 250px;
-    }
-    .movie_button {
-      background-color: white;
-      height: 40px;
-      width: 125px;
-      border: 2px solid black;
-      border-radius: 8px;
-      margin-right: 15px;
     }
   </style>
 
@@ -142,8 +134,9 @@
       <div id="movie_right">
         <h5>{{ movie.title }}</h5>
         <p>{{ movie.rating }}</p>
-        <button class="movie_button">More Info</button>
-        <button class="movie_button">Book Now</button>
+        <a href="{{movie.trailer_video}}">Play Trailer</a>
+        <a href="">More Info</a>
+        <a href="">Book Now</a>
       </div>
     </div>
     {% endfor %}
