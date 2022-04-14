@@ -6,15 +6,16 @@ from .models import Account
 from .models import Movie
 from .models import MovieCategory
 from .models import Showtime
+from django.forms import ModelForm
 
 
-class RegisterForm(UserCreationForm):
+class RegisterForm(ModelForm):
     email = forms.EmailField()
     first_name = forms.CharField()
     last_name = forms.CharField()
     password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style': 'height: 50px;'}))
 
-    class Meta(UserCreationForm.Meta):
+    class Meta(ModelForm):
         model = User
         fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
 
@@ -23,6 +24,8 @@ class RegisterForm(UserCreationForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
+        user.phone = self.cleaned_data['phone']
+        user.enrollForPromotions = self.cleaned_data['enrollForPromotions']
         if commit:
             user.save()
         return user

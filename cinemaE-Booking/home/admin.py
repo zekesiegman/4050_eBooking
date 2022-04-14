@@ -5,10 +5,18 @@ from .models import CardType
 from .models import Movie
 from .models import Showtime
 from .models import MovieCategory
+from django.contrib.auth.admin import UserAdmin
+
+class UserConfig(UserAdmin):
+    search_fields = ('email','user_name','first_name',)
+    ordering = ('email',)
+    list_display = ('email','user_name','first_name',
+                    'last_name','is_active', 'is_staff')
+
 
 # Register your models here.
 
-admin.site.register(User)
+admin.site.register(User, UserConfig)
 admin.site.register(Account)
 admin.site.register(CardType)
 admin.site.register(Movie)

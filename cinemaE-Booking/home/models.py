@@ -1,17 +1,63 @@
 from django.db import models
-from django.contrib.auth.models import User as us
+from django.contrib.auth.models import User as us, AbstractBaseUser,PermissionsMixin, BaseUserManager
 from django.db.models.signals import post_save
 from django.dispatch import receiver
+import datetime
 
 # Create your models here.
 
 
-class User(models.Model):
-    user = models.OneToOneField(us, on_delete=models.CASCADE, default=1)
-    userId = models.AutoField(primary_key=True)
-    phone = models.IntegerField(default=20000000000)
-    enrollForPromotions = models.BooleanField(default=False)
 
+
+class CustomAccountManager(BaseUserManager):
+    def create_superuser(self, email, user_name, first_name, password, **other_fields):
+        other_fields.setdefault('is_staff', True)
+        other_fields.setdefault('is_superuser',True)
+        other_fields.setdefault('is_active', True)
+        return self.create_user(email, user_name, first_name, password, **other_fields)
+
+    def create_user(self,email, user_name, first_name, password, **other_fields):
+        if not email:
+            raise ValueError('You must provide an email address')
+        email = self.normalize_email(email)
+        if not user_name:
+            raise ValueError('You must provide a user name')
+        if not first_name:
+            raise ValueError('You must provide a first name')
+        user = self.model(email=email, user_name=user_name,first_name=first_name,**other_fields)
+        user.set_password(password)
+        user.save()
+        return user
+
+
+class User(AbstractBaseUser, PermissionsMixin):
+    email = models.EmailField(primary_key=True)
+    user_name = models.CharField(max_length=150)
+    first_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150)
+    cardNo = models.CharField(max_length=250,blank=True)
+    expirationDate = models.DateField(default =datetime.date.today,blank=True)
+    billingAdd = models.CharField(max_length=150,blank=True)
+    phone = models.CharField(max_length=10)
+    enrollForPromotions = models.BooleanField(default=False)
+    is_active = models.BooleanField(default=False)
+    is_staff = models.BooleanField(default=False)
+    is_superuser = models.BooleanField(default=False)
+
+    objects = CustomAccountManager()
+
+
+    USERNAME_FIELD = 'email'
+    REQUIRED_FIELDS = ['user_name', 'first_name']
+
+
+#class User(AbstractBaseUser):
+ #   user = models.OneToOneField(us, on_delete=models.CASCADE, default=1)
+  #  userId = models.AutoField(primary_key=True)
+   # phone = models.IntegerField(default=20000000000)
+    #enrollForPromotions = models.BooleanField(default=False)
+
+    USERNAME_FIELD = 'email'
     def __str__(self):
         return self.user.username
 
@@ -22,7 +68,6 @@ class Account(models.Model):
     expirationDate = models.DateField()
     billingAdd = models.CharField(max_length=45)
     # type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)
-    user_userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
 
 class CardType(models.Model):
