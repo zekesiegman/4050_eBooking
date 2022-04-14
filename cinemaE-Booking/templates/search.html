@@ -126,7 +126,10 @@
       </div>
     </div>
     {% block list %}
-    {% for movie in movies %}
+    {% if not matches %}
+    <p>Sorry, no movies or categories matching your search were found.</p>
+    {% else %}
+    {% for movie in matches %}
     <div id="movie">
       <div id="movie_left">
         <img src="{{ movie.trailer_picture }}">
@@ -140,6 +143,7 @@
       </div>
     </div>
     {% endfor %}
+    {% endif %}
     {% endblock %}
   </header>
 
@@ -159,6 +163,6 @@
   <script src="js/jquery.magnific-popup.min.js"></script>
   <script src="js/slick-animation.min.js"></script>
 
-  <script src="main.js"></script>
+  <script src="{% static 'js/main.js' %}"></script>
 </body>
 </html>
