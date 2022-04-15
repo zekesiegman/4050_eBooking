@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import User
+from .models import Profile
 from .models import Account
 from .models import Movie
 from .models import Showtime
@@ -23,14 +23,10 @@ fernet = Fernet(key)
 
 # Create your views here.
 
-#def success(request,uid):
 
-  #  return render(request, "/")
-
-
-def registration2(response):
-    if response.method == "POST":
-        form = RegisterForm(response.POST)
+def registration2(request):
+    if request.method == "POST":
+        form = RegisterForm(request.POST)
         if form.is_valid():
             # inactiveUser = send_verification_email(response, form)
             # inactiveUser.save()
@@ -49,7 +45,7 @@ def registration2(response):
             return redirect('/')
             # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
-    return render(response, "../templates/registration2.html", {"form": form})
+    return render(request, "../templates/registration2.html", {"form": form})
 
 
 def registration_success(request):
@@ -80,20 +76,22 @@ def logoutpage(request):
 
 def user_profile(request):
 
-    users = User.objects.order_by('userId')
+    users = request.user
     accounts = Account.objects.order_by('accountID')
-    context = {'users': users, 'accounts': accounts, }
+    profile = Profile.objects.get(user=users)
+    context = {'users': users, 'accounts': accounts, 'profile': profile}
     return render(request, '../templates/user-profile.html', context)
 
 
 def editprofile(request):
-    # users = User.objects.order_by('userID')
+    profile = Profile.objects.get(user=request.user)
     accounts = Account.objects.order_by('accountID')
-    context = {'accounts': accounts, }
+    context = {'accounts': accounts, 'profile': profile}
 
     # update user info
     if request.method == 'POST':
         user = request.user
+        profile = Profile.objects.get(user=user)
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -107,7 +105,10 @@ def editprofile(request):
             update_session_auth_hash(request, us)
         enrollForPromotions = request.POST.get('promotion')
         if enrollForPromotions is not None:
-            User.user.enrollForPromotions = True
+            profile.enrollForPromotions = True
+        t = request.POST.get('phone')
+        if len(t) !=0:
+            profile.phone = request.POST.get('phone')
 
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
