@@ -1,19 +1,45 @@
-{% block title %}
-Login Here
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+{% load static %}
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="{% static 'css/forms.css' %}">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New User Registration</title>
+</head>
+<body>
+    {% load crispy_forms_tags %}
+    {%block content %}
+    <div class="container">
+        <div class="forms">
+            <div class="form login">
+                <span class="title">Login</span>
+                <form method="post" class="form-group">
+                    {% csrf_token %}
+                 <div class="input-field">
+                     {{ form.email|as_crispy_field }}
+                 </div>
+                <div class="input-field">
+                    {{ form.password|as_crispy_field }}
+                </div>
+                <div class="input-field button">
+                    <button type="submit" class = "btn btn-success">Login</button>
+                </div>
+                </form>
+                <div class="login-signup">
+                    <span class="text">Already a user?
+                        <a href="{% url 'registration2' %}">Create one</a>
+                    </span><br>
+                    <span class="text">Forgot password?
+                        <a href="{% url 'forgotpassword' %}">Reset here</a>
+                    </span>
+                </div>
 
-{% load crispy_forms_tags %}
-
-{%block content %}
-    <div>
-       <form method="post" class="form-group">
-            {% csrf_token %}
-            {{form|crispy}}
-        </form>
+            </div>
+        </div>
     </div>
-    <div>
-        <button type="submit" class = "btn btn-success">Login</button>
-        <p>Don't have an account?<a href="{% url 'registration2' %}"/>Create one </a></p>
-        <a href="{% url 'forgotpassword' %}"/>Forgot Password </a>
-    </div>
-{% endblock %}
+    {% endblock %}
+</body>
+</html>

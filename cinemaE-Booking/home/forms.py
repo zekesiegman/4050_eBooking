@@ -10,7 +10,7 @@ from django.forms import ModelForm
 from django.contrib.auth import get_user_model
 
 
-class RegisterForm(ModelForm):
+class RegisterForm(UserCreationForm):
     username = forms.CharField()
     email = forms.EmailField()
     first_name = forms.CharField()
@@ -19,16 +19,16 @@ class RegisterForm(ModelForm):
     password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style':'height: 50px;'}))
     phone = forms.CharField()
     enrollForPromotions = forms.BooleanField()
-    class Meta(ModelForm):
+    class Meta(UserCreationForm):
         model = get_user_model()
         fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2','phone','enrollForPromotions')
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.user_name = self.cleaned_data['username']
+        user.username = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
-        user.password = self.cleaned_data['password1']
+        user.password = self.cleaned_data['password']
         user.email = self.cleaned_data['email']
         user.phone = self.cleaned_data['phone']
         user.enrollForPromotions = self.cleaned_data['enrollForPromotions']
@@ -36,6 +36,21 @@ class RegisterForm(ModelForm):
             if self.cleaned_data['password1'] == self.cleaned_data['password2']:
                 user.save()
         return user
+
+class UserAuthForm(forms.Form):
+    password = forms.CharField(label='Password', widget=forms.PasswordInput)
+
+    class Meta():
+        model = User
+        fields = ('email', 'password')
+
+
+    def clean(self):
+        email = self.cleaned_data['email']
+        password = self.cleaned_data['password']
+        if not authenticate(email=email, password=password):
+            raise forms.ValidationError('Invalid login')
+
 
 
 class AddMovie(forms.Form):

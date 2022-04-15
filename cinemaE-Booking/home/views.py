@@ -8,6 +8,7 @@ from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
 from django.contrib.auth.models import User as us
 from .forms import RegisterForm
+from .forms import UserAuthForm
 from .forms import AddMovie
 from .forms import ScheduleMovie
 from cryptography.fernet import Fernet
@@ -33,11 +34,9 @@ def registration2(response):
     if response.method == "POST":
         form = RegisterForm(response.POST)
         if form.is_valid():
-            # inactiveUser = send_verification_email(response, form)
-            # inactiveUser.save()
             form.save()
             name = form.cleaned_data['first_name']
-            # send confirmation video
+            # send confirmation email
             template = render_to_string('../templates/email_template.html', {'name':name})
             email = EmailMessage(
                 'Thanks for signing up for our movie site!',
@@ -51,6 +50,30 @@ def registration2(response):
             # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
     return render(response, "../templates/registration2.html", {"form": form})
+
+def login_view(request):
+    context = {}
+    user = request.user
+    if user.is_authenticated:
+        return redirect('/')
+    if request.POST:
+        form = UserAuthForm(request.POST)
+        if form.is_valid():
+            email = request.POST['email']
+            password = request.Post['password']
+            return render(request, '../templates/login,html', {'form': form})
+            user = authenticate(email=email,password=password)
+            if user:
+                login(request, user)
+
+                return redirect('/')
+    else:
+        form = UserAuthForm()
+        context['login']  = form
+        return render(request, '../templates/login.html',context)
+
+
+
 
 
 def registration_success(request):

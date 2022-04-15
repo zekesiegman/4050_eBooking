@@ -29,10 +29,9 @@ urlpatterns = [
     path('adminpage', include('home.urls')),
     path('logoutpage', include('home.urls')),
     path('registration2', include('home.urls')),
-    #path('login', include('home.urls')),
+    path('login', include('home.urls')),
     path('', include("django.contrib.auth.urls")),
     path('verification/', include('verify_email.urls')),
     path('forgotpassword', include('home.urls')),
     path('search', include('home.urls')),
-
 ]

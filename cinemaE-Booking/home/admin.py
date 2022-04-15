@@ -8,11 +8,12 @@ from .models import MovieCategory
 from django.contrib.auth.admin import UserAdmin
 
 class UserConfig(UserAdmin):
-    search_fields = ('email','user_name','first_name',)
+    readonly_fields = ['date_joined','last_login']
+    search_fields = ('email','username','first_name',)
     ordering = ('email',)
-    add_fieldsets = ((None, {'fields': ('username','date_joined',)}))
-    list_display = ('email','user_name','first_name',
-                    'last_name','is_active', 'is_staff')
+    #add_fieldsets = ((None, {'fields': ('username','date_joined',)}))
+    list_display = ('email','username','first_name', 'password',
+                    'last_name','is_active', 'is_superuser')
 
 
 # Register your models here.
