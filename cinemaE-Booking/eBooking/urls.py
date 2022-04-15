@@ -34,4 +34,5 @@ urlpatterns = [
     path('verification/', include('verify_email.urls')),
     path('forgotpassword', include('home.urls')),
     path('search', include('home.urls')),
+
 ]

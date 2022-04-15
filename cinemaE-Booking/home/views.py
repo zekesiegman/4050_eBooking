@@ -11,6 +11,7 @@ from .forms import RegisterForm
 from .forms import UserAuthForm
 from .forms import AddMovie
 from .forms import ScheduleMovie
+from .forms import LoginForm
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -25,9 +26,15 @@ fernet = Fernet(key)
 
 # Create your views here.
 
-#def success(request,uid):
 
-  #  return render(request, "/")
+def login(response):
+    form = LoginForm()
+    if response.method == 'POST':
+        if form.is_valid():
+            form.login()
+            return redirect('/')
+    form = LoginForm()
+    return render(response, '../templates/login.html', {form: 'form'})
 
 
 def registration2(response):
@@ -61,19 +68,16 @@ def login_view(request):
         if form.is_valid():
             email = request.POST['email']
             password = request.Post['password']
-            return render(request, '../templates/login,html', {'form': form})
-            user = authenticate(email=email,password=password)
+            return render(request, '../templates/login.html', {'form': form})
+            user = authenticate(email=email, password=password)
             if user:
                 login(request, user)
 
                 return redirect('/')
     else:
         form = UserAuthForm()
-        context['login']  = form
+        context['login'] = form
         return render(request, '../templates/login.html',context)
-
-
-
 
 
 def registration_success(request):

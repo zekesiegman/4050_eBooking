@@ -94,5 +94,16 @@ class ScheduleMovie(forms.Form):
             showtime.save()
         return showtime
 
+class LoginForm(forms.Form):
+    username = forms.CharField()
+    password = forms.CharField()
 
+    class Meta():
+        model = get_user_model()
+        fields = ('username', 'password')
 
+    def login(self):
+        username = self.cleaned_data['username']
+        password = self.cleaned_data['password']
+        if not authenticate(username=username, password=password):
+            raise forms.ValidationError('Invalid ')
