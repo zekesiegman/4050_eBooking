@@ -7,27 +7,34 @@ from .models import Movie
 from .models import MovieCategory
 from .models import Showtime
 from django.forms import ModelForm
+from django.contrib.auth import get_user_model
 
 
 class RegisterForm(ModelForm):
+    username = forms.CharField()
     email = forms.EmailField()
     first_name = forms.CharField()
     last_name = forms.CharField()
-    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style': 'height: 50px;'}))
-
+    password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style':'height: 50px;'}))
+    password2 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style':'height: 50px;'}))
+    phone = forms.CharField()
+    enrollForPromotions = forms.BooleanField()
     class Meta(ModelForm):
-        model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2')
+        model = get_user_model()
+        fields = ('username', 'email', 'first_name', 'last_name', 'password1', 'password2','phone','enrollForPromotions')
 
     def save(self, commit=True):
         user = super().save(commit=False)
+        user.user_name = self.cleaned_data['username']
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
+        user.password = self.cleaned_data['password1']
         user.email = self.cleaned_data['email']
         user.phone = self.cleaned_data['phone']
         user.enrollForPromotions = self.cleaned_data['enrollForPromotions']
         if commit:
-            user.save()
+            if self.cleaned_data['password1'] == self.cleaned_data['password2']:
+                user.save()
         return user
 
 

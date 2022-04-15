@@ -14,6 +14,7 @@ class CustomAccountManager(BaseUserManager):
         other_fields.setdefault('is_staff', True)
         other_fields.setdefault('is_superuser',True)
         other_fields.setdefault('is_active', True)
+        other_fields.setdefault('date_joined',True)
         return self.create_user(email, user_name, first_name, password, **other_fields)
 
     def create_user(self,email, user_name, first_name, password, **other_fields):
@@ -32,7 +33,7 @@ class CustomAccountManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(primary_key=True)
-    user_name = models.CharField(max_length=150)
+    user_name = models.CharField(max_length=150, unique=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
     cardNo = models.CharField(max_length=250,blank=True)
@@ -47,8 +48,8 @@ class User(AbstractBaseUser, PermissionsMixin):
     objects = CustomAccountManager()
 
 
-    USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['user_name', 'first_name']
+    USERNAME_FIELD = 'user_name'
+    REQUIRED_FIELDS = [ 'first_name']
 
 
 #class User(AbstractBaseUser):
@@ -57,9 +58,6 @@ class User(AbstractBaseUser, PermissionsMixin):
    # phone = models.IntegerField(default=20000000000)
     #enrollForPromotions = models.BooleanField(default=False)
 
-    USERNAME_FIELD = 'email'
-    def __str__(self):
-        return self.user.username
 
 
 class Account(models.Model):

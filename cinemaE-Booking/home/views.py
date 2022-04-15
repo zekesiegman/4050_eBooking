@@ -14,6 +14,7 @@ from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+from django.contrib.auth import get_user_model
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 
