@@ -206,4 +206,12 @@ def adminPromo(request):
     promos = Promotion.objects.all()
     form = CreatePromo()
     context = {'profile': profiles, 'promos': promos, 'form': form}
+    if form.is_valid():
+        form.save()
+
+
+
+        newForm = CreatePromo()
+        context = {'profile': profiles, 'promos': promos, 'form': newForm}
+        return render(request, '../templates/admin-promo.html', context)
     return render(request, '../templates/admin-promo.html', context)

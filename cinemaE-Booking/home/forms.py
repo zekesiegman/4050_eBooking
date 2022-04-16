@@ -85,7 +85,7 @@ class CreatePromo(forms.Form):
         model = Promotion
         fields = ('amount', 'valid')
 
-    def sae(self, commit=True):
+    def save(self, commit=True):
         data = self.cleaned_data
         promo = Promotion(amount=data['amount'], valid_thru=data['valid'])
         if commit:
