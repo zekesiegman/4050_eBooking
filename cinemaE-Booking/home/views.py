@@ -32,7 +32,7 @@ def registration2(request):
             # inactiveUser.save()
             form.save()
             name = form.cleaned_data['first_name']
-            # send confirmation video
+            # send confirmation email
             template = render_to_string('../templates/email_template.html', {'name':name})
             email = EmailMessage(
                 'Thanks for signing up for our movie site!',
@@ -40,7 +40,7 @@ def registration2(request):
                 settings.EMAIL_HOST_USER,
                 [form.cleaned_data['email']]
             )
-            email.fail_silently = False
+            email.fail_silently = True
             email.send()
             return redirect('/')
     form = RegisterForm()
