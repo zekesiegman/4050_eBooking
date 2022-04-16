@@ -4,6 +4,7 @@ from .models import Movie
 from .models import Showtime
 from .models import Profile
 from .models import CardEncr
+from .models import Promotion
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
@@ -11,6 +12,7 @@ from django.contrib.auth.models import User as us
 from .forms import RegisterForm
 from .forms import AddMovie
 from .forms import ScheduleMovie
+from .forms import CreatePromo
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -196,3 +198,12 @@ def search(request, new_context):
         return render(request, '../templates/search.html', context2)
 
     return render(request, '../templates/search.html', context)
+
+
+def adminPromo(request):
+    user = request.user
+    profiles = Profile.objects.filter(enrollForPromotions=True)
+    promos = Promotion.objects.all()
+    form = CreatePromo()
+    context = {'profile': profiles, 'promos': promos, 'form': form}
+    return render(request, '../templates/admin-promo.html', context)

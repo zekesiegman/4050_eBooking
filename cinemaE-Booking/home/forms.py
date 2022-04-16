@@ -7,6 +7,7 @@ from .models import Movie
 from .models import MovieCategory
 from .models import Showtime
 from .models import Profile
+from .models import Promotion
 
 
 class RegisterForm(UserCreationForm):
@@ -76,4 +77,17 @@ class ScheduleMovie(forms.Form):
         return showtime
 
 
+class CreatePromo(forms.Form):
+    amount = forms.IntegerField()
+    valid = forms.DateField()
 
+    class Meta():
+        model = Promotion
+        fields = ('amount', 'valid')
+
+    def sae(self, commit=True):
+        data = self.cleaned_data
+        promo = Promotion(amount=data['amount'], valid_thru=data['valid'])
+        if commit:
+            promo.save()
+        return promo

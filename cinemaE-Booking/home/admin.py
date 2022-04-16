@@ -5,6 +5,7 @@ from .models import Movie
 from .models import Showtime
 from .models import MovieCategory
 from .models import Profile
+from .models import Promotion
 
 # Register your models here.
 
@@ -14,3 +15,4 @@ admin.site.register(Movie)
 admin.site.register(Showtime)
 admin.site.register(MovieCategory)
 admin.site.register(Profile)
+admin.site.register(Promotion)
