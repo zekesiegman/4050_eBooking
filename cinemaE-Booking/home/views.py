@@ -76,7 +76,7 @@ def logoutpage(request):
 def user_profile(request):
 
     users = request.user
-    accounts = Account.objects.get(user=request.user)
+    accounts = Account.objects.get(user=users)
     profile = Profile.objects.get(user=users)
     context = {'users': users, 'accounts': accounts, 'profile': profile}
     return render(request, '../templates/user-profile.html', context)

@@ -17,9 +17,9 @@ class Profile(models.Model):
 
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
-    cardNo = models.CharField(max_length=250, default="")
-    exp = models.DateField()
-    billingAdd = models.CharField(max_length=45, default="")
+    cardNo = models.CharField(max_length=250, default="", blank=True)
+    exp = models.DateField(blank=True)
+    billingAdd = models.CharField(max_length=45, default="", blank=True)
     user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
 
