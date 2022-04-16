@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import User as us
 from django.db.models.signals import post_save
@@ -5,21 +7,14 @@ from django.dispatch import receiver
 
 # Create your models here.
 
-
-class Profile(models.Model):
-    user = models.OneToOneField(us, on_delete=models.CASCADE, default=1, primary_key=True)
-    phone = models.IntegerField(default=10000000)
-    enrollForPromotions = models.BooleanField(default=False)
-
-
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
-    cardNo = models.CharField(max_length=250)
-    expirationDate = models.DateField()
-    billingAdd = models.CharField(max_length=45)
-    # type = models.ForeignKey('CardType', on_delete=models.CASCADE, default=1)
-    user_userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
-
+    cardNo = models.CharField(max_length=250,default ="")
+    exp = models.DateField(default=datetime.datetime.today())
+    billingAdd = models.CharField(max_length=45,default= "")
+    phone = models.CharField(max_length=45)
+    enroll_For_Promotions = models.BooleanField(default=False)
+    user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
 class CardType(models.Model):
     cardTypeID = models.AutoField(primary_key=True)

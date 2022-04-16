@@ -1,5 +1,4 @@
 from django.shortcuts import render, redirect
-from .models import Profile
 from .models import Account
 from .models import Movie
 from .models import Showtime
@@ -77,21 +76,21 @@ def logoutpage(request):
 def user_profile(request):
 
     users = request.user
-    accounts = Account.objects.order_by('accountID')
-    profile = Profile.objects.get(user=users)
-    context = {'users': users, 'accounts': accounts, 'profile': profile}
+    accounts = Account.objects.get(user=request.user)
+    #profile = Profile.objects.get(user=users)
+    context = {'users': users, 'accounts': accounts}
     return render(request, '../templates/user-profile.html', context)
 
 
 def editprofile(request):
-    profile = Profile.objects.get(user=request.user)
-    accounts = Account.objects.order_by('accountID')
-    context = {'accounts': accounts, 'profile': profile}
+    accounts = Account.objects.get(user=request.user)
+    #accounts = Account.objects.order_by('accountID')
+    context = {'accounts': accounts}
 
     # update user info
     if request.method == 'POST':
         user = request.user
-        profile = Profile.objects.get(user=user)
+       # profile = Profile.objects.get(user=user)
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -103,29 +102,29 @@ def editprofile(request):
         if len(p) != 0:
             user.set_password(request.POST.get('password'))
             update_session_auth_hash(request, us)
-        enrollForPromotions = request.POST.get('promotion')
-        if enrollForPromotions is not None:
-            profile.enrollForPromotions = True
+        enroll = request.POST.get('promotion')
+        if enroll == 'yes':
+            accounts.enroll_For_Promotions = True
+        else:
+            accounts.enroll_For_Promotions = False
         t = request.POST.get('phone')
         if len(t) !=0:
-            profile.phone = request.POST.get('phone')
+            accounts.phone = request.POST.get('phone')
 
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
         # if card info is filled out, create new account and save it
         if len(cardno) != 0 and len(exp) != 0 and len(address) != 0:
-            account = Account()
 
             # encrypt card number with Fernet
             global fernet
             cardNoEnc = fernet.encrypt(cardno.encode())
-            account.cardNo = cardNoEnc
+            accounts.cardNo = cardNoEnc
 
-            account.expirationDate = exp
-            account.billingAdd = address
-            account.user_userID = user
-            account.save()
+            accounts.expirationDate = exp
+            accounts.billingAdd = address
+        accounts.save()
         user.save()
         return redirect('/')
     return render(request, '../templates/editprofile.html', context)

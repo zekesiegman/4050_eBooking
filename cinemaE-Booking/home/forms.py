@@ -3,7 +3,6 @@ from django.contrib.auth import login, authenticate, update_session_auth_hash
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Account
-from .models import Profile
 from .models import Movie
 from .models import MovieCategory
 from .models import Showtime
@@ -15,22 +14,23 @@ class RegisterForm(UserCreationForm):
     last_name = forms.CharField()
     password1 = forms.CharField(widget=forms.TextInput(attrs={'placeholder': '', 'style': 'height: 50px;'}))
     phone = forms.IntegerField()
-    enroll = forms.BooleanField()
+    enroll_For_Promotions = forms.BooleanField()
 
     class Meta(UserCreationForm.Meta):
         model = User
-        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'phone', 'enroll')
+        fields = ('username', 'first_name', 'last_name', 'email', 'password1', 'password2', 'phone', 'enroll_For_Promotions')
 
     def save(self, commit=True):
         user = super().save(commit=False)
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
-        profile = Profile(user=user, phone=self.cleaned_data['phone'], enrollForPromotions=self.cleaned_data['enroll'])
         if commit:
             user.save()
-            profile.save()
-        return user, profile
+            account = Account(user=user, phone=self.cleaned_data['phone'],
+                              enroll_For_Promotions=self.cleaned_data['enroll_For_Promotions'])
+            account.save()
+        return user, account
 
 
 class AddMovie(forms.Form):
