@@ -2,6 +2,8 @@ from django.shortcuts import render, redirect
 from .models import Account
 from .models import Movie
 from .models import Showtime
+from .models import Profile
+from .models import CardEncr
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
@@ -16,9 +18,6 @@ from django.template.loader import render_to_string
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 
-# global variable for Fernet key
-key = Fernet.generate_key()
-fernet = Fernet(key)
 
 # Create your views here.
 
@@ -42,7 +41,6 @@ def registration2(request):
             email.fail_silently = False
             email.send()
             return redirect('/')
-            # return response(response, "../templates/registration2.html", {'form': form})
     form = RegisterForm()
     return render(request, "../templates/registration2.html", {"form": form})
 
@@ -77,20 +75,19 @@ def user_profile(request):
 
     users = request.user
     accounts = Account.objects.get(user=request.user)
-    #profile = Profile.objects.get(user=users)
-    context = {'users': users, 'accounts': accounts}
+    profile = Profile.objects.get(user=users)
+    context = {'users': users, 'accounts': accounts, 'profile': profile}
     return render(request, '../templates/user-profile.html', context)
 
 
 def editprofile(request):
     accounts = Account.objects.get(user=request.user)
-    #accounts = Account.objects.order_by('accountID')
     context = {'accounts': accounts}
 
     # update user info
     if request.method == 'POST':
         user = request.user
-       # profile = Profile.objects.get(user=user)
+        profile = Profile.objects.get(user=user)
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -104,26 +101,31 @@ def editprofile(request):
             update_session_auth_hash(request, us)
         enroll = request.POST.get('promotion')
         if enroll == 'yes':
-            accounts.enroll_For_Promotions = True
+            profile.enrollForPromotions = True
         else:
-            accounts.enroll_For_Promotions = False
+            profile.enrollForPromotions = False
         t = request.POST.get('phone')
-        if len(t) !=0:
-            accounts.phone = request.POST.get('phone')
+        if len(t) != 0:
+            profile.phone = request.POST.get('phone')
 
         cardno = request.POST.get('cardno')
         exp = request.POST.get('exp')
         address = request.POST.get('address')
+        address1 = request.POST.get('address1')
+        address2 = request.POST.get('address2')
+        state = request.POST.get('state')
         # if card info is filled out, create new account and save it
-        if len(cardno) != 0 and len(exp) != 0 and len(address) != 0:
+        if len(cardno) != 0 and len(exp) != 0 and len(address) != 0 and len(address1) != 0\
+                and len(address2) != 0 and state is not None:
 
             # encrypt card number with Fernet
-            global fernet
+            fernet = CardEncr.fernet
             cardNoEnc = fernet.encrypt(cardno.encode())
             accounts.cardNo = cardNoEnc
 
             accounts.expirationDate = exp
-            accounts.billingAdd = address
+            fullAddress = address + address1 + address2 + state
+            accounts.billingAdd = fullAddress
         accounts.save()
         user.save()
         return redirect('/')

@@ -4,6 +4,7 @@ from .models import CardType
 from .models import Movie
 from .models import Showtime
 from .models import MovieCategory
+from .models import Profile
 
 # Register your models here.
 
@@ -12,3 +13,4 @@ admin.site.register(CardType)
 admin.site.register(Movie)
 admin.site.register(Showtime)
 admin.site.register(MovieCategory)
+admin.site.register(Profile)

@@ -31,10 +31,10 @@
                         {{ form.email|as_crispy_field }}
                     </div>
                     <div class="input-field">
-                        {{ accounts.phone|as_crispy_field }}
+                        {{ form.phone|as_crispy_field }}
                     </div>
                     <div class="input-field">
-                        {{ accounts.enroll_For_Promotions|as_crispy_field }}
+                        {{ form.enroll_For_Promotions|as_crispy_field }}
                     </div>
                     <div class="input-field" style="">
                            {{ form.password1|as_crispy_field }}
@@ -50,10 +50,6 @@
                     <div class="input-field">
                         {{ form.password2|as_crispy_field }}
                     </div>
-                        <div class="'promotion">
-                            <input type="checkbox" id="promotion"  value="prom">
-                                <label for="promotion">Register for promotion</label><br>
-                        </div>
                     <div class="input-field">
                         <button type="submit" class ="btn btn-success">Register</button>
                     </div>

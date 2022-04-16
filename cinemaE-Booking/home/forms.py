@@ -6,6 +6,7 @@ from .models import Account
 from .models import Movie
 from .models import MovieCategory
 from .models import Showtime
+from .models import Profile
 
 
 class RegisterForm(UserCreationForm):
@@ -27,10 +28,10 @@ class RegisterForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         if commit:
             user.save()
-            account = Account(user=user, phone=self.cleaned_data['phone'],
-                              enroll_For_Promotions=self.cleaned_data['enroll_For_Promotions'])
-            account.save()
-        return user, account
+            profile = Profile(user=user, phone=self.cleaned_data['phone'],
+                              enrolllForPromotions=self.cleaned_data['enroll_For_Promotions'])
+            profile.save()
+        return user, profile
 
 
 class AddMovie(forms.Form):
