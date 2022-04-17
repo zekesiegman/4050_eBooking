@@ -13,6 +13,7 @@ from .forms import RegisterForm
 from .forms import AddMovie
 from .forms import ScheduleMovie
 from .forms import CreatePromo
+from .forms import SendPromo
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -205,7 +206,8 @@ def adminPromo(request):
     profiles = Profile.objects.filter(enrollForPromotions=True)
     promos = Promotion.objects.all()
     form = CreatePromo()
-    context = {'profile': profiles, 'promos': promos, 'form': form}
+    form2 = SendPromo()
+    context = {'profile': profiles, 'promos': promos, 'form': form, 'form2': form2}
     if form.is_valid():
         form.save()
 

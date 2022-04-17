@@ -99,6 +99,34 @@
 						  </div>
 						{% endblock %}
 				</div>
+
+			</div>
+			<div class="table-data">
+				<div class="order">
+					<div class="head">
+						{% load crispy_forms_tags %}
+    					{% block sendpromo %}
+						<h3>Send Promotion</h3></div>
+							<div class="content">
+							  <form action="#", method="POST">
+								{% csrf_token %}
+								<div class="user-details">
+								  <div class="input-box">
+									{{ form2.promos|as_crispy_field }}
+								  </div>
+								  <div class="input-box">
+									{{ form2.users_with_promotions|as_crispy_field }}
+								  </div>
+								</div>
+								<div class="button">
+								  <input type="submit" value="Submit">
+								</div>
+							  </form>
+							</div>
+						  </div>
+						{% endblock %}
+				</div>
+
 			</div>
 
 		</main>

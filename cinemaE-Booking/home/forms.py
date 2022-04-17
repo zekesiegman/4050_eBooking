@@ -82,7 +82,6 @@ class ScheduleMovie(forms.Form):
 class CreatePromo(forms.Form):
     amount = forms.IntegerField()
     valid = forms.DateField()
-
     class Meta():
         model = Promotion
         fields = ('amount', 'valid')
@@ -93,3 +92,9 @@ class CreatePromo(forms.Form):
         if commit:
             promo.save()
         return promo
+
+class SendPromo(forms.Form):
+    promos = forms.ModelChoiceField(queryset=Promotion.objects.all())
+    users_with_promotions = forms.ModelChoiceField(queryset=Profile.objects.all())
+    class Meta():
+        model = Promotion

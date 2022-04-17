@@ -14,7 +14,6 @@ class Profile(models.Model):
     phone = models.IntegerField()
     enrollForPromotions = models.BooleanField(default=False)
 
-
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
     cardNo = models.CharField(max_length=250, default="", blank=True)
@@ -53,8 +52,10 @@ class MovieCategory(models.Model):
 
 class Promotion(models.Model):
     promoID = models.AutoField(primary_key=True)
-    amount = models.IntegerField()
+    amount = models.IntegerField(default=1)
     valid_thru = models.DateField(auto_now=False)
+    def __str__(self):
+        return Promotion.amount
 
 
 class CardEncr(models.Model):
