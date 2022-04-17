@@ -1,5 +1,6 @@
 import datetime
 
+import django.utils.timezone
 from django.db import models
 from django.contrib.auth.models import User as us
 from django.db.models.signals import post_save
@@ -14,10 +15,11 @@ class Profile(models.Model):
     phone = models.IntegerField()
     enrollForPromotions = models.BooleanField(default=False)
 
+
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
     cardNo = models.CharField(max_length=250, default="", blank=True)
-    exp = models.DateField(default=datetime.date.today())
+    exp = models.DateField(default=django.utils.timezone.now)
     billingAdd = models.CharField(max_length=45, default="", blank=True)
     user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
@@ -54,6 +56,7 @@ class Promotion(models.Model):
     promoID = models.AutoField(primary_key=True)
     amount = models.IntegerField(default=1)
     valid_thru = models.DateField(auto_now=False)
+
     def __str__(self):
         return Promotion.amount
 

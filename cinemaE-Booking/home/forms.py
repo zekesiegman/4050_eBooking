@@ -1,5 +1,8 @@
 from django import forms
 from django.contrib.auth import login, authenticate, update_session_auth_hash
+from django.core.mail import EmailMessage
+from django.conf import settings
+from django.template.loader import render_to_string
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 from .models import Account
@@ -27,14 +30,12 @@ class RegisterForm(UserCreationForm):
         user.first_name = self.cleaned_data['first_name']
         user.last_name = self.cleaned_data['last_name']
         user.email = self.cleaned_data['email']
+        profile = Profile(user=user, phone=self.cleaned_data['phone'],
+                          enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
         if commit:
             user.save()
-            profile = Profile(user=user, phone=self.cleaned_data['phone'],
-                              enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
             profile.save()
-            account = Account(user=user)
-            account.save()
-        return user, profile, account
+        return user, profile
 
 
 class AddMovie(forms.Form):
@@ -82,6 +83,7 @@ class ScheduleMovie(forms.Form):
 class CreatePromo(forms.Form):
     amount = forms.IntegerField()
     valid = forms.DateField()
+
     class Meta():
         model = Promotion
         fields = ('amount', 'valid')
@@ -93,8 +95,30 @@ class CreatePromo(forms.Form):
             promo.save()
         return promo
 
+
 class SendPromo(forms.Form):
     promos = forms.ModelChoiceField(queryset=Promotion.objects.all())
-    users_with_promotions = forms.ModelChoiceField(queryset=Profile.objects.all())
+
     class Meta():
         model = Promotion
+
+    def send(self):
+        users = User.objects.all()
+        promo = self.cleaned_data['promos']
+        for user in users:
+            profile = Profile.objects.filter(user=user)
+            if profile.enrollForPromotions:
+                emailAddr = user.email
+                name = user.first_name
+                promoAmount = promo.amount
+                promoValid = promo.valid_thru
+                template = render_to_string('../templates/email_template2.html',
+                                            {'name': name, 'amount': promoAmount, 'valid': promoValid})
+                email = EmailMessage(
+                    'We have a new promotion for you!',
+                    template,
+                    settings.EMAIL_HOST_USER,
+                    [emailAddr]
+                )
+                email.fail_silently = True
+                email.send()

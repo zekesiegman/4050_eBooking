@@ -211,7 +211,9 @@ def adminPromo(request):
     if form.is_valid():
         form.save()
 
-
+        # send promo to emails of users who enrolled for promotions
+        if form2.is_valid():
+            form2.send()
 
         newForm = CreatePromo()
         context = {'profile': profiles, 'promos': promos, 'form': newForm}
