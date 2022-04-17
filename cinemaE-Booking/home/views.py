@@ -174,7 +174,9 @@ def adminpage(request):
 
 def index(request):
     movies = Movie.objects.all()
-    context = {'movies': movies}
+    playing_now = Movie.objects.filter(playing_now=True)[:5]
+    coming_soon = Movie.objects.filter(playing_now=False)[:5]
+    context = {'playing_now': playing_now, 'coming_soon': coming_soon}
 
     if request.method == 'POST':
         searchStr = request.POST.get('search')
