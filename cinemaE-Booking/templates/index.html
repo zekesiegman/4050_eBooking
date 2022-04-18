@@ -205,18 +205,19 @@
               </div>
               <div class="favorite-contens">
                 <ul class="favorites-slider list-inline row p-0 mb-0">
-               
+               {% block list %}
+               {% for movie in playing_now %}
                   <li class="slide-item">
                     <div class="block-images position-relative">
                       <div class="img-box">
-                        <img src="images/favorite/f1.jpg" class="img-fluid" alt="" />
+                        <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" />
                       </div>
                       <div class="block-description">
                         <h6 class="iq-title">
-                          <a href="#"> Dune </a>
+                          <a href="#">{{ movie.title }} </a>
                         </h6>
                         <div class="hover-buttons">
-                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=8g18jFHCLXk"> 
+                          <a class="popup-youtube" href="{{movie.trailer_video}}">
                           <span class="btn btn-hover iq-button">
                             <i class="fa fa-play mr-1"></i>
                             Watch Trailer</a>
@@ -232,112 +233,8 @@
                       </div>
                     </div>
                   </li>
-
-                  <li class="slide-item">
-                    <div class="block-images position-relative">
-                      <div class="img-box">
-                        <img src="images/favorite/f2.jpg" class="img-fluid" alt="" />
-                      </div>
-                      <div class="block-description">
-                        <h6 class="iq-title">
-                          <a href="#"> Star Wars </a>
-                        </h6>
-                        <div class="hover-buttons">
-                          <span class="btn btn-hover iq-button">
-                            <a class="popup-youtube" href="https://www.youtube.com/watch?v=4cJpiOPKH14"> 
-                            <i class="fa fa-play mr-1"></i>
-                            Watch Trailer</a>
-                          </span>
-                        </div>
-                        <div class="hover-buttons">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Book Now
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                 
-                  <li class="slide-item">
-                    <div class="block-images position-relative">
-                      <div class="img-box">
-                        <img src="images/favorite/f3.jpg" class="img-fluid" alt="" />
-                      </div>
-                      <div class="block-description">
-                        <h6 class="iq-title">
-                          <a href="#"> John Wick </a>
-                        </h6>
-                        <div class="hover-buttons">
-                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=gy31U2bvVGU">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Watch Trailer</a>
-                          </span>
-                        </div>
-                        <div class="hover-buttons">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Book Now
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                  </li>
-                 
-                  <li class="slide-item">
-                    <div class="block-images position-relative">
-                      <div class="img-box">
-                        <img src="images/favorite/f4.jpg" class="img-fluid" alt="" />
-                      </div>
-                      <div class="block-description">
-                        <h6 class="iq-title">
-                          <a href="#">Avengers </a>
-                        </h6>
-                        <div class="hover-buttons">
-                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=TcMBFSGVi1c">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Watch Trailer
-                          </span>
-                        </div>
-                        <div class="hover-buttons">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Book Now
-                          </span>
-                        </div>
-                        
-                      </div>
-                    </div>
-                  </li>
-        
-                  <li class="slide-item">
-                    <div class="block-images position-relative">
-                      <div class="img-box">
-                        <img src="images/favorite/f5.jpg" class="img-fluid" alt="" />
-                      </div>
-                      <div class="block-description">
-                        <h6 class="iq-title">
-                          <a href="#"> The Last of Us-Part 2 </a>
-                        </h6>
-                        <div class="hover-buttons">
-                          <a class="popup-youtube" href="https://www.youtube.com/watch?v=qPNiIeKMHyg">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Watch Trailer</a>
-                          </span>
-                        </div>
-                        <div class="hover-buttons">
-                          <span class="btn btn-hover iq-button">
-                            <i class="fa fa-play mr-1"></i>
-                            Book Now
-                          </span>
-                        </div>
-                       
-                      </div>
-                    </div>
-                  </li>
+                  {% endfor %}
+                  {% endblock %}
                 </ul>
               </div>
             </div>
@@ -357,19 +254,20 @@
             </div>
             <div class="favorite-contens">
               <ul class="favorites-slider list-inline row p-0 mb-0">
-      
+                {% block soon %}
+                {% for mov in coming_soon %}
                 <li class="slide-item">
                   <div class="block-images position-relative">
                     <div class="img-box">
-                      <img src="images/popular/u1.jpg" class="img-fluid" alt="" />
+                      <img src="{{ mov.trailer_picture }}" class="img-fluid" alt="" />
                     </div>
                     <div class="block-description">
                       <h6 class="iq-title">
-                        <a href="#"> The watchman</a>
+                        <a href="#"> {{mov.title}}</a>
                       </h6>
                       
                       <div class="hover-buttons">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=zymgtV99Rko">
+                        <a class="popup-youtube" href="{{mov.trailer_video}}">
                         <span class="btn btn-hover iq-button">
                           <i class="fa fa-play mr-1"></i>
                           Watch Trailer</a>
@@ -378,86 +276,8 @@
                     </div>
                   </div>
                 </li>
-
-                <li class="slide-item">
-                  <div class="block-images position-relative">
-                    <div class="img-box">
-                      <img src="images/popular/u2.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="block-description">
-                      <h6 class="iq-title">
-                        <a href="#"> her</a>
-                      </h6>
-                      <div class="hover-buttons">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=zp8ZoQu2ojg">
-                        <span class="btn btn-hover iq-button">
-                          <i class="fa fa-play mr-1"></i>
-                          Watch Trailer</a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-
-                <li class="slide-item">
-                  <div class="block-images position-relative">
-                    <div class="img-box">
-                      <img src="images/popular/u3.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="block-description">
-                      <h6 class="iq-title">
-                        <a href="#"> Avatar </a>
-                      </h6>
-                      <div class="hover-buttons">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=EWXb-Twcbi4">
-                        <span class="btn btn-hover iq-button">
-                          <i class="fa fa-play mr-1"></i>
-                          Watch Trailer</a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-        
-                <li class="slide-item">
-                  <div class="block-images position-relative">
-                    <div class="img-box">
-                      <img src="images/popular/u4.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="block-description">
-                      <h6 class="iq-title">
-                        <a href="#"> 007 </a>
-                      </h6>
-                      <div class="hover-buttons">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=N_gD9-Oa0fg">
-                        <span class="btn btn-hover iq-button">
-                          <i class="fa fa-play mr-1"></i>
-                          Watch Trailer</a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
-      
-                <li class="slide-item">
-                  <div class="block-images position-relative">
-                    <div class="img-box">
-                      <img src="images/popular/u5.jpg" class="img-fluid" alt="" />
-                    </div>
-                    <div class="block-description">
-                      <h6 class="iq-title">
-                        <a href="#">Alien </a>
-                      </h6>
-                      <div class="hover-buttons">
-                        <a class="popup-youtube" href="https://www.youtube.com/watch?v=svnAD0TApb8">
-                        <span class="btn btn-hover iq-button">
-                          <i class="fa fa-play mr-1"></i>
-                          Watch Trailer</a>
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </li>
+                {% endfor %}
+                {% endblock %}
               </ul>
             </div>
           </div>
