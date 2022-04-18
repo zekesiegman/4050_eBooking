@@ -43,6 +43,10 @@ class Movie(models.Model):
     cat = models.ForeignKey('MovieCategory', on_delete=models.CASCADE, default='Action')
 
 
+class Temp(models.Model):
+    id = models.AutoField(primary_key=True)
+    movie = models.ForeignKey('Movie',on_delete=models.CASCADE, default=1)
+
 class Showtime(models.Model):
     time = models.CharField(primary_key=True, max_length=50, default='12/12/12 12:12')
     movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')

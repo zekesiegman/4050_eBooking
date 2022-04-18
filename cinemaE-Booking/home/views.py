@@ -18,9 +18,10 @@ from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+from .models import Temp
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
-
+from django.template import RequestContext
 
 # Create your views here.
 
@@ -196,8 +197,12 @@ def search(request, new_context):
         searchStr = request.POST.get('search')
         movieSearch = Movie.objects.filter(title__icontains=searchStr)
         catSearch = Movie.objects.filter(cat=searchStr)
+        tem = Temp.objects.all()
+       # variables = RequestContext(request, {
+       #     'tem': tem,
+        #})
         matches = movieSearch | catSearch
-        context2 = {'matches': matches}
+        context2 = {'matches': matches,}
         return render(request, '../templates/search.html', context2)
 
     return render(request, '../templates/search.html', context)

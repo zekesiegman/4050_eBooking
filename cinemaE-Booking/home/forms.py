@@ -32,10 +32,12 @@ class RegisterForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         profile = Profile(user=user, phone=self.cleaned_data['phone'],
                           enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
+        account = Account(user=user)
         if commit:
             user.save()
             profile.save()
-        return user, profile
+            account.save()
+        return user, profile, account
 
 
 class AddMovie(forms.Form):
