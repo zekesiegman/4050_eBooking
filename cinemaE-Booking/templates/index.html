@@ -208,9 +208,9 @@
                {% block list %}
                {% for movie in playing_now %}
                   <li class="slide-item">
-                    <div class="block-images position-relative">
+                    <div class="block-images position-relative" style="margin-left: 30px">>
                       <div class="img-box">
-                        <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" />
+                        <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" style="height: 500px; width: 225px;" />
                       </div>
                       <div class="block-description">
                         <h6 class="iq-title">
@@ -224,7 +224,7 @@
                           </span>
                         </div>
                         <div class="hover-buttons">
-                          <a href="movieselect.html">
+                          <a href="{% url 'booking' %}">
                           <span class="btn btn-hover iq-button">
                             <i class="fa fa-play mr-1"></i>
                             Book Now</a>
@@ -257,9 +257,9 @@
                 {% block soon %}
                 {% for mov in coming_soon %}
                 <li class="slide-item">
-                  <div class="block-images position-relative">
+                  <div class="block-images position-relative" style="margin-left: 30px">
                     <div class="img-box">
-                      <img src="{{ mov.trailer_picture }}" class="img-fluid" alt="" />
+                      <img src="{{ mov.trailer_picture }}" class="img-fluid" alt="" style="height: 500px; width: 225px;" />
                     </div>
                     <div class="block-description">
                       <h6 class="iq-title">

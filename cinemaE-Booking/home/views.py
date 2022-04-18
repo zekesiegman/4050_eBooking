@@ -224,6 +224,8 @@ def adminPromo(request):
 
 
 def booking(request):
+    movie = Movie.objects.filter()
+    showtimes = Showtime.objects.filter()
     context = {}
     return render(request, '../templates/movieselect.html', context)
 
