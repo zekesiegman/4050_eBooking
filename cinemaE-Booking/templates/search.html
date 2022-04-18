@@ -17,23 +17,43 @@
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
   <style>
+
+
+
+
+
     #movie {
-      margin-left: 50px;
-      margin-bottom: 40px;
-      width: 800px;
-      border: 2px solid black;
+  padding: 20px 30px 20px 15px;
+  border: 3px solid #1c2a4f;
+  border-radius: 10px;
+  margin-bottom: 20px;
+      margin-left: 60px;
+      width: 50%;
+
     }
-    #movie_left {
+    .movie_left {
       display: inline-block;
     }
-    #movie_right {
+    .movie_right {
       display: inline-block;
       margin-left: 20px;
     }
-    img {
+    .img {
       height: 300px;
       width: 250px;
     }
+  #movie .watch-btn{
+  width: 200px;
+  margin: auto;
+  padding: 10px;
+  border: 1px solid black;
+  background: transparent;
+  font-size: 15px;
+  cursor: pointer;
+  color: black;
+  transition: all 0.5s ease;
+}
+
   </style>
 
 
@@ -135,11 +155,18 @@
         <img src="{{ movie.trailer_picture }}">
       </div>
       <div id="movie_right">
-        <h5>{{ movie.title }}</h5>
+        <h1>{{ movie.title }}</h1>
         <p>{{ movie.rating }}</p>
-        <a href="{{movie.trailer_video}}">Play Trailer</a>
-        <a href="">More Info</a>
-        <a href="{% url 'booking' %}">Book Now</a>
+         <p class="movie-shorts">Fairy Tail is set in Earth-land, a fictional land where wizards coalesce into guilds to apply their magical abilities for paid job requests. Novice wizard Lucy Heartfilia runs away from home, a guild famous for its members' overly destructive antics.</p>
+         <div class="hover-buttons">
+                          <a style="color:black;font-size:40px" class="popup-youtube" href="{{movie.trailer_video}}">
+                          <span class="btn btn-hover iq-button">
+                            <i class="fa fa-play mr-1"></i>
+                            Watch Trailer</a>
+                          </span>
+                        </div>
+
+        <a style="color:black" href="{% url 'booking' %}">Book Now</a>
       </div>
     </div>
     {% endfor %}
