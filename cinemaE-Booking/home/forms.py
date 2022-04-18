@@ -101,24 +101,3 @@ class SendPromo(forms.Form):
 
     class Meta():
         model = Promotion
-
-    def send(self):
-        users = User.objects.all()
-        promo = self.cleaned_data['promos']
-        for user in users:
-            profile = Profile.objects.filter(user=user)
-            if profile.enrollForPromotions:
-                emailAddr = user.email
-                name = user.first_name
-                promoAmount = promo.amount
-                promoValid = promo.valid_thru
-                template = render_to_string('../templates/email_template2.html',
-                                            {'name': name, 'amount': promoAmount, 'valid': promoValid})
-                email = EmailMessage(
-                    'We have a new promotion for you!',
-                    template,
-                    settings.EMAIL_HOST_USER,
-                    [emailAddr]
-                )
-                email.fail_silently = True
-                email.send()

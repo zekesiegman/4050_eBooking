@@ -204,23 +204,45 @@ def search(request, new_context):
 
 
 def adminPromo(request):
-    user = request.user
-    profiles = Profile.objects.filter(enrollForPromotions=True)
     promos = Promotion.objects.all()
+    if request.method =="POST":
+        form = CreatePromo(request.POST)
+        form2 = SendPromo()
+        if form.is_valid():
+            form.save()
+            form = CreatePromo()
+            return render(request, '../templates/admin-promo.html', {'promos': promos, 'form': form, 'form2': form2})
+        # send promo to emails of users who enrolled for promotions
+    if request.method == "POST" and not form.is_valid():
+        form = CreatePromo()
+        form2 = SendPromo(request.POST)
+        if form2.is_valid():
+            users = us.objects.filter(is_staff=False)
+            promo = form2.cleaned_data['promos']
+            for user in users:
+                profile = Profile.objects.get(user=user)
+                print(profile.enrollForPromotions)
+                if profile.enrollForPromotions:
+                    emailAddr = user.email
+                    name = user.first_name
+                    promoAmount = promo.amount
+                    promoValid = promo.valid_thru
+                    template = render_to_string('../templates/email-template2.html',
+                                                {'name': name, 'amount': promoAmount, 'valid': promoValid})
+                    email = EmailMessage(
+                        'We have a new promotion for you!',
+                        template,
+                        settings.EMAIL_HOST_USER,
+                        [emailAddr]
+                    )
+                    email.fail_silently = True
+                    email.send()
+            form2 = SendPromo()
+            return render(request, '../templates/admin-promo.html', {'promos': promos, 'form': form, 'form2': form2})
+
     form = CreatePromo()
     form2 = SendPromo()
-    context = {'profile': profiles, 'promos': promos, 'form': form, 'form2': form2}
-    if form.is_valid():
-        form.save()
-
-        # send promo to emails of users who enrolled for promotions
-        if form2.is_valid():
-            form2.send()
-
-        newForm = CreatePromo()
-        context = {'profile': profiles, 'promos': promos, 'form': newForm}
-        return render(request, '../templates/admin-promo.html', context)
-    return render(request, '../templates/admin-promo.html', context)
+    return render(request, '../templates/admin-promo.html',{'promos': promos, 'form': form, 'form2': form2})
 
 
 def booking(request):
