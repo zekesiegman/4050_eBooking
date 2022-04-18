@@ -36,5 +36,5 @@ urlpatterns = [
     path('search', include('home.urls')),
     path('admin-promo', include('home.urls')),
     path('booking', include('home.urls')),
-
+    path('seatselect', include('home.urls')),
 ]

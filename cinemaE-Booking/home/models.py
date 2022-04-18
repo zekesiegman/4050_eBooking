@@ -57,9 +57,6 @@ class Promotion(models.Model):
     amount = models.IntegerField(default=1)
     valid_thru = models.DateField(auto_now=False)
 
-    def __str__(self):
-        return Promotion.amount
-
 
 class CardEncr(models.Model):
     key = Fernet.generate_key()

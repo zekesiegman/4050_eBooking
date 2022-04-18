@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+{% load static %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Movie</title>
     
-    <link rel="stylesheet" href="css/movieselect.css">
+    <link rel="stylesheet" href="{% static 'css/movieselect.css' %}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 </head>
@@ -14,14 +15,15 @@
   <header class="site-header">
     <div class="site-identity">
       <h1><a href="index.html">MovieTicket</a></h1>
-    </div>  
+    </div>
+      {% block header %}
     <nav class="site-navigation">
       <ul class="nav">
-        <li><a href="user-profile.html">Account</a></li> 
-        <li><a href="registration.html">Login</a></li> 
-        <li><a href="#">Log out</a></li> 
+        <li><a href="{% url 'user-profile' %}">Account</a></li>
+        <li><a href="{% url 'logout' %}">Log out</a></li>
       </ul>
     </nav>
+      {% endblock %}
   </header>
     <script>
         $(function() {
@@ -58,31 +60,33 @@
           </div>
         </div>
       </div>
-      <div>
+        {% block showtimes %}
+        <div>
           <p style="font-size: 40px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p>
           <br>
           <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/21/2022- Monday<br></p></br>
-          <a href="seatselection.html" class="myButton">3:15 PM</a><br>
+          <a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br>
           <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/22/2022- Tuesday<br></p></br>
-         <div class="container" style="display:flex"><a href="seatselection.html" class="myButton">3:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">4:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">7:15 PM</a><br></div>
+         <div class="container" style="display:flex"><a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">4:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">7:15 PM</a><br></div>
           <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/23/2022- Wednesday<br></p></br>
-          <div class="container" style="display:flex"><a href="seatselection.html" class="myButton">3:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">10:45 AM</a><br>
-            <a href="seatselection.html" class="myButton">12:30 PM</a><br></div>
+          <div class="container" style="display:flex"><a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">10:45 AM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">12:30 PM</a><br></div>
             <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/24/2022- Thursday<br></p></br>
-          <a href="seatselection.html" class="myButton">3:15 PM</a><br></div>
+          <a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br></div>
           <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/25/2022- Friday<br></p></br>
-         <div class="container" style="display:flex"><a href="seatselection.html" class="myButton">3:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">4:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">7:15 PM</a><br></div>
+         <div class="container" style="display:flex"><a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">4:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">7:15 PM</a><br></div>
           <p  style="font-size: 20px;font-family:Poppin;font-weight: 200;color: white;margin-left: 40px;" >02/26/2022- Saturday<br></p></br>
-          <div class="container" style="display:flex"><a href="seatselection.html" class="myButton">3:15 PM</a><br>
-            <a href="seatselection.html" class="myButton">10:45 AM</a><br>
-            <a href="seatselection.html" class="myButton">12:30 PM</a><br></div>
+          <div class="container" style="display:flex"><a href="{% url 'seatselect' %}" class="myButton">3:15 PM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">10:45 AM</a><br>
+            <a href="{% url 'seatselect' %}" class="myButton">12:30 PM</a><br></div>
             
       </div>
-      <script src="js/jquery.magnific-popup.min.js"></script>
+        {% endblock %}
+      <script src="{% static 'js/jquery.magnific-popup.min.js' %}"></script>
 </body>
 </html>

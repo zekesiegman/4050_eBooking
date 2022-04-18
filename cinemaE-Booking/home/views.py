@@ -226,3 +226,8 @@ def adminPromo(request):
 def booking(request):
     context = {}
     return render(request, '../templates/movieselect.html', context)
+
+
+def seatselect(request):
+    context = {}
+    return render(request, '../templates/seatselection.html', context)
