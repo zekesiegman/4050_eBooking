@@ -139,7 +139,7 @@
         <p>{{ movie.rating }}</p>
         <a href="{{movie.trailer_video}}">Play Trailer</a>
         <a href="">More Info</a>
-        <a href="">Book Now</a>
+        <a href="{% url 'booking' %}">Book Now</a>
       </div>
     </div>
     {% endfor %}

@@ -221,3 +221,8 @@ def adminPromo(request):
         context = {'profile': profiles, 'promos': promos, 'form': newForm}
         return render(request, '../templates/admin-promo.html', context)
     return render(request, '../templates/admin-promo.html', context)
+
+
+def booking(request):
+    context = {}
+    return render(request, '../templates/movieselect.html', context)

@@ -15,5 +15,6 @@ urlpatterns = [
     # path('login', TemplateView.as_view(template_name="login.html"), name="login"),
     path('search', views.search, name='search'),
     path('admin-promo', views.adminPromo, name='admin-promo'),
+    path('booking', views.booking, name='booking'),
 
 ]
