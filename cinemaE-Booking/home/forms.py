@@ -32,12 +32,27 @@ class RegisterForm(UserCreationForm):
         user.email = self.cleaned_data['email']
         profile = Profile(user=user, phone=self.cleaned_data['phone'],
                           enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
-        account = Account(user=user)
         if commit:
             user.save()
             profile.save()
-            account.save()
-        return user, profile, account
+        return user, profile
+
+
+class AddCard(forms.Form):
+    states = ('AL', 'AK', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL',
+             'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT',
+             'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
+             'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WV', 'WI', 'WY')
+    cardNo = forms.IntegerField()
+    exp = forms.DateField()
+    add = forms.CharField()
+    city = forms.CharField()
+    state = forms.ChoiceField(choices=states)
+    zip = forms.IntegerField
+
+    class Meta():
+        model = Account
+        fields = ('cardNo', 'exp', 'add', 'city', 'state', 'zip')
 
 
 class AddMovie(forms.Form):

@@ -14,6 +14,7 @@ from .forms import AddMovie
 from .forms import ScheduleMovie
 from .forms import CreatePromo
 from .forms import SendPromo
+from .forms import AddCard
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -76,17 +77,20 @@ def logoutpage(request):
 
 
 def user_profile(request):
-
     users = request.user
-    accounts = Account.objects.get(user=users)
+    count = Account.objects.filter(user=users).count()
+    if count == 0:
+        accountRemaining = 3
+    else:
+        accountRemaining = 3 - count
+
     profile = Profile.objects.get(user=users)
-    context = {'users': users, 'accounts': accounts, 'profile': profile}
+    context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
     return render(request, '../templates/user-profile.html', context)
 
 
 def editprofile(request):
-    accounts = Account.objects.get(user=request.user)
-    context = {'accounts': accounts}
+    context = {}
 
     # update user info
     if request.method == 'POST':
@@ -111,33 +115,31 @@ def editprofile(request):
         t = request.POST.get('phone')
         if len(t) != 0:
             profile.phone = request.POST.get('phone')
-
-        cardno = request.POST.get('cardno')
-        exp = request.POST.get('exp')
-        address = request.POST.get('address')
-        address1 = request.POST.get('address1')
-        address2 = request.POST.get('address2')
-        state = request.POST.get('state')
-        # if card info is filled out, create new account and save it
-        if len(cardno) != 0 and len(exp) != 0 and len(address) != 0 and len(address1) != 0\
-                and len(address2) != 0 and state is not None:
-
-            # encrypt card number with Fernet
-            fernet = CardEncr.fernet
-            cardNoEnc = fernet.encrypt(cardno.encode())
-            accounts.cardNo = cardNoEnc
-
-            accounts.expirationDate = exp
-            fullAddress = address + address1 + address2 + state
-            accounts.billingAdd = fullAddress
-        accounts.save()
         user.save()
-        return redirect('/')
+        return render(request, '../templates/user-profile.html')
     return render(request, '../templates/editprofile.html', context)
 
 
 def addCard(request):
+    user = request.user
+    count = Account.objects.filter(user=user).count()
     context = {}
+    if request.method == "POST" and count < 3:
+        form = AddCard(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+
+            fernet = CardEncr.fernet
+            cardNo = data['cardNo']
+            cardNoEnc = fernet.encrypt(cardNo.encode())
+
+            address = data['add'] + data['city'] + data['state'] + data['zip']
+
+            account = Account(user=user, cardNo=cardNoEnc, exp=data['exp'], billingAdd=address)
+            account.save()
+
+            return render(request, '../templates/add-card.html', {'form': form})
+
     return render(request, '../templates/add-card.html', context)
 
 
