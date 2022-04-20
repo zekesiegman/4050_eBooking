@@ -29,7 +29,7 @@ urlpatterns = [
     path('adminpage', include('home.urls')),
     path('logoutpage', include('home.urls')),
     path('registration2', include('home.urls')),
-    #path('login', include('home.urls')),
+    # path('login', include('home.urls')),
     path('', include("django.contrib.auth.urls")),
     path('verification/', include('verify_email.urls')),
     path('forgotpassword', include('home.urls')),
@@ -37,4 +37,6 @@ urlpatterns = [
     path('admin-promo', include('home.urls')),
     path('booking', include('home.urls')),
     path('seatselect', include('home.urls')),
+    path('add-card', include('home.urls')),
+
 ]

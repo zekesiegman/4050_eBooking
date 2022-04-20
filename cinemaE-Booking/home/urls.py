@@ -17,5 +17,6 @@ urlpatterns = [
     path('admin-promo', views.adminPromo, name='admin-promo'),
     path('booking', views.booking, name='booking'),
     path('seatselect', views.seatselect, name='seatselect'),
+    path('add-card', views.addCard, name='add-card'),
 
 ]

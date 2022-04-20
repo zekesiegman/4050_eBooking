@@ -136,6 +136,11 @@ def editprofile(request):
     return render(request, '../templates/editprofile.html', context)
 
 
+def addCard(request):
+    context = {}
+    return render(request, '../templates/add-card.html', context)
+
+
 def adminpage(request):
     if request.method == "POST":
         form = AddMovie(request.POST)
