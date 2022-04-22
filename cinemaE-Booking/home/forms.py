@@ -38,22 +38,6 @@ class RegisterForm(UserCreationForm):
         return user, profile
 
 
-class AddCard(forms.Form):
-    states = ('AL', 'AK', 'AZ', 'CA', 'CO', 'CT', 'DE', 'DC', 'FL', 'GA', 'HI', 'ID', 'IL',
-             'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT',
-             'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'OH', 'OK', 'OR', 'PA', 'RI',
-             'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VA', 'WV', 'WI', 'WY')
-    cardNo = forms.IntegerField()
-    exp = forms.DateField()
-    add = forms.CharField()
-    city = forms.CharField()
-    state = forms.ChoiceField(choices=states)
-    zip = forms.IntegerField
-
-    class Meta():
-        model = Account
-        fields = ('cardNo', 'exp', 'add', 'city', 'state', 'zip')
-
 
 class AddMovie(forms.Form):
     title = forms.CharField()

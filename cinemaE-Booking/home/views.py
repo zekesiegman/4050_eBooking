@@ -14,7 +14,6 @@ from .forms import AddMovie
 from .forms import ScheduleMovie
 from .forms import CreatePromo
 from .forms import SendPromo
-from .forms import AddCard
 from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
@@ -23,6 +22,7 @@ from .models import Temp
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 from django.template import RequestContext
+
 
 # Create your views here.
 
@@ -123,23 +123,32 @@ def editprofile(request):
 def addCard(request):
     user = request.user
     count = Account.objects.filter(user=user).count()
+    profile = Profile.objects.get(user=user)
     context = {}
     if request.method == "POST" and count < 3:
-        form = AddCard(request.POST)
-        if form.is_valid():
-            data = form.cleaned_data
-
+        if count == 1:
+            accounts = Account.objects.get(user=user)
+        else:
+            accounts = Account(user=user)
+        cardno = request.POST.get('cardno')
+        exp = request.POST.get('exp')
+        address = request.POST.get('address')
+        address1 = request.POST.get('address1')
+        address2 = request.POST.get('address2')
+        state = request.POST.get('state')
+        s = str(state)
+        # if card info is filled out, create new account and save it
+        if len(cardno) != 0 or len(exp) != 0 or len(address) != 0 or len(address1) != 0 \
+            or len(address2) != 0 or s is not None:
+            # encrypt card number with Fernet
             fernet = CardEncr.fernet
-            cardNo = data['cardNo']
-            cardNoEnc = fernet.encrypt(cardNo.encode())
-
-            address = data['add'] + data['city'] + data['state'] + data['zip']
-
-            account = Account(user=user, cardNo=cardNoEnc, exp=data['exp'], billingAdd=address)
-            account.save()
-
-            return render(request, '../templates/add-card.html', {'form': form})
-
+            cardNoEnc = fernet.encrypt(cardno.encode())
+            accounts.cardNo = cardNoEnc
+            accounts.expirationDate = exp
+            fullAddress = address + address1 + address2 + s
+            accounts.billingAdd = fullAddress
+            accounts.save()
+            return render(request, '../templates/user-profile.html')
     return render(request, '../templates/add-card.html', context)
 
 
