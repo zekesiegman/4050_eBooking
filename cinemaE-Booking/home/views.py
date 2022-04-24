@@ -246,10 +246,11 @@ def adminPromo(request):
                 if profile.enrollForPromotions:
                     emailAddr = user.email
                     name = user.first_name
+                    promoId = promo.promoID
                     promoAmount = promo.amount
                     promoValid = promo.valid_thru
                     template = render_to_string('../templates/email-template2.html',
-                                                {'name': name, 'amount': promoAmount, 'valid': promoValid})
+                                                {'name': name, 'id': promoId, 'amount': promoAmount, 'valid': promoValid})
                     email = EmailMessage(
                         'We have a new promotion for you!',
                         template,
