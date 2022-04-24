@@ -157,7 +157,7 @@
       <div id="movie_right">
         <h1>{{ movie.title }}</h1>
         <p>{{ movie.rating }}</p>
-         <p class="movie-shorts">Fairy Tail is set in Earth-land, a fictional land where wizards coalesce into guilds to apply their magical abilities for paid job requests. Novice wizard Lucy Heartfilia runs away from home, a guild famous for its members' overly destructive antics.</p>
+         <p class="movie-shorts">{{ movie.synopsis }}</p>
          <div class="hover-buttons">
                           <a style="color:black;font-size:40px" class="popup-youtube" href="{{movie.trailer_video}}">
                           <span class="btn btn-hover iq-button">
@@ -165,8 +165,9 @@
                             Watch Trailer</a>
                           </span>
                         </div>
-
-        <a style="color:black" href="{% url 'booking' %}">Book Now</a>
+        {% with tem=movie.title %}
+        <a style="color:black" href="{% url 'booking' %}?movie={{tem}}">Book Now</a>
+        {% endwith %}
       </div>
     </div>
     {% endfor %}
