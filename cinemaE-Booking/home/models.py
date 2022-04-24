@@ -45,7 +45,7 @@ class Movie(models.Model):
 
 class Temp(models.Model):
     id = models.AutoField(primary_key=True)
-    movie = models.ForeignKey('Movie',on_delete=models.CASCADE, default=1)
+    movie = models.ForeignKey('Movie', on_delete=models.CASCADE, default=1)
 
 
 class Showtime(models.Model):
@@ -66,3 +66,15 @@ class Promotion(models.Model):
 class CardEncr(models.Model):
     key = Fernet.generate_key()
     fernet = Fernet(key)
+
+
+class Seat(models.Model):
+    seatID = models.AutoField(primary_key=True)
+
+
+class Ticket(models.Model):
+    ticketID = models.AutoField(primary_key=True)
+
+
+class Order(models.Model):
+    orderID = models.AutoField(primary_key=True)
