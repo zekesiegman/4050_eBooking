@@ -224,10 +224,12 @@
                           </span>
                         </div>
                         <div class="hover-buttons">
-                          <a href="{% url 'booking' %}">
+                          {% with temp=movie.title %}
+                          <a href="{% url 'booking' %}?movie={{temp}}">
                           <span class="btn btn-hover iq-button">
                             <i class="fa fa-play mr-1"></i>
                             Book Now</a>
+                          {% endwith %}
                           </span>
                         </div>
                       </div>

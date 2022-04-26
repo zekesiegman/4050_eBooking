@@ -214,10 +214,6 @@ def search(request, new_context):
         searchStr = request.POST.get('search')
         movieSearch = Movie.objects.filter(title__icontains=searchStr)
         catSearch = Movie.objects.filter(cat=searchStr)
-        tem = Temp.objects.all()
-        variables = RequestContext(request, {
-            'tem': tem,
-        })
         matches = movieSearch | catSearch
         context2 = {'matches': matches, }
         return render(request, '../templates/search.html', context2)
@@ -265,7 +261,7 @@ def adminPromo(request):
 
     form = CreatePromo()
     form2 = SendPromo()
-    return render(request, '../templates/admin-promo.html',{'promos': promos, 'form': form, 'form2': form2})
+    return render(request, '../templates/admin-promo.html', {'promos': promos, 'form': form, 'form2': form2})
 
 
 def booking(request):
