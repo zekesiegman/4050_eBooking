@@ -5,6 +5,7 @@ from .models import Showtime
 from .models import Profile
 from .models import CardEncr
 from .models import Promotion
+from .models import MovieCategory
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
 from django.contrib.auth import logout, update_session_auth_hash
@@ -268,9 +269,12 @@ def adminPromo(request):
 
 
 def booking(request):
-    movie = Movie.objects.filter()
-    showtimes = Showtime.objects.filter()
-    context = {}
+    moviestring = ''
+    if request.method == 'GET':
+        moviestring = request.GET.get('movie')
+    movie = Movie.objects.get(title=moviestring)
+    showtimes = Showtime.objects.filter(movieID=movie)
+    context = {'movie': movie, 'showtimes': showtimes}
     return render(request, '../templates/movieselect.html', context)
 
 

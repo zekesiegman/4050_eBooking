@@ -37,19 +37,20 @@
     });
 });
     </script>
+    {% block movie %}
     <div class="container movie-details">
         <div class="row">
           <div class="col-md-6 left-box">
-            <h1>DUNE</h1>
+            <h1>{{ movie.title }}</h1>
             <p style="font-size: 20px;">Description<br>
-                Paul Atreides, a brilliant and gifted young man born into a great destiny beyond his understanding, must travel to the most dangerous planet in the universe to ensure the future of his family and his people. As malevolent forces explode into conflict over the planet's exclusive supply of the most precious resource in existence, only those who can conquer their own fear will survive.</p>
-                <br><p  style="font-size: 20px;">Genres: <br>
-                    Action, Science fiction, Adventure, Drama, Fantasy</p>
+                {{ movie.synopsis }}</p>
+                <br><p  style="font-size: 20px;">Genre: <br>
+                    {{ movie.cat }}</p>
     
               
         
               <div >
-                <a class="popup-youtube" href="https://www.youtube.com/watch?v=8g18jFHCLXk"> 
+                <a class="popup-youtube" href="{{ movie.trailer_video }}">
                 <span class="btn btn-hover iq-button">
                   
                   Watch Trailer</a>
@@ -58,6 +59,7 @@
           </div>
         </div>
       </div>
+        {% endblock %}
         {% block showtimes %}
         <div>
           <p style="font-size: 40px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p>
