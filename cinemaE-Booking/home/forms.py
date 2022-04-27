@@ -38,7 +38,6 @@ class RegisterForm(UserCreationForm):
         return user, profile
 
 
-
 class AddMovie(forms.Form):
     title = forms.CharField()
     director = forms.CharField()
