@@ -92,21 +92,27 @@ def user_profile(request):
 
 def editprofile(request):
     context = {}
-
     # update user info
     if request.method == 'POST':
-        user = request.user
-        profile = Profile.objects.get(user=user)
+        users = request.user
+        count = Account.objects.filter(user=users).count()
+        if count == 0:
+            accountRemaining = 3
+        else:
+            accountRemaining = 3 - count
+
+        profile = Profile.objects.get(user=users)
+        context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
-            user.first_name = request.POST.get('fname')
+            users.first_name = request.POST.get('fname')
         l = request.POST.get('lname')
         if len(l) != 0:
-            user.last_name = request.POST.get('lname')
+            users.last_name = request.POST.get('lname')
         p = request.POST.get('password')
         if len(p) != 0:
-            user.set_password(request.POST.get('password'))
+            users.set_password(request.POST.get('password'))
             update_session_auth_hash(request, us)
         enroll = request.POST.get('promotion')
         if enroll == 'yes':
@@ -116,8 +122,8 @@ def editprofile(request):
         t = request.POST.get('phone')
         if len(t) != 0:
             profile.phone = request.POST.get('phone')
-        user.save()
-        return render(request, '../templates/user-profile.html')
+        users.save()
+        return render(request, '../templates/user-profile.html',context)
     return render(request, '../templates/editprofile.html', context)
 
 
@@ -149,7 +155,16 @@ def addCard(request):
             fullAddress = address + address1 + address2 + s
             accounts.billingAdd = fullAddress
             accounts.save()
-            return render(request, '../templates/user-profile.html')
+            users = request.user
+            count = Account.objects.filter(user=users).count()
+            if count == 0:
+                accountRemaining = 3
+            else:
+                accountRemaining = 3 - count
+
+            profile = Profile.objects.get(user=users)
+            context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
+            return render(request, '../templates/user-profile.html',context)
     return render(request, '../templates/add-card.html', context)
 
 
