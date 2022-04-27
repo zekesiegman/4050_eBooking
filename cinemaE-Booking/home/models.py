@@ -85,3 +85,4 @@ class Ticket(models.Model):
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
     userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
+
