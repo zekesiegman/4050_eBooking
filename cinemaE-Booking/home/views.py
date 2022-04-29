@@ -311,3 +311,9 @@ def checkout(request):
     context = {}
     return render(request, '../templates/checkout.html', context)
 
+
+def orderconfirm(request):
+    context = {}
+    return render(request, '../templates/confirmation.html', context)
+
+

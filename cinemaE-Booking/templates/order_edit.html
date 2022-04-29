@@ -1,6 +1,6 @@
 {% load static %}
 <html>
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap');
         .card .p{margin-top: 20px;font-family: Poppins;font-weight: 500;font-size: 40px;}
@@ -49,6 +49,7 @@
       }
     </style>
     <body>
+    {% block content %}
       <div class="card">
         <h1>Order Summary</h1> 
         <div class="container" style="display: flex;"><img src="images/favorite/f1.jpg" width="200px" height="200px">
@@ -59,6 +60,7 @@
             <input type="number" id="myNumber"  value="4">
             <br>Child
             <input type="number" id="myNumber" value="0"></p><br>
-            <div><a href="checkout.html"><input type="button"  value="Continue to Checkout" class="btn"></a></div>
+            <div><a href="{% url 'checkout' %}"><input type="button"  value="Continue to Checkout" class="btn"></a></div>
+    {% endblock %}
     </body>
 </html>

@@ -20,5 +20,6 @@ urlpatterns = [
     path('add-card', views.addCard, name='add-card'),
     path('orderedit', views.orderedit, name='orderedit'),
     path('checkout', views.checkout, name='checkout'),
+    path('orderconfirm', views.orderconfirm, name='orderconfirm')
 
 ]
