@@ -49,11 +49,11 @@ class Temp(models.Model):
 
 
 class Ticket(models.Model):
-    ticketID = models.AutoField(primary_key=True, default=1)
+    ticketID = models.IntegerField(primary_key=True)
     price = models.IntegerField(default=10)
     showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
-    user = models.ForeignKey(us, on_delete=models.CASCADE, default=1, blank=True)
-    order = models.ForeignKey('Order', on_delete=models.CASCADE, default=1, blank=True)
+    user = models.ForeignKey(us, on_delete=models.CASCADE, blank=True, null=True)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, blank=True, null=True)
 
 
 class Showtime(models.Model):
