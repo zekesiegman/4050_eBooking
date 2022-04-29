@@ -77,6 +77,7 @@ class ScheduleMovie(forms.Form):
         showtime = Showtime(time=data['time'], movieID=data['movie'])
         if commit:
             showtime.save()
+            showtime.createSeats()
         return showtime
 
 

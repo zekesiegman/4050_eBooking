@@ -62,7 +62,7 @@ class Showtime(models.Model):
 
     def createSeats(self):
         for i in range(1, 21):
-            ticket = Ticket(ticketID=i, showtimeID=self.time)
+            ticket = Ticket(ticketID=i, showtimeID=self)
             ticket.save()
 
 
