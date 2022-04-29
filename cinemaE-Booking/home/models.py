@@ -48,9 +48,22 @@ class Temp(models.Model):
     movie = models.ForeignKey('Movie', on_delete=models.CASCADE, default=1)
 
 
+class Ticket(models.Model):
+    ticketID = models.AutoField(primary_key=True, default=1)
+    price = models.IntegerField(default=10)
+    showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
+    user = models.ForeignKey(us, on_delete=models.CASCADE, default=1, blank=True)
+    order = models.ForeignKey('Order', on_delete=models.CASCADE, default=1, blank=True)
+
+
 class Showtime(models.Model):
     time = models.CharField(primary_key=True, max_length=50, default='12/12/12 12:12')
     movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')
+
+    def createSeats(self):
+        for i in range(1, 21):
+            ticket = Ticket(ticketID=i, showtimeID=self.time)
+            ticket.save()
 
 
 class MovieCategory(models.Model):
@@ -68,15 +81,9 @@ class CardEncr(models.Model):
     fernet = Fernet(key)
 
 
-class Ticket(models.Model):
-    ticketID = models.AutoField(primary_key=True)
-    price = models.IntegerField(default=10)
-    showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
-    user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
-
-
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
     total = models.IntegerField(default=0)
     userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
+
 
