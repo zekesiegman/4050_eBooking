@@ -8,11 +8,11 @@
 </head>
 
 <body>
-  
+  {% block content %}
   <div class="movie-container">
     
     <select id="movie">
-      <option value="15">Dune</option>
+      <option value="15">{{ movie.title }} {{ showtime.time }}</option>
     </select>
     
       <ul class="showcase">
@@ -216,9 +216,10 @@
   </div>
 
   <p class="text">
-    You have selected <span id="count">0</span> seats for a total price of $<span id="total">0</span>
+    You have selected <span id="count">0</span> seats<span id="total">0</span>
   </p>
-  <div><a href="order_edit.html">
+  <div><a href="{% url 'orderedit' %}">
   <input type="button"  value="Proceed to payment" class="btn"></div></a>
   <script src="js/seatselection.js"></script>
+  {% endblock %}
 </body>

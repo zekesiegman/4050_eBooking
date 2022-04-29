@@ -64,8 +64,9 @@
         <div>
           <p style="font-size: 40px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p><br>
           {% for show in showtimes %}
-
-            <a href="{% url 'seatselect' %}" class="myButton">{{ show.time }}</a><br>
+            {% with temp=show.time %}
+            <a href="{% url 'seatselect' %}?time={{temp}}" class="myButton">{{ show.time }}</a><br>
+            {% endwith %}
           {% endfor %}
         </div>
         {% endblock %}

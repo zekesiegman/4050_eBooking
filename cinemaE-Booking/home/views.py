@@ -5,6 +5,8 @@ from .models import Showtime
 from .models import Profile
 from .models import CardEncr
 from .models import Promotion
+from .models import Ticket
+from .models import Order
 from .models import MovieCategory
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
@@ -290,5 +292,22 @@ def booking(request):
 
 
 def seatselect(request):
-    context = {}
+    showtimeString = ''
+    if request.method == 'GET':
+        showtimeString = request.GET.get('time')
+    showtime = Showtime.objects.get(time=showtimeString)
+    movie = showtime.movieID
+    seats = Ticket.objects.filter(showtimeID=showtime)
+    context = {'movie': movie, 'showtime': showtime, 'seats': seats}
     return render(request, '../templates/seatselection.html', context)
+
+
+def orderedit(request):
+    context = {}
+    return render(request, '../templates/order_edit.html', context)
+
+
+def checkout(request):
+    context = {}
+    return render(request, '../templates/checkout.html', context)
+

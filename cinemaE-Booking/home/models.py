@@ -49,11 +49,14 @@ class Temp(models.Model):
 
 
 class Ticket(models.Model):
-    ticketID = models.IntegerField(primary_key=True)
+    seatNum = models.IntegerField(primary_key=True)
     price = models.IntegerField(default=10)
     showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
     user = models.ForeignKey(us, on_delete=models.CASCADE, blank=True, null=True)
     order = models.ForeignKey('Order', on_delete=models.CASCADE, blank=True, null=True)
+
+    class Meta:
+        unique_together = (('seatNum', 'showtimeID'),)
 
 
 class Showtime(models.Model):
@@ -62,7 +65,7 @@ class Showtime(models.Model):
 
     def createSeats(self):
         for i in range(1, 21):
-            ticket = Ticket(ticketID=i, showtimeID=self)
+            ticket = Ticket(seatNum=i, showtimeID=self)
             ticket.save()
 
 
