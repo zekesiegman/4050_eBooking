@@ -63,9 +63,9 @@
         {% block showtimes %}
         <div>
           <p style="font-size: 40px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p><br>
-          {% for time in showtimes %}
-            <p>{{ showtime.time }}</p>
-            <a href="{% url 'seatselect' %}" class="myButton">Reserve Seats</a><br>
+          {% for show in showtimes %}
+
+            <a href="{% url 'seatselect' %}" class="myButton">{{ show.time }}</a><br>
           {% endfor %}
         </div>
         {% endblock %}
