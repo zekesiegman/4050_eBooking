@@ -68,21 +68,15 @@ class CardEncr(models.Model):
     fernet = Fernet(key)
 
 
-class Seat(models.Model):
-    seatID = models.AutoField(primary_key=True)
-    movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')
-    showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
-
-
 class Ticket(models.Model):
     ticketID = models.AutoField(primary_key=True)
-    price = models.IntegerField(default=5)
-    movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')
+    price = models.IntegerField(default=10)
     showtimeID = models.ForeignKey('Showtime', on_delete=models.CASCADE, default='12/12/12 12:12')
     user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
 
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
+    total = models.IntegerField(default=0)
     userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 

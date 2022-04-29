@@ -165,9 +165,14 @@
                             Watch Trailer</a>
                           </span>
                         </div>
-        {% with temp=movie.title %}
-        <a style="color:black" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
-        {% endwith %}
+        {% if movie.playing_now %}
+          {% with temp=movie.title %}
+          <a style="color:black" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
+          {% endwith %}
+        {% endif %}
+        {% if not movie.playing_now %}
+        <p>Coming Soon.</p>
+        {% endif %}
       </div>
     </div>
     {% endfor %}
