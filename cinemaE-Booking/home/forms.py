@@ -11,6 +11,7 @@ from .models import MovieCategory
 from .models import Showtime
 from .models import Profile
 from .models import Promotion
+from .models import Ticket
 
 
 class RegisterForm(UserCreationForm):
@@ -102,3 +103,11 @@ class SendPromo(forms.Form):
 
     class Meta():
         model = Promotion
+
+class bookings(forms.Form):
+
+    def book(self,showtimeString,show,name):
+        showtime = Showtime.objects.get(time=showtimeString)
+        movie = showtime.movieID
+        seats = Ticket.objects.filter(showtimeID=show)
+

@@ -64,7 +64,7 @@ class Showtime(models.Model):
     movieID = models.ForeignKey('Movie', on_delete=models.CASCADE, default='')
 
     def createSeats(self):
-        for i in range(1, 21):
+        for i in range(0, 21):
             ticket = Ticket(seatNum=i, showtimeID=self)
             ticket.save()
 

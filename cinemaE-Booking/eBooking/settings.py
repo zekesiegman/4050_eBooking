@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'bootstrap4',
     'home',
     'verify_email.apps.VerifyEmailConfig',
+    'mathfilters',
 ]
 
 MIDDLEWARE = [

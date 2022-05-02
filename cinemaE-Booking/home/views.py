@@ -21,6 +21,7 @@ from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+import json
 from .models import Temp
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
@@ -290,15 +291,24 @@ def booking(request):
     context = {'movie': movie, 'showtimes': showtimes}
     return render(request, '../templates/movieselect.html', context)
 
+#def seatSelect(request):
+ #   data = json.loads(request.body)
+  #  showtime = Showtime.object.get(showtimeID=['showtime'])
 
 def seatselect(request):
+    user = request.user
+    num = chr(65)
     showtimeString = ''
     if request.method == 'GET':
         showtimeString = request.GET.get('time')
     showtime = Showtime.objects.get(time=showtimeString)
     movie = showtime.movieID
     seats = Ticket.objects.filter(showtimeID=showtime)
-    context = {'movie': movie, 'showtime': showtime, 'seats': seats}
+    context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'num': num, 'user':user}
+    if request.method == 'POST':
+        for seat in seats:
+            if request.GET.get(seat.seatNum) == " ":
+                seat.user = user
     return render(request, '../templates/seatselection.html', context)
 
 

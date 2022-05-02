@@ -1,5 +1,6 @@
 <html lang="en">
 {% load static %}
+{% load mathfilters %}
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -35,191 +36,30 @@
 
   <div class="container">
     <div class="screen"></div>
-    <br>
-    <div class="row">
-   
-      <div class="seat">A</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
+    <form action="" method="POST">
+      <br>
+      {% block list %}
+      {% for seat in seats %}
+        {% if forloop.counter0|mod:7 == 0 or forloop.counter0 == 0 %}
+          <div class="row">
+            <input type="button" name={{seat.seatNum}} value= {{num}} class="seat">
+        {% else %}
+          <input type="button" value = " " name={{seat.seatNum}} class="seat">
+        {% if forloop.counter0|div:6 == 1 or forloop.counter0|div:13 == 1 %}
+          </div>
+        {% endif %}
+        {% endif %}
+      {% endfor %}
+      {% endblock %}
+      </div>
     </div>
-        <div class="row">
-      <div class="seat">B</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">C</div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat">D</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">E</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-       <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">F</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat">G</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">H</div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat">I</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">J</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-       <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">K</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-    </div>
-  </div>
+    <p class="text">
+      You have selected <span id="count">0</span> seats<span id="total">0</span>
+    </p>
+    <div><a href="{% url 'orderedit' %}">
+    <input type="button"  value="Proceed to payment" class="btn"></div></a>
 
-  <p class="text">
-    You have selected <span id="count">0</span> seats<span id="total">0</span>
-  </p>
-  <div><a href="{% url 'orderedit' %}">
-  <input type="button"  value="Proceed to payment" class="btn"></div></a>
+  </form>
   <script src="{% static 'js/seatselection.js' %}"></script>
   {% endblock %}
 </body>
