@@ -306,11 +306,25 @@ def seatselect(request):
             ticket = Ticket.objects.get(seatNum=seat)
             ticket.user = request.user
             ticket.save()
-        return redirect('orderedit')
+        return render(request, '../templates/order_edit.html', context)
     return render(request, '../templates/seatselection.html', context)
 
 
 def orderedit(request):
+    user = request.user
+    time = request.GET.get('time')
+    if request.method == 'POST':
+        adult = request.POST.get('adult')
+        child = request.POST.get('child')
+        senior = request.POST.get('senior')
+        total = adult + child + senior
+        ticketCount = Ticket.object.filter(user=user, time=time).count()
+        if total > ticketCount:
+            ticket = None
+            # do something
+        else:
+            tickets = Ticket.object.filter(user=user, time=time).count()
+            # assign ticket prices
     context = {}
     return render(request, '../templates/order_edit.html', context)
 

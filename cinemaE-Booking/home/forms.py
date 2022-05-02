@@ -104,6 +104,7 @@ class SendPromo(forms.Form):
     class Meta():
         model = Promotion
 
+
 class bookings(forms.Form):
 
     def book(self,showtimeString,show,name):
