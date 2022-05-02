@@ -294,6 +294,8 @@ def booking(request):
 
 def seatselect(request):
     user = request.user
+    row = [1, 2, 3]
+    col = [1, 2, 3, 4, 5, 6, 7]
     showtimeString = ''
     if request.method == 'GET':
         showtimeString = request.GET.get('time')
