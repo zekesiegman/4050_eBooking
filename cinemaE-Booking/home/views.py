@@ -303,9 +303,7 @@ def seatselect(request):
     if request.method == 'POST':
         selectedSeats = request.POST.getlist('seat')
         for seat in selectedSeats:
-            print(seat)
             ticket = Ticket.objects.get(seatNum=seat)
-            print(ticket)
             ticket.user = request.user
             ticket.save()
         return redirect('orderedit')
