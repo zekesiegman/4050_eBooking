@@ -44,17 +44,21 @@
         {% if forloop.counter0|mod:7 == 0 or forloop.counter0 == 0 %}
           <div class="row">
             {% if seat.order is None %}
-            <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat">
+            <label for="seat">{{seat.seatNum}}</label>
+            <input type="checkbox" id="seat" name='seat' value="{{seat.seatNum}}" class="seat">
             {% endif %}
             {% if seat.order is not None %}
-            <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
+            <label for="seat2">{{seat.seatNum}}</label>
+            <input type="checkbox" id="seat2" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
             {% endif %}
         {% else %}
           {% if seat.order is None %}
-            <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat">
+            <label for="seat3">{{seat.seatNum}}</label>
+            <input type="checkbox" id="seat3" name='seat' value="{{seat.seatNum}}" class="seat">
             {% endif %}
             {% if seat.order is not None %}
-            <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
+            <label for="seat4">{{seat.seatNum}}</label>
+            <input type="checkbox" id="seat4" name='seat' value="{{seat.seatNum}}" class="seat" disabled="disabled">
             {% endif %}
         {% if forloop.counter0|div:6 == 1 or forloop.counter0|div:13 == 1 %}
           </div>
