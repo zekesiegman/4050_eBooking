@@ -36,191 +36,41 @@
     <div class="screen"></div>
     <br>
     <form method="post">
-
+      {% csrf_token %}
+      <div class="row">
+        <input type="button" class="seat" value="A1" name="A1">
+        <input type="button" class="seat" value="A2" name="A2">
+        <input type="button" class="seat" value="A3" name="A3">
+        <input type="button" class="seat" value="A4" name="A4">
+        <input type="button" class="seat" value="A5" name="A5">
+        <input type="button" class="seat" value="A6" name="A6">
+        <input type="button" class="seat" value="A7" name="A7">
+      </div>
+      <div class="row">
+        <input type="button" class="seat" value="B1" name="B1">
+        <input type="button" class="seat" value="B2" name="B2">
+        <input type="button" class="seat" value="B3" name="B3">
+        <input type="button" class="seat" value="B4" name="B4">
+        <input type="button" class="seat" value="B5" name="B5">
+        <input type="button" class="seat" value="B6" name="B6">
+        <input type="button" class="seat" value="B7" name="B7">
+      </div>
+      <div class="row">
+        <input type="button" class="seat" value="C1" name="C1">
+        <input type="button" class="seat" value="C2" name="C2">
+        <input type="button" class="seat" value="C3" name="C3">
+        <input type="button" class="seat" value="C4" name="C4">
+        <input type="button" class="seat" value="C5" name="C5">
+        <input type="button" class="seat" value="C6" name="C6">
+        <input type="button" class="seat" value="C7" name="C7">
+      </div>
+      <div><a href="{% url 'orderedit' %}"/><input type="submit"value="Proceed to Payment" class="btn"></a></div>
     </form>
-    <div class="row">
-      <div class="seat">A</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
-        <div class="row">
-      <div class="seat">B</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">C</div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat">D</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">E</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-       <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">F</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat">G</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">H</div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat">I</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">J</div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-       <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-    </div>
-    <div class="row">
-      <div class="seat occupied">K</div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat"></div>
-      <div class="seat occupied"></div>
-      <div class="seat occupied"></div>
-    </div>
   </div>
 
   <p class="text">
     You have selected <span id="count">0</span> seats for a total price of $<span id="total">0</span>
   </p>
-  <div><a href="{% url 'orderedit' %}">
-  <input type="button"  value="Proceed to payment" class="btn"></div></a>
   <script src="{% static 'js/seatselection.js' %}"></script>
   {% endblock %}
 </body>

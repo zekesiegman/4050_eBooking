@@ -294,16 +294,14 @@ def booking(request):
 
 def seatselect(request):
     user = request.user
-    row = [1, 2, 3]
-    col = [1, 2, 3, 4, 5, 6, 7]
-    showtimeString = ''
-    if request.method == 'GET':
-        showtimeString = request.GET.get('time')
+    showtimeString = request.GET.get('time')
     showtime = Showtime.objects.get(time=showtimeString)
     movie = showtime.movieID
     seats = Ticket.objects.filter(showtimeID=showtime)
     context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'user': user}
+    if request.method == 'POST':
 
+        return redirect('orderedit')
     return render(request, '../templates/seatselection.html', context)
 
 
