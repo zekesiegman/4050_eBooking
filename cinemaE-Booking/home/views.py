@@ -318,6 +318,7 @@ def orderedit(request):
         child = request.POST.get('child')
         senior = request.POST.get('senior')
         changeCount = child + senior
+        print(changeCount)
         total = adult + child + senior
         ticketCount = Ticket.object.filter(user=user, time=time).count()
         if total > ticketCount:
@@ -325,6 +326,7 @@ def orderedit(request):
             # do something
         else:
             tickets = Ticket.object.filter(user=user, time=time)[:changeCount]
+            print(tickets)
             for ticket in tickets:
                 ticket.price = 5
                 ticket.save()
