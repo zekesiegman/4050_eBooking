@@ -37,14 +37,15 @@
   <div class="container">
     <div class="screen"></div>
     <form action="" method="POST">
+      {% csrf_token %}
       <br>
       {% block list %}
       {% for seat in seats %}
         {% if forloop.counter0|mod:7 == 0 or forloop.counter0 == 0 %}
           <div class="row">
-            <input type="button" name={{seat.seatNum}} value= {{num}} class="seat">
+            <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat">
         {% else %}
-          <input type="button" value = " " name={{seat.seatNum}} class="seat">
+          <input type="checkbox" name='seat' value="{{seat.seatNum}}" class="seat">
         {% if forloop.counter0|div:6 == 1 or forloop.counter0|div:13 == 1 %}
           </div>
         {% endif %}
@@ -54,10 +55,11 @@
       </div>
     </div>
     <p class="text">
-      You have selected <span id="count">0</span> seats<span id="total">0</span>
+      You have selected <span id="count">0</span> seats
     </p>
-    <div><a href="{% url 'orderedit' %}">
-    <input type="button"  value="Proceed to payment" class="btn"></div></a>
+    <div>
+      <input type="submit"  value="Proceed to payment" class="btn">
+    </div>
 
   </form>
   <script src="{% static 'js/seatselection.js' %}"></script>

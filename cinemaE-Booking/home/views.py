@@ -126,7 +126,7 @@ def editprofile(request):
         if len(t) != 0:
             profile.phone = request.POST.get('phone')
         users.save()
-        return render(request, '../templates/user-profile.html',context)
+        return render(request, '../templates/user-profile.html', context)
     return render(request, '../templates/editprofile.html', context)
 
 
@@ -291,24 +291,24 @@ def booking(request):
     context = {'movie': movie, 'showtimes': showtimes}
     return render(request, '../templates/movieselect.html', context)
 
-#def seatSelect(request):
- #   data = json.loads(request.body)
-  #  showtime = Showtime.object.get(showtimeID=['showtime'])
 
 def seatselect(request):
     user = request.user
     num = chr(65)
-    showtimeString = ''
-    if request.method == 'GET':
-        showtimeString = request.GET.get('time')
+    showtimeString = request.GET.get('time')
     showtime = Showtime.objects.get(time=showtimeString)
     movie = showtime.movieID
     seats = Ticket.objects.filter(showtimeID=showtime)
-    context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'num': num, 'user':user}
+    context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'num': num, 'user': user}
     if request.method == 'POST':
-        for seat in seats:
-            if request.GET.get(seat.seatNum) == " ":
-                seat.user = user
+        selectedSeats = request.POST.getlist('seat')
+        for seat in selectedSeats:
+            print(seat)
+            ticket = Ticket.objects.get(seatNum=seat)
+            print(ticket)
+            ticket.user = request.user
+            ticket.save()
+        return redirect('orderedit')
     return render(request, '../templates/seatselection.html', context)
 
 
