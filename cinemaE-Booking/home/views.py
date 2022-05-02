@@ -317,14 +317,17 @@ def orderedit(request):
         adult = request.POST.get('adult')
         child = request.POST.get('child')
         senior = request.POST.get('senior')
+        changeCount = child + senior
         total = adult + child + senior
         ticketCount = Ticket.object.filter(user=user, time=time).count()
         if total > ticketCount:
             ticket = None
             # do something
         else:
-            tickets = Ticket.object.filter(user=user, time=time).count()
-            # assign ticket prices
+            tickets = Ticket.object.filter(user=user, time=time)[:changeCount]
+            for ticket in tickets:
+                ticket.price = 5
+                ticket.save()
     context = {}
     return render(request, '../templates/order_edit.html', context)
 

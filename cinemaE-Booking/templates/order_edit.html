@@ -57,6 +57,7 @@
         </div> 
         <br>
         <form method="POST">
+             {% csrf_token %}
             <label for="adult" style="align-items: flex-start;">Adult</label>
             <input type="number" id="adult" name="adult" value="0">
             <label for="child" style="align-items: flex-start;">Child</label>
