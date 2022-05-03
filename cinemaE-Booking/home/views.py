@@ -357,7 +357,7 @@ def checkout(request):
         formName = request.POST.get('name')
         if formName == 'cardsForm':
             card = request.POST.get('card')
-            #account = Account.objects.get(accountID=card)
+            account = Account.objects.get(accountID=card)
             if formName == 'promoForm':
                 promoID = request.POST.get('promo')
                 try:
@@ -388,7 +388,7 @@ def checkout(request):
                 except:
                     messages.error(request, 'Invalid promo ID')
                 total = total - promo.amount
-            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime)
+            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
 
     return render(request, '../templates/checkout.html', context)
