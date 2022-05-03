@@ -72,7 +72,9 @@
       You have selected <span id="count">0</span> seats
     </p>
     <div>
-      <a href="{% url 'orderedit' %}">
+      {% with temp=show.time %}
+      <a href="{% url 'orderedit' %}?time={{temp}}">
+      {% endwith %}
       <input type="submit"  value="Proceed to payment" class="btn"></a>
     </div>
 

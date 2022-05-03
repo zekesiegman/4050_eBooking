@@ -26,6 +26,7 @@ from .models import Temp
 from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 from django.template import RequestContext
+from django.urls import reverse
 
 
 # Create your views here.
@@ -306,31 +307,31 @@ def seatselect(request):
             ticket = Ticket.objects.get(seatNum=seat, showtimeID=showtime)
             ticket.user = request.user
             ticket.save()
-        return render(request, '../templates/order_edit.html', context)
+        return redirect(reverse('orderedit') + '?time=' + showtimeString)
     return render(request, '../templates/seatselection.html', context)
 
 
 def orderedit(request):
     user = request.user
     time = request.GET.get('time')
+    showtime = Showtime.objects.get(time=time)
+    movie = showtime.movieID
+    ticketCount = Ticket.objects.filter(user=user, showtimeID=showtime).count()
+    context = {'showtime': showtime, 'movie': movie}
     if request.method == 'POST':
-        adult = request.POST.get('adult')
-        child = request.POST.get('child')
-        senior = request.POST.get('senior')
+        adult = int(request.POST.get('adult'))
+        child = int(request.POST.get('child'))
+        senior = int(request.POST.get('senior'))
+        totalCount = adult + child + senior
         changeCount = child + senior
-        print(changeCount)
-        total = adult + child + senior
-        ticketCount = Ticket.object.filter(user=user, time=time).count()
-        if total > ticketCount:
-            ticket = None
-            # do something
+        if totalCount > ticketCount:
+            return render(request, '../templates/order_edit.html', context)
         else:
-            tickets = Ticket.object.filter(user=user, time=time)[:changeCount]
-            print(tickets)
+            tickets = Ticket.objects.filter(user=user, showtimeID=showtime)[:changeCount]
             for ticket in tickets:
                 ticket.price = 5
                 ticket.save()
-    context = {}
+        return redirect(checkout)
     return render(request, '../templates/order_edit.html', context)
 
 

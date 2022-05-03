@@ -84,6 +84,7 @@ class CardEncr(models.Model):
 
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
+    numTickets = models.IntegerField(default=0)
     total = models.IntegerField(default=0)
     userID = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 

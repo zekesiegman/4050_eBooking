@@ -18,7 +18,7 @@ urlpatterns = [
     path('booking', views.booking, name='booking'),
     path('seatselect', views.seatselect, name='seatselect'),
     path('add-card', views.addCard, name='add-card'),
-    path('orderedit', views.orderedit, name='orderedit'),
+    path(r'^orderedit/$', views.orderedit, name='orderedit'),
     path('checkout', views.checkout, name='checkout'),
     path('orderconfirm', views.orderconfirm, name='orderconfirm')
 
