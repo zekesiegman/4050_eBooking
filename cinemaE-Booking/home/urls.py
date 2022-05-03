@@ -19,7 +19,7 @@ urlpatterns = [
     path('seatselect', views.seatselect, name='seatselect'),
     path('add-card', views.addCard, name='add-card'),
     path(r'^orderedit/$', views.orderedit, name='orderedit'),
-    path('checkout', views.checkout, name='checkout'),
-    path('orderconfirm', views.orderconfirm, name='orderconfirm')
+    path(r'^checkout/$', views.checkout, name='checkout'),
+    path(r'^orderconfirm/$', views.orderconfirm, name='orderconfirm')
 
 ]

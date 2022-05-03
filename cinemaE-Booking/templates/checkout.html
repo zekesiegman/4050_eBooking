@@ -14,20 +14,29 @@
 <div class="row">
     <div class="col-75">
       <div class="container">
-        <form action="/action_page.php">
-            <h1>Checkout</h1>
+        <h1>Choose from saved cards:</h1>
+        <form method="post" name="cards">
+          {% csrf_token %}
+          <input type="hidden" name="name" value="cardsForm">
+          {% for account in accounts %}
+            <label for="card">{{account.accountID}}</label>
+            <input type="radio" id="card" name="card"><br>
+          {% endfor %}
+          <input type="submit" class="Btn" value="Use this card">
+        </form>
+
+          <h1>Alternate checkout:</h1>
+          <form method="post" name="cardinfoForm">
+          {% csrf_token %}
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
-              <label for="fname"><i class="fa fa-user"></i> Full Name</label>
-              <input type="text" id="fname" name="firstname" >
-              <label for="email"><i class="fa fa-envelope"></i> Email</label>
-              <input type="text" id="email" name="email" >
+              <input type="hidden" name="name" value="cardinfoForm">
               <label for="adr"><i class="fa fa-address-card-o"></i> Address</label>
               <input type="text" id="adr" name="address" >
               <label for="city"><i class="fa fa-institution"></i> City</label>
               <input type="text" id="city" name="city" >
-  
+
               <div class="row">
                 <div class="col-50">
                   <label for="state">State</label>
@@ -39,35 +48,22 @@
                 </div>
               </div>
             </div>
-  
+
             <div class="col-50">
               <h3>Payment</h3>
-              <label for="fname">Accepted Cards</label>
+              <label>Accepted Cards</label>
               <div class="icon-container">
               VISA, MASTERCARD, AMEX
               </div><br>
-              <label for="cname">Name on Card</label>
-              <input type="text" id="cname" name="cardname" >
               <label for="ccnum">Credit card number</label>
               <input type="text" id="ccnum" name="cardnumber" >
-              <label for="expmonth">Exp Month</label>
-              <input type="text" id="expmonth" name="expmonth">
-  
-              <div class="row">
-                <div class="col-50">
-                  <label for="expyear">Exp Year</label>
-                  <input type="text" id="expyear" name="expyear" >
-                </div>
-                <div class="col-50">
-                  <label for="cvv">CVV</label>
-                  <input type="text" id="cvv" name="cvv" >
-                </div>
-              </div>
+              <label for="exp">Exp Date</label>
+              <input type="date" id="exp" name="exp">
             </div>
   
           </div>
-          <div> <a href="{% url 'orderconfirm' %}">
-          <input type="button"  value="Book now" class="btn">
+          <div>
+          <input type="submit"  value="Book now" class="btn">
        </div>
     </a>
         </form>
@@ -79,11 +75,26 @@
         <h3>Cart
          
         </h3>
-        <p><img src="images/favorite/f1.jpg" width="100px";height="150px"><br> Dune<br> 02/21/2022 3:20PM<br>G1,G2,G3,G4<span class="price">$15 x 4</span></p>
-        <p>Taxes<span class="price">$4.95</span></p>
+        <p><img src="{{movie.trailer_picture}}" width="100px";height="150px"><br><br> {{movie.title}}<br>
+          {{showtime.time}}<br>
+          <p>Seats:</p>
+          {% for ticket in tickets %}
+          {{ticket.seatNum}}
+          {% endfor %}
+          <span class="price">
+            ${{seatprices}}
+          </span></p>
+        <p>Taxes<span class="price">${{tax}}</span></p>
 
         <hr>
-        <p>Total <span class="price" style="color:black"><b>$64.95</b></span></p>
+        <form method="post" name="promoForm">
+          <div class="col-50">
+            <input type="hidden" name="name" value="promoForm">
+              <label for="promo">Enter Promotion:</label>
+              <input type="text" id="promo" name="promo" >
+          </div>
+        </form>
+        <p>Total <span class="price" style="color:black"><b>${{total}}</b></span></p>
       </div>
     </div>
   </div>

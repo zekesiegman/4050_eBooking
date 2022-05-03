@@ -112,3 +112,6 @@ class bookings(forms.Form):
         movie = showtime.movieID
         seats = Ticket.objects.filter(showtimeID=show)
 
+
+
+

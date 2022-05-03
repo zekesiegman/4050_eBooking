@@ -153,7 +153,8 @@ def addCard(request):
             or len(address2) != 0 or s is not None:
             # encrypt card number with Fernet
             fernet = CardEncr.fernet
-            cardNoEnc = fernet.encrypt(cardno.encode())
+            cardno = cardno.encode('utf-8')
+            cardNoEnc = fernet.encrypt(cardno)
             accounts.cardNo = cardNoEnc
             accounts.expirationDate = exp
             fullAddress = address + address1 + address2 + s
@@ -315,6 +316,7 @@ def orderedit(request):
     user = request.user
     time = request.GET.get('time')
     showtime = Showtime.objects.get(time=time)
+    showtimeString = showtime.time
     movie = showtime.movieID
     ticketCount = Ticket.objects.filter(user=user, showtimeID=showtime).count()
     context = {'showtime': showtime, 'movie': movie}
@@ -331,17 +333,46 @@ def orderedit(request):
             for ticket in tickets:
                 ticket.price = 5
                 ticket.save()
-        return redirect(checkout)
+        return redirect(reverse('checkout') + '?time=' + showtimeString)
     return render(request, '../templates/order_edit.html', context)
 
 
 def checkout(request):
-    context = {}
+    user = request.user
+    time = request.GET.get('time')
+    showtime = Showtime.objects.get(time=time)
+    movie = showtime.movieID
+    accounts = Account.objects.filter(user=user)
+    tickets = Ticket.objects.filter(user=user, showtimeID=showtime)
+    ticketCount = tickets.count()
+    seatPrices = 0
+    for ticket in tickets:
+        seatPrices += ticket.price
+    tax = round((seatPrices * .07), 3)
+    total = seatPrices + tax
+    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+               'tax': tax, 'total': total, 'accounts': accounts}
+    if request.method == 'POST':
+        formName = request.POST.get('name')
+        if formName == 'cardsForm':
+            card = request.POST.get('card')
+            print(card)
+            #account = Account.objects.get(accountID=card)
+            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime)
+            order.save()
+            return redirect(reverse('orderconfirm') + '?time=' + time)
+
     return render(request, '../templates/checkout.html', context)
 
 
 def orderconfirm(request):
-    context = {}
+    user = request.user
+    time = request.GET.get('time')
+    showtime = Showtime.objects.get(time=time)
+    movie = showtime.movieID
+    tickets = Ticket.objects.filter(user=user, showtimeID=showtime)
+    order = Order.objects.get(userID=user, showtimeID=showtime)
+    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'order': order}
     return render(request, '../templates/confirmation.html', context)
 
 
