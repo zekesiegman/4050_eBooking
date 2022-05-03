@@ -20,7 +20,7 @@
           <input type="hidden" name="name" value="cardsForm">
           {% for account in accounts %}
             <label for="card">{{account.accountID}}</label>
-            <input type="radio" id="card" name="card"><br>
+            <input type="radio" id="card" name="card" value="{{account.accountID}}"><br>
           {% endfor %}
           <input type="submit" class="Btn" value="Use this card">
         </form>

@@ -365,7 +365,10 @@ def checkout(request):
                 except:
                     messages.error(request, 'Invalid promo ID')
                 total = total - promo.amount
-            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime)
+                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                           'tax': tax, 'total': total, 'accounts': accounts}
+                return render(request, '../templates/checkout.html', context)
+            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
         if formName == 'cardinfoForm' and numAccounts > 3:
             address = request.POST.get('address')
@@ -374,6 +377,7 @@ def checkout(request):
             zip = request.POST.get('zip')
             ccnum = request.POST.get('cardnumber')
             exp = request.POST.get('exp')
+            print(address, city, state, zip, ccnum, exp)
             if len(address) != 0 and len(city) != 0 and state is not None and len(zip) != 0 and len(ccnum) != 0 and len(exp) != 0:
                 billingAdd = address + city + state + zip
                 fernet = CardEncr.fernet
@@ -388,6 +392,9 @@ def checkout(request):
                 except:
                     messages.error(request, 'Invalid promo ID')
                 total = total - promo.amount
+                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                           'tax': tax, 'total': total, 'accounts': accounts}
+                return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
 
