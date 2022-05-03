@@ -6,14 +6,14 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>MovieTickets</title>
-  <<link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="{% static 'css/slick.css' %}">
   <link rel="stylesheet" href="{% static 'css/slick-theme.css' %}" >
   <link rel="stylesheet" href="{% static 'css/animate.min.css' %}" >
   <link rel="stylesheet" href="{% static 'css/select2.min.css' %}" />
   <link rel="stylesheet" href="{% static 'css/slick-animation.css' %}" >
-  <link rel="stylesheet" href="{% static 'style.css' %}" />
+  <link rel="stylesheet" href="{% static 'css/style.css' %}" />
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
   <style>
@@ -54,6 +54,10 @@
   transition: all 0.5s ease;
 }
 
+
+
+
+
   </style>
 
 
@@ -91,14 +95,14 @@
                         <div class="form-group position-relative">
                           <input type="text" name="search" class="text search-input font-size-12"
                             placeholder="type here to search..." />
-                          <button type="submit" class="search-link fa fa-search"></button>
+
                         </div>
                       </form>
                     </div>
                   </li>
                   <li class="nav-item nav-icon">
                     <a href="#" class="iq-user-dropdown search-toggle d-flex align-items-center p-0">
-                      <img src="images/user/user.png" class="img-fluid user-m rounded-circle"  />
+                      <img src="static\admin\img\gis\user.png" class="img-fluid user-m rounded-circle"  />
                     </a>
                     <div class="iq-sub-dropdown iq-user-dropdown">
                       <div class="iq-card shadow-none m-0">
@@ -147,7 +151,7 @@
     </div>
     {% block list %}
     {% if not matches %}
-    <p>Sorry, no movies or categories matching your search were found.</p>
+    <p style="padding-top:30px">Sorry, no movies or categories matching your search were found.</p>
     {% else %}
     {% for movie in matches %}
     <div id="movie">
