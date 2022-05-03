@@ -20,6 +20,6 @@ urlpatterns = [
     path('add-card', views.addCard, name='add-card'),
     path(r'^orderedit/$', views.orderedit, name='orderedit'),
     path(r'^checkout/$', views.checkout, name='checkout'),
-    path(r'^orderconfirm/$', views.orderconfirm, name='orderconfirm')
+    path('orderconfirm', views.orderconfirm, name='orderconfirm')
 
 ]

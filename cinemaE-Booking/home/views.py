@@ -343,6 +343,7 @@ def checkout(request):
     showtime = Showtime.objects.get(time=time)
     movie = showtime.movieID
     accounts = Account.objects.filter(user=user)
+    numAccounts = accounts.count()
     tickets = Ticket.objects.filter(user=user, showtimeID=showtime)
     ticketCount = tickets.count()
     seatPrices = 0
@@ -356,11 +357,39 @@ def checkout(request):
         formName = request.POST.get('name')
         if formName == 'cardsForm':
             card = request.POST.get('card')
-            print(card)
             #account = Account.objects.get(accountID=card)
+            if formName == 'promoForm':
+                promoID = request.POST.get('promo')
+                try:
+                    promo = Promotion.objects.get(promoID=promoID)
+                except:
+                    messages.error(request, 'Invalid promo ID')
+                total = total - promo.amount
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime)
             order.save()
-            return redirect(reverse('orderconfirm') + '?time=' + time)
+        if formName == 'cardinfoForm' and numAccounts > 3:
+            address = request.POST.get('address')
+            city = request.POST.get('city')
+            state = request.POST.get('state')
+            zip = request.POST.get('zip')
+            ccnum = request.POST.get('cardnumber')
+            exp = request.POST.get('exp')
+            if len(address) != 0 and len(city) != 0 and state is not None and len(zip) != 0 and len(ccnum) != 0 and len(exp) != 0:
+                billingAdd = address + city + state + zip
+                fernet = CardEncr.fernet
+                cardno = ccnum.encode('utf-8')
+                cardNoEnc = fernet.encrypt(cardno)
+                account = Account(cardNo=cardNoEnc, exp=exp, billingAdd=billingAdd, user=user)
+                account.save()
+            if formName == 'promoForm':
+                promoID = request.POST.get('promo')
+                try:
+                    promo = Promotion.objects.get(promoID=promoID)
+                except:
+                    messages.error(request, 'Invalid promo ID')
+                total = total - promo.amount
+            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime)
+            order.save()
 
     return render(request, '../templates/checkout.html', context)
 
