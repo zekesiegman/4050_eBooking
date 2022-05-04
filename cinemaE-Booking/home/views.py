@@ -376,6 +376,7 @@ def checkout(request):
                 return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
+            print('hey')
         if formName == 'cardinfoForm' and numAccounts < 3:
             address = request.POST.get('address')
             city = request.POST.get('city')
@@ -383,7 +384,6 @@ def checkout(request):
             zip = request.POST.get('zip')
             ccnum = request.POST.get('cardnumber')
             exp = request.POST.get('exp')
-            print(address, city, state, zip, ccnum, exp)
             if len(address) != 0 and len(city) != 0 and len(zip) != 0 and len(ccnum) != 0 and len(exp) != 0 or state is not None:
                 billingAdd = address + city + str(state) + zip
                 fernet = CardEncr.fernet
@@ -403,7 +403,6 @@ def checkout(request):
                 return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
-
     return render(request, '../templates/checkout.html', context)
 
 
