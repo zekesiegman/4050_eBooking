@@ -135,9 +135,10 @@ def addCard(request):
     user = request.user
     count = Account.objects.filter(user=user).count()
     profile = Profile.objects.get(user=user)
+    temp = Account.objects.filter(user=user).first()
     context = {}
     if request.method == "POST" and count < 3:
-        if count == 1:
+        if count == 1 and len(temp.billingAdd) == 0:
             accounts = Account.objects.get(user=user)
         else:
             accounts = Account(user=user)
