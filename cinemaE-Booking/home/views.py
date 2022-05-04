@@ -409,6 +409,18 @@ def orderconfirm(request):
     movie = showtime.movieID
     tickets = Ticket.objects.filter(user=user, showtimeID=showtime)
     order = Order.objects.get(userID=user, showtimeID=showtime)
+    name = user.first_name
+    emailAddr = user.email
+    template = render_to_string('../templates/email_template3.html',
+                                {'name': name, 'showtime': showtime, 'movie': movie, 'tickets': tickets, 'order': order})
+    email = EmailMessage(
+        'Your order has been set',
+        template,
+        settings.EMAIL_HOST_USER,
+        [emailAddr]
+    )
+    email.fail_silently = True
+    email.send()
     context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'order': order}
     return render(request, '../templates/confirmation.html', context)
 
