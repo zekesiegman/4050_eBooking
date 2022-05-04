@@ -77,7 +77,7 @@
                   <span class="navbar-menu-icon navbar-menu-icon--bottom"></span>
                 </div>
               </a>
-              <a href="index.html" class="navbar-brand">
+              <a href="{% url 'index' %}" class="navbar-brand">
                <h4 style="margin-right:1100px;">MovieTickets</h4>
               </a>
 
@@ -170,9 +170,14 @@
                           </span>
                         </div>
         {% if movie.playing_now %}
-          {% with temp=movie.title %}
-          <a style="color:black" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
-          {% endwith %}
+          {% if user.is_authenticated %}
+            {% with temp=movie.title %}
+            <a style="color:black" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
+            {% endwith %}
+          {% endif %}
+          {% if not user.is_authenticated %}
+            <p>Login to book</p>
+          {% endif %}
         {% endif %}
         {% if not movie.playing_now %}
         <p>Coming Soon.</p>
