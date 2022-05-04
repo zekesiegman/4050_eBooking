@@ -1,0 +1,9 @@
+Hey {{name}},
+
+Thank you for your order of tickets from {{movie.title}}
+Tickets: {{order.numTickets}} seats: {% for ticket in tickets %} {{ticket.seatNum}} {% endfor %}
+for a total price of ${{order.total}}.Your showtime is {{showtime.time}} and your order confirmation number is {{order.orderID}}
+
+Looking forward to seeing you there.
+
+From, A5
