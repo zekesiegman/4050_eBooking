@@ -88,9 +88,10 @@ def user_profile(request):
         accountRemaining = 3
     else:
         accountRemaining = 3 - count
-
     profile = Profile.objects.get(user=users)
-    context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
+    orders = Order.objects.filter(userID=users)
+    context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
+               'orders':orders}
     return render(request, '../templates/user-profile.html', context)
 
 
@@ -106,7 +107,9 @@ def editprofile(request):
             accountRemaining = 3 - count
 
         profile = Profile.objects.get(user=users)
-        context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
+        orders = Order.objects.filter(userID=users)
+        context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
+                   'orders': orders,}
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -169,7 +172,9 @@ def addCard(request):
                 accountRemaining = 3 - count
 
             profile = Profile.objects.get(user=users)
-            context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile}
+            orders = Order.objects.filter(userID=users)
+            context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
+                       'orders': orders}
             return render(request, '../templates/user-profile.html',context)
     return render(request, '../templates/add-card.html', context)
 

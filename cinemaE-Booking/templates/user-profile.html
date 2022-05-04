@@ -40,39 +40,28 @@
            </div>
 
         </div>
-      <div>
-          <h2>Prefered Genres</h2>
-          <p>Action, Comedy, Sci-fi</p>
-      </div>
       <br>
       <div class="">
             <h2>Recent Booking</h2>
+            {% for order in orders %}
             <div class="projects_data">
                  <div class="data">
-                    <h4>Avatar</h4>
-                    <p>01/20/2022</p>
+                    <h4>{{order.showtimeID.movieID.title}}</h4>
+                    <p>{{order.showtimeID.time}}</p>
                  </div>
                  <div class="data">
-                   <h4>$36</h4>
-                    <p>2 Tickets</p>
+                   <h4>${{order.total}}</h4>
+                    <p>{{order.numTickets}} Tickets</p>
               </div>
             </div>
-            <div class="projects_data">
-                <div class="data">
-                   <h4>John Wick</h4>
-                   <p>02/10/2022</p>
-                </div>
-                <div class="data">
-                  <h4>$72</h4>
-                   <p>4 Tickets</p>
-             </div>
-           </div>
+            {% endfor %}
         </div>
+        <br>
         <div>
             <h2>Saved Cards</h2>
             <p></p>
         </div>
-      
+
     </div>
 </div>
 </body>
