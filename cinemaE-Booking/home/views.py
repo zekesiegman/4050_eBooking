@@ -133,6 +133,7 @@ def editprofile(request):
             profile.phone = request.POST.get('phone')
         users.save()
         return render(request, '../templates/user-profile.html', context)
+
     return render(request, '../templates/editprofile.html', context)
 
 
