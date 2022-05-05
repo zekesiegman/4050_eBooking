@@ -33,7 +33,7 @@
                   <span class="navbar-menu-icon navbar-menu-icon--bottom"></span>
                 </div>
               </a>
-              <a href="{% url 'index' %}" class="navbar-brand">
+              <a href="index.html" class="navbar-brand">
                <h4 style="margin-right:1100px;">MovieTickets</h4>
               </a>
 
@@ -210,7 +210,7 @@
                   <li class="slide-item">
                     <div class="block-images position-relative" style="margin-left: 30px">
                       <div class="img-box">
-                        <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" style="height: 500px; width: 225px;" />
+                        <img src="{{ movie.trailer_picture }}"class="img-fluid" alt="" style="height: 320px; width: 300px;" />
                       </div>
                       <div class="block-description">
                         <h6 class="iq-title">
@@ -224,17 +224,12 @@
                           </span>
                         </div>
                         <div class="hover-buttons">
-                          {% if user.is_authenticated %}
-                            {% with temp=movie.title %}
-                            <a href="{% url 'booking' %}?movie={{temp}}">
-                            <span class="btn btn-hover iq-button">
-                              <i class="fa fa-play mr-1"></i>
-                              Book Now</a>
-                            {% endwith %}
-                          {% endif %}
-                          {% if not user.is_authenticated %}
-                            <p>Login to book</p>
-                          {% endif %}
+                          {% with temp=movie.title %}
+                          <a href="{% url 'booking' %}?movie={{temp}}">
+                          <span class="btn btn-hover iq-button">
+                            <i class="fa fa-ticket mr-1"></i>
+                            Book Now</a>
+                          {% endwith %}
                           </span>
                         </div>
                       </div>
@@ -266,7 +261,7 @@
                 <li class="slide-item">
                   <div class="block-images position-relative" style="margin-left: 30px">
                     <div class="img-box">
-                      <img src="{{ mov.trailer_picture }}" class="img-fluid" alt="" style="height: 500px; width: 225px;" />
+                      <img src="{{ mov.trailer_picture }}" class="img-fluid" alt="" style="height: 320px; width: 300px;" />
                     </div>
                     <div class="block-description">
                       <h6 class="iq-title">
