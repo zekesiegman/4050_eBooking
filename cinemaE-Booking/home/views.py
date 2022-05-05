@@ -151,7 +151,7 @@ def addCard(request):
         else:
             accounts = Account(user=user)
         cardno = request.POST.get('cardno')
-        exp = request.POST.get('exp')
+        exp = str(request.POST.get('exp'))
         address = request.POST.get('address')
         address1 = request.POST.get('address1')
         address2 = request.POST.get('address2')

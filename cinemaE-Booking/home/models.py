@@ -19,7 +19,7 @@ class Profile(models.Model):
 class Account(models.Model):
     accountID = models.AutoField(primary_key=True)
     cardNo = models.CharField(max_length=250, default="", blank=True)
-    exp = models.DateField(default=django.utils.timezone.now)
+    exp = models.CharField(max_length=250)
     billingAdd = models.CharField(max_length=45, default="", blank=True)
     user = models.ForeignKey(us, on_delete=models.CASCADE, default=1)
 
@@ -80,9 +80,6 @@ class Promotion(models.Model):
 class CardEncr(models.Model):
     key = settings.ENCRYPT_KEY
     fernet = Fernet(key)
-
-    def getEncr(self):
-        return self.fernet
 
 
 class Order(models.Model):
