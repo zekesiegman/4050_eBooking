@@ -31,7 +31,7 @@
           <h1>Enter new card:</h1>
           <form method="post" name="cardinfoForm">
           {% csrf_token %}
-            {% if errorPromo %}
+            {% if errorNewCard %}
               <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
                   <p>Please enter all fields correctly!</p>
               </div>

@@ -377,18 +377,6 @@ def checkout(request):
         if formName == 'cardsForm':
             card = request.POST.get('card')
             account = Account.objects.get(accountID=card)
-            if formName == 'promoForm':
-                promoID = request.POST.get('promo')
-                promo = Promotion.objects.filter(promoID=promoID)
-                if promo.count() == 0:
-                    error = True
-                    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-                                'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
-                    return render(request, '../templates/checkout.html', context)
-                total = total - promo.amount
-                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-                           'tax': tax, 'total': total, 'accounts': accounts}
-                return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
             for ticket in tickets:
@@ -431,6 +419,19 @@ def checkout(request):
             for ticket in tickets:
                 ticket.order = order
                 ticket.save()
+        if formName == 'promoForm':
+            promoID = request.POST.get('promo')
+            try:
+                promo = Promotion.objects.get(promoID=promoID)
+            except Promotion.DoesNotExist:
+                errorPromo = True
+                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                           'tax': tax, 'total': total, 'accounts': accounts, 'errorPromo': errorPromo}
+                return render(request, '../templates/checkout.html', context)
+            total = round((total - promo.amount), 2)
+            context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                       'tax': tax, 'total': total, 'accounts': accounts}
+            return render(request, '../templates/checkout.html', context)
     return render(request, '../templates/checkout.html', context)
 
 
