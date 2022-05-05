@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
+{% load home_tags %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -20,7 +21,7 @@
           {% csrf_token %}
           <input type="hidden" name="name" value="cardsForm">
           {% for account in accounts %}
-            <label for="card">{{account.accountID}}</label>
+            <label for="card"> ************{{account.cardNo|decrypt}}</label>
             <input type="radio" id="card" name="card" value="{{account.accountID}}"><br>
           {% endfor %}
           <input type="submit" class="Btn" value="Use this card">
