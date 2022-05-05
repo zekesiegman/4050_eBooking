@@ -87,16 +87,24 @@ def logoutpage(request):
 
 def user_profile(request):
     users = request.user
-    count = Account.objects.filter(user=users).count()
-    if count == 0:
+    cards = Account.objects.filter(user=users)
+    cardList = []
+    if cards.count() == 0:
         accountRemaining = 3
     else:
-        accountRemaining = 3 - count
+        accountRemaining = 3 - cards.count()
+        for card in cards:
+            cardno = card.cardNo
+            fernet = CardEncr.fernet
+            bites = bytes(cardno, 'utf-8')
+            decoded = fernet.decrypt(bites).decode()
+            decoded = decoded[-4:]
+            cardList.append(decoded)
     profile = Profile.objects.get(user=users)
     orders = Order.objects.filter(userID=users)
-    cards = Account.objects.filter(user=users)
+
     context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-               'orders':orders,'cards': cards}
+               'orders': orders, 'cards': cardList}
     return render(request, '../templates/user-profile.html', context)
 
 
@@ -357,6 +365,7 @@ def orderedit(request):
 
 
 def checkout(request):
+    context = {}
     user = request.user
     time = request.GET.get('time')
     showtime = Showtime.objects.get(time=time)
@@ -394,7 +403,7 @@ def checkout(request):
                 billingAdd = address + city + str(state) + zip
                 fernet = CardEncr.fernet
                 cardno = ccnum.encode('utf-8')
-                cardNoEnc = fernet.encrypt(cardno)
+                cardNoEnc = fernet.encrypt(cardno).decode()
                 account = Account(cardNo=cardNoEnc, exp=exp, billingAdd=billingAdd, user=user)
                 account.save()
             else:

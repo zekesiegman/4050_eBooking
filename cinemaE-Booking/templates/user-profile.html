@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 {% load static %}
-{% load home_tags %}
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -61,14 +60,13 @@
         <br>
         <div class="">
             <h2>Saved Cards</h2>
-            {% for card in cards %}
-            <div class ="projects_data">
-                <div class="data">
-                    <h4> Card: ************{{ card.cardNo|decrypt }} </h4>
-                    <p> expires: {{ card.exp }} </p>
-                </div>
-            </div>
-            {% endfor %}
+                {% for card in cardList %}
+                    <div class ="projects_data">
+                        <div class="data">
+                            <h4> Card: ************{{ card }} </h4>
+                        </div>
+                    </div>
+                {% endfor %}
         </div>
     </div>
 </div>
