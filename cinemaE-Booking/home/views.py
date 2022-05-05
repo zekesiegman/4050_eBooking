@@ -378,7 +378,10 @@ def checkout(request):
                 try:
                     promo = Promotion.objects.get(promoID=promoID)
                 except:
-                    messages.error(request, 'Invalid promo ID')
+                    error = True
+                    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                                'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
+                    return render(request, '../templates/checkout.html', context)
                 total = total - promo.amount
                 context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                            'tax': tax, 'total': total, 'accounts': accounts}
@@ -400,12 +403,20 @@ def checkout(request):
                 cardNoEnc = fernet.encrypt(cardno)
                 account = Account(cardNo=cardNoEnc, exp=exp, billingAdd=billingAdd, user=user)
                 account.save()
+            else:
+                errorNewCard = True
+                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                    'tax': tax, 'total': total, 'accounts': accounts, 'errorNewCard': errorNewCard}
+                return render(request, '../templates/checkout.html', context)
             if formName == 'promoForm':
                 promoID = request.POST.get('promo')
                 try:
                     promo = Promotion.objects.get(promoID=promoID)
                 except:
-                    messages.error(request, 'Invalid promo ID')
+                    error = True
+                    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                               'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
+                    return render(request, '../templates/checkout.html', context)
                 total = total - promo.amount
                 context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                            'tax': tax, 'total': total, 'accounts': accounts}
