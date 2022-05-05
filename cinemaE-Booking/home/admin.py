@@ -8,6 +8,7 @@ from .models import Profile
 from .models import Promotion
 from .models import Ticket
 from .models import Order
+from .models import CardEncr
 
 # Register your models here.
 
@@ -20,3 +21,4 @@ admin.site.register(Profile)
 admin.site.register(Promotion)
 admin.site.register(Ticket)
 admin.site.register(Order)
+admin.site.register(CardEncr)
