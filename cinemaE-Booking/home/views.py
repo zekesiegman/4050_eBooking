@@ -378,9 +378,8 @@ def checkout(request):
             account = Account.objects.get(accountID=card)
             if formName == 'promoForm':
                 promoID = request.POST.get('promo')
-                try:
-                    promo = Promotion.objects.get(promoID=promoID)
-                except:
+                promo = Promotion.objects.filter(promoID=promoID)
+                if promo.count() == 0:
                     error = True
                     context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                                 'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
@@ -413,9 +412,8 @@ def checkout(request):
                 return render(request, '../templates/checkout.html', context)
             if formName == 'promoForm':
                 promoID = request.POST.get('promo')
-                try:
-                    promo = Promotion.objects.get(promoID=promoID)
-                except:
+                promo = Promotion.objects.filter(promoID=promoID)
+                if promo.count() == 0:
                     error = True
                     context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                                'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
