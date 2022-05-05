@@ -18,6 +18,9 @@
                 <span class="title">Login</span>
                 <form method="post" class="form-group">
                     {% csrf_token %}
+                    {% if form.errors %}
+                        <h3 style="color:red">Your username and password didn't match. Please try again.</h3>
+                    {% endif %}
                  <div class="input-field">
                      {{ form.username|as_crispy_field }}
                  </div>
