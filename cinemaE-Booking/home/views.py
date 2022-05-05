@@ -21,6 +21,7 @@ from cryptography.fernet import Fernet
 from django.core.mail import EmailMessage
 from django.conf import settings
 from django.template.loader import render_to_string
+from django import template
 import json
 from .models import Temp
 from verify_email.email_handler import send_verification_email
@@ -92,8 +93,9 @@ def user_profile(request):
         accountRemaining = 3 - count
     profile = Profile.objects.get(user=users)
     orders = Order.objects.filter(userID=users)
+    cards = Account.objects.filter(user=users)
     context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-               'orders':orders}
+               'orders':orders,'cards': cards}
     return render(request, '../templates/user-profile.html', context)
 
 
@@ -110,8 +112,9 @@ def editprofile(request):
 
         profile = Profile.objects.get(user=users)
         orders = Order.objects.filter(userID=users)
+        cards = Account.objects.filter(user=users)
         context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-                   'orders': orders,}
+                   'orders': orders,'cards': cards}
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -133,7 +136,6 @@ def editprofile(request):
             profile.phone = request.POST.get('phone')
         users.save()
         return render(request, '../templates/user-profile.html', context)
-
     return render(request, '../templates/editprofile.html', context)
 
 
@@ -160,8 +162,8 @@ def addCard(request):
             or len(address2) != 0 or s is not None:
             # encrypt card number with Fernet
             fernet = CardEncr.fernet
-            cardno = cardno.encode('utf-8')
-            cardNoEnc = fernet.encrypt(cardno)
+            cardno = cardno.encode()
+            cardNoEnc = fernet.encrypt(cardno).decode()
             accounts.cardNo = cardNoEnc
             accounts.expirationDate = exp
             fullAddress = address + address1 + address2 + s
@@ -176,8 +178,9 @@ def addCard(request):
 
             profile = Profile.objects.get(user=users)
             orders = Order.objects.filter(userID=users)
+            cards = Account.objects.filter(user=users)
             context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-                       'orders': orders}
+                       'orders': orders, 'cards':cards}
             return render(request, '../templates/user-profile.html',context)
     return render(request, '../templates/add-card.html', context)
 
