@@ -429,6 +429,9 @@ def checkout(request):
                            'tax': tax, 'total': total, 'accounts': accounts, 'errorPromo': errorPromo}
                 return render(request, '../templates/checkout.html', context)
             total = round((total - promo.amount), 2)
+            order = Order.objects.get(showtimeID=showtime, userID=user)
+            order.total = total
+            order.save()
             context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                        'tax': tax, 'total': total, 'accounts': accounts}
             return render(request, '../templates/checkout.html', context)
