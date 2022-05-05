@@ -202,8 +202,8 @@ def adminpage(request):
             time = request.POST.get('time')
             count = Showtime.objects.filter(time=time).count()
             if count != 0:
-                # error message
-                return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
+                error = True
+                return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'error': error})
 
             form2.save()
             # update movie info to now playing once movie is scheduled

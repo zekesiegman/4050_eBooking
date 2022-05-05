@@ -119,6 +119,11 @@
 						<h3>Schedule a Movie</h3></div>
 							<div class="content">
 							  <form action="#", method="POST">
+								{% if error %}
+                        			<br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                            			<p>Movie already scheduled for this time!</p>
+                        			</div>
+                    			{% endif %}
 								{% csrf_token %}
 								<div class="user-details">
 								  <div class="input-box">
