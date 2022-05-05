@@ -30,6 +30,11 @@
           <h1>Enter new card:</h1>
           <form method="post" name="cardinfoForm">
           {% csrf_token %}
+            {% if errorPromo %}
+              <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+                  <p>Please enter all fields correctly!</p>
+              </div>
+            {% endif %}
           <div class="row">
             <div class="col-50">
               <h3>Billing Address</h3>
@@ -142,10 +147,17 @@
 
         <hr>
         <form method="post" name="promoForm">
+          {% csrf_token %}
+          {% if errorPromo %}
+            <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+              <p>Not a valid promo code!</p>
+            </div>
+          {% endif %}
           <div class="col-50">
             <input type="hidden" name="name" value="promoForm">
-              <label for="promo">Enter Promotion:</label>
-              <input type="text" id="promo" name="promo" >
+            <label for="promo">Enter Promotion:</label>
+            <input type="text" id="promo" name="promo">
+            <input type="submit"  value="Apply Promo" class="btn">
           </div>
         </form>
         <p>Total <span class="price" style="color:black"><b>${{total}}</b></span></p>
