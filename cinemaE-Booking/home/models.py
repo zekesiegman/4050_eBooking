@@ -81,6 +81,9 @@ class CardEncr(models.Model):
     key = settings.ENCRYPT_KEY
     fernet = Fernet(key)
 
+    def getEncr(self):
+        return self.fernet
+
 
 class Order(models.Model):
     orderID = models.AutoField(primary_key=True)
