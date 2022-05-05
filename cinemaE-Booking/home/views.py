@@ -1,3 +1,6 @@
+import base64
+import logging
+import traceback
 from django.shortcuts import render, redirect
 from .models import Account
 from .models import Movie
@@ -90,8 +93,16 @@ def user_profile(request):
         accountRemaining = 3 - count
     profile = Profile.objects.get(user=users)
     orders = Order.objects.filter(userID=users)
+    accounts = Account.objects.filter(user=users)
+    fernet = CardEncr.fernet
+    acc = Account.objects.filter(user=users).first()
+    accc = acc.cardNo
+    print(accc)
+    accc = bytes(accc,'utf-8')
+    act = fernet.decrypt(accc).decode()
+    print(act[-4:])
     context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-               'orders':orders}
+               'orders':orders, 'accounts': accounts}
     return render(request, '../templates/user-profile.html', context)
 
 
@@ -108,8 +119,9 @@ def editprofile(request):
 
         profile = Profile.objects.get(user=users)
         orders = Order.objects.filter(userID=users)
+        accounts = Account.objects.filter(user=users)
         context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-                   'orders': orders,}
+                   'orders': orders, 'accounts': accounts}
         f = request.POST.get('fname')
         # if form element is filled out, update info
         if len(f) != 0:
@@ -157,8 +169,9 @@ def addCard(request):
             or len(address2) != 0 or s is not None:
             # encrypt card number with Fernet
             fernet = CardEncr.fernet
-            cardno = cardno.encode('utf-8')
+            cardno = cardno.encode()
             cardNoEnc = fernet.encrypt(cardno)
+            cardNoEnc = cardNoEnc.decode()
             accounts.cardNo = cardNoEnc
             accounts.expirationDate = exp
             fullAddress = address + address1 + address2 + s
@@ -173,8 +186,9 @@ def addCard(request):
 
             profile = Profile.objects.get(user=users)
             orders = Order.objects.filter(userID=users)
+            accounts = Account.objects.filter(user=users)
             context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-                       'orders': orders}
+                       'orders': orders, 'accounts': accounts}
             return render(request, '../templates/user-profile.html',context)
     return render(request, '../templates/add-card.html', context)
 

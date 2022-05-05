@@ -58,7 +58,9 @@
         <br>
         <div>
             <h2>Saved Cards</h2>
-            <p></p>
+            {% for account in accounts %}
+                <h4> card ending in {{account.cardNo}} </h4>
+            {% endfor %}
         </div>
 
     </div>

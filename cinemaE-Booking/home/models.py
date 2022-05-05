@@ -1,5 +1,5 @@
 import datetime
-
+from django.conf import settings
 import django.utils.timezone
 from django.db import models
 from django.contrib.auth.models import User as us
@@ -78,7 +78,7 @@ class Promotion(models.Model):
 
 
 class CardEncr(models.Model):
-    key = Fernet.generate_key()
+    key = settings.ENCRYPT_KEY
     fernet = Fernet(key)
 
 
