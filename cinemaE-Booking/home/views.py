@@ -313,6 +313,10 @@ def seatselect(request):
     context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'num': num, 'user': user}
     if request.method == 'POST':
         selectedSeats = request.POST.getlist('seat')
+        if len(selectedSeats) == 0:
+            error = True
+            context = {'movie': movie, 'showtime': showtime, 'seats': seats, 'num': num, 'user': user, 'error': error}
+            return render(request, '../templates/seatselection.html', context)
         for seat in selectedSeats:
             ticket = Ticket.objects.get(seatNum=seat, showtimeID=showtime)
             ticket.user = request.user
@@ -335,7 +339,9 @@ def orderedit(request):
         senior = int(request.POST.get('senior'))
         totalCount = adult + child + senior
         changeCount = child + senior
-        if totalCount > ticketCount:
+        if totalCount != ticketCount:
+            error = True
+            context = {'showtime': showtime, 'movie': movie, 'error': error}
             return render(request, '../templates/order_edit.html', context)
         else:
             tickets = Ticket.objects.filter(user=user, showtimeID=showtime)[:changeCount]
