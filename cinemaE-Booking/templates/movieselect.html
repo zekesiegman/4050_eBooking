@@ -19,7 +19,12 @@
       {% block header %}
     <nav class="site-navigation">
       <ul class="nav">
-        <li><a href="{% url 'user-profile' %}">Account</a></li>
+        {% if not user.is_staff %}
+            <li><a href="{% url 'user-profile' %}">Account</a></li>
+        {% endif %}
+        {% if user.is_staff %}
+           <li><a href="{% url 'adminpage' %}">Admin Page</a></li>
+        {% endif %}
         <li><a href="{% url 'logout' %}">Log out</a></li>
       </ul>
     </nav>
