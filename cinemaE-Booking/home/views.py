@@ -28,6 +28,7 @@ from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 from django.template import RequestContext
 from django.urls import reverse
+from datetime import datetime
 
 
 # Create your views here.
