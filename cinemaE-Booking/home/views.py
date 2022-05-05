@@ -60,16 +60,18 @@ def registration_success(request):
 
 
 def forgotpassword(request):
-    username = request.POST.get('username')
-    newpassword = request.POST.get('newpassword')
-    # try to find user with matching email and change password
-    try:
-        user = us.objects.get(username=username)
-        user.set_password(newpassword)
-        user.save()
-        return redirect('/')
-    except us.DoesNotExist:
-        user = None
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        newpassword = request.POST.get('newpassword')
+        # try to find user with matching email and change password
+        try:
+            user = us.objects.get(username=username)
+            user.set_password(newpassword)
+            user.save()
+            return redirect('/')
+        except us.DoesNotExist:
+            error = True
+            return render(request, "../templates/forgotpassword.html", {'error': error})
     return render(request, "../templates/forgotpassword.html")
 
 
