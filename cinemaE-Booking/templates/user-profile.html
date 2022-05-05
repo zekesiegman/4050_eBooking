@@ -23,7 +23,9 @@
            <div style="line-height: 2.0">
                <h1>Information </h1>
                <h3><a href="{% url 'editprofile' %}"/> Edit Profile</h3></a>
-               <h3><a href="{% url 'add-card' %}"/> Add Payment Card</h3></a>
+               {% if accountRemain != 0 %}
+                    <h3><a href="{% url 'add-card' %}"/> Add Payment Card</h3></a>
+               {% endif %}
                <p>You have {{accountRemain}} new cards remaining.</p>
            </div>
             <div class="info_data">

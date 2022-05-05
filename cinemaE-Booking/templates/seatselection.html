@@ -38,6 +38,11 @@
     <div class="screen"></div>
     <form action="" method="POST">
       {% csrf_token %}
+      {% if error %}
+        <br><div style="border: 2px solid red; border-radius: 8px; background-color: rgba(255, 99, 71, 0.5); text-align: center;">
+          <p>You must select at least one seat!</p>
+        </div>
+      {% endif %}
       <br>
       {% block list %}
       {% for seat in seats %}
