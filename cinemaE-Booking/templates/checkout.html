@@ -27,7 +27,7 @@
           <input type="submit" class="Btn" value="Use this card">
         </form>
         {% endif %}
-
+        {% if accounts.count < 3 %}
           <h1>Enter new card:</h1>
           <form method="post" name="cardinfoForm">
           {% csrf_token %}
@@ -127,6 +127,7 @@
        </div>
     </a>
         </form>
+        {% endif %}
       </div>
     </div>
   
