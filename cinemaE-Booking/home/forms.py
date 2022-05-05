@@ -28,11 +28,15 @@ class RegisterForm(UserCreationForm):
 
     def save(self, commit=True):
         user = super().save(commit=False)
-        user.first_name = self.cleaned_data['first_name']
-        user.last_name = self.cleaned_data['last_name']
-        user.email = self.cleaned_data['email']
-        profile = Profile(user=user, phone=self.cleaned_data['phone'],
-                          enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
+        if len(self.cleaned_data['first_name']) == 0 or len(self.cleaned_data['last_name']) == 0 or len(self.cleaned_data['email']) == 0 or \
+                len(self.cleaned_data['phone']) == 0 or self.cleaned_data['enroll_For_Pomotions'] is None:
+            raise forms.ValidationError('Please make sure all forms are filled in!')
+        else:
+            user.first_name = self.cleaned_data['first_name']
+            user.last_name = self.cleaned_data['last_name']
+            user.email = self.cleaned_data['email']
+            profile = Profile(user=user, phone=self.cleaned_data['phone'],
+                              enrollForPromotions=self.cleaned_data['enroll_For_Promotions'])
         if commit:
             user.save()
             profile.save()
