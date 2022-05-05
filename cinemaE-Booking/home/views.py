@@ -151,7 +151,7 @@ def addCard(request):
         else:
             accounts = Account(user=user)
         cardno = request.POST.get('cardno')
-        exp = str(request.POST.get('exp'))
+        exp = request.POST.get('exp')
         address = request.POST.get('address')
         address1 = request.POST.get('address1')
         address2 = request.POST.get('address2')
@@ -165,7 +165,7 @@ def addCard(request):
             cardno = cardno.encode()
             cardNoEnc = fernet.encrypt(cardno).decode()
             accounts.cardNo = cardNoEnc
-            accounts.expirationDate = exp
+            accounts.exp = exp
             fullAddress = address + address1 + address2 + s
             accounts.billingAdd = fullAddress
             accounts.save()
