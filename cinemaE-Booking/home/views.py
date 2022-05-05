@@ -390,6 +390,9 @@ def checkout(request):
                 return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
+            for ticket in tickets:
+                ticket.order = order
+                ticket.save()
             print('hey')
         if formName == 'cardinfoForm' and numAccounts < 3:
             address = request.POST.get('address')
@@ -424,6 +427,9 @@ def checkout(request):
                 return render(request, '../templates/checkout.html', context)
             order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
             order.save()
+            for ticket in tickets:
+                ticket.order = order
+                ticket.save()
     return render(request, '../templates/checkout.html', context)
 
 
