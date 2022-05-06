@@ -204,7 +204,6 @@ def adminpage(request):
                 date_time = datetime.strptime(showtime.time, '%d/%m/%y %H:%M')
                 if date_time < time_as_datetime < (date_time + timedelta(hours=2)):
                     overlap = True
-
             if count != 0:
                 error = True
                 return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'error': error})
