@@ -220,6 +220,7 @@
                             Watch Trailer</a>
                           </span>
                         </div>
+                        {% if user.is_authenticated %}
                         <div class="hover-buttons">
                           {% with temp=movie.title %}
                           <a href="{% url 'booking' %}?movie={{temp}}">
@@ -229,6 +230,10 @@
                           {% endwith %}
                           </span>
                         </div>
+                        {% endif %}
+                        {% if not user.is_authenticated %}
+                          <p>Please login to book</p>
+                        {% endif %}
                       </div>
                     </div>
                   </li>
