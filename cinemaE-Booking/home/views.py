@@ -199,15 +199,15 @@ def adminpage(request):
             if count != 0:
                 error = True
                 return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'error': error})
+            else:
+                form2.save()
+                # update movie info to now playing once movie is scheduled
+                movietime = form2.cleaned_data['movie']
+                movie = Movie.objects.filter(title=movietime)
+                movie.playing_now = True
 
-            form2.save()
-            # update movie info to now playing once movie is scheduled
-            movietime = form2.cleaned_data['movie']
-            movie = Movie.objects.filter(title=movietime)
-            movie.playing_now = True
-
-            form2 = ScheduleMovie()
-            return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
+                form2 = ScheduleMovie()
+                return render(request, '../templates/admin.html', {'form': form, 'form2': form2})
     else:
         form = AddMovie()
         form2 = ScheduleMovie()
