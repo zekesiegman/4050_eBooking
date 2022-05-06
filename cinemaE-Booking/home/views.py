@@ -102,7 +102,6 @@ def user_profile(request):
             cardList.append(decoded)
     profile = Profile.objects.get(user=users)
     orders = Order.objects.filter(userID=users)
-
     context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
                'orders': orders, 'cards': cardList}
     return render(request, '../templates/user-profile.html', context)
