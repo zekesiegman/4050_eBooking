@@ -51,10 +51,10 @@
     <body>
     {% block content %}
       <div class="card">
-        <h1>Order Summary</h1> 
+        <h1>Order Summary</h1>
         <div class="container" style="display: flex;">
         <br><p style="font-size: 30px;font-weight: 300;margin-top: 10px;font-family:'Poppins' ;">{{movie.title}}<br>{{showtime.time}}<br></p>
-        </div> 
+        </div>
         <br>
         <form method="POST">
             {% csrf_token %}
@@ -63,12 +63,12 @@
                 <p>You must select the same number of tickets as seats!</p>
                 </div>
             {% endif %}
-            <label for="adult" style="align-items: flex-start;">Adults:</label>
-            <input type="number" id="adult" name="adult" value="0">
-            <label for="child" style="align-items: flex-start;">Children:</label>
-            <input type="number" id="child" name="child" value="0">
-            <label for="senior" style="align-items: flex-start;">Seniors:</label>
-            <input type="number" id="senior" name="senior" value="0">
+            <label for="adult" style="align-items: flex-start;color:#141414;font-weight:bold;">Adults:</label>
+            <input type="number" style="background-color:white" id="adult" name="adult" value="0">
+            <label for="child" style="align-items: flex-start;color:#141414;font-weight:bold;">Children:</label>
+            <input type="number" style="background-color:white" id="child" name="child" value="0">
+            <label for="senior" style="align-items: flex-start;color:#141414;font-weight:bold;">Seniors:</label>
+            <input type="number" style="background-color:white;margin-bottom:20px;" id="senior" name="senior" value="0">
             <input type="submit" value="Continue to Checkout" class="btn">
         </form>
     {% endblock %}

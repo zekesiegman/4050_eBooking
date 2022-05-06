@@ -171,7 +171,7 @@
                         </div>
         {% if movie.playing_now %}
           {% with temp=movie.title %}
-          <a style="color:black" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
+          <a style="color:white" href="{% url 'booking' %}?movie={{temp}}">Book Now</a>
           {% endwith %}
         {% endif %}
         {% if not movie.playing_now %}
