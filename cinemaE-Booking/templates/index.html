@@ -15,6 +15,8 @@
   <link rel="stylesheet" href="{% static 'css/slick-animation.css' %}" >
    <link rel="stylesheet" href="{% static 'css/style.css' %}" >
   <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
+   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
 </head>
 
@@ -215,7 +217,7 @@
                         <h6 class="iq-title">
                           <a href="#">{{ movie.title }} </a>
                         </h6>
-                        <div class="hover-buttons">
+                        <div style="max-width:75%;margin:0 auto;">
                           <a class="popup-youtube" href="{{movie.trailer_video}}">
                           <span class="btn btn-hover iq-button">
                             <i class="fa fa-play mr-1"></i>
