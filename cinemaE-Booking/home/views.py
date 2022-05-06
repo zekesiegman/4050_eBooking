@@ -200,11 +200,9 @@ def adminpage(request):
             overlap = False
             time_as_datetime = datetime.strptime(time, '%d/%m/%y %H:%M')
             showtimes = Showtime.objects.filter(time=time)
-            print('datetime', time_as_datetime)
-            print('datetime + 2', (time_as_datetime + timedelta(hours=2)))
             for showtime in showtimes:
                 date_time = datetime.strptime(showtime.time, '%d/%m/%y %H:%M')
-                if time_as_datetime < (date_time + timedelta(hours=2)) and time_as_datetime > date_time:
+                if date_time < time_as_datetime < (date_time + timedelta(hours=2)):
                     overlap = True
 
             if count != 0:
@@ -230,8 +228,8 @@ def adminpage(request):
 
 def index(request):
     movies = Movie.objects.all()
-    playing_now = Movie.objects.filter(playing_now=True)[:5]
-    coming_soon = Movie.objects.filter(playing_now=False)[:5]
+    playing_now = Movie.objects.filter(playing_now=True)
+    coming_soon = Movie.objects.filter(playing_now=False)
     context = {'playing_now': playing_now, 'coming_soon': coming_soon}
 
     if request.method == 'POST':
