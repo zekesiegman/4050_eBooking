@@ -6,7 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Select Movie</title>
-    
+
     <link rel="stylesheet" href="{% static 'css/movieselect.css' %}">
     <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.js"></script>
@@ -51,13 +51,13 @@
                 {{ movie.synopsis }}</p>
                 <br><p  style="font-size: 20px;">Genre: <br>
                     {{ movie.cat }}</p>
-    
-              
-        
+
+
+
               <div >
                 <a class="popup-youtube" href="{{ movie.trailer_video }}">
                 <span class="btn btn-hover iq-button">
-                  
+
                   Watch Trailer</a>
                 </span>
               </div>
@@ -66,8 +66,8 @@
       </div>
         {% endblock %}
         {% block showtimes %}
-        <div>
-          <p style="font-size: 40px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p><br>
+        <div style="margin-bottom:100px">
+          <p style="font-size: 30px;font-family:Poppin;font-weight: 500;color: white;margin-left: 30px;">Select ShowTime</p><br>
           {% for show in showtimes %}
             {% with temp=show.time %}
             <a href="{% url 'seatselect' %}?time={{temp}}" class="myButton">{{ show.time }}</a><br>

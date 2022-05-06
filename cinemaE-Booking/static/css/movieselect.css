@@ -13,38 +13,43 @@
     font-family: 'Poppins';
     font-weight: 500;
   }
-  .site-header { 
+  .site-header {
    color: rgba(0, 0, 0, 0.021);
    backdrop-filter: blur(6px);
     padding: .5em 1em;
     display: flex;
     justify-content: space-between;
   }
-  
+
   .site-identity h1 {
-    font-size: 1.5em;
+    font-size: 1.4em;
     margin: .6em 0;
     display: inline-block;
   }
-  
-  
-  .site-navigation ul, 
+
+
+  .site-navigation ul,
   .site-navigation li {
-    margin: 0; 
+    margin: 0;
     padding: 0;
   }
-  
+
   .site-navigation li {
     display: inline-block;
     margin: 1.4em 1em 1em 1em;
   }
-  body {
-    background-image: linear-gradient(rgba(0,0,0,0.8),rgba(0,0,0,0.8)),url(../images/favorite/f1.jpg);
-    background-position: center;
-    background-size: cover;
-    background-repeat: no-repeat;
-  }
-  .logo {
+  body{
+    font-family: 'Poppins', sans-serif;
+    font-weight: 400;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 1.5;
+    padding: 0;
+    margin: 0;
+
+    background: #141414;
+}
+ .logo {
     width: 150px;
     margin-top: 18px;
   }
@@ -63,7 +68,7 @@
   }
   .movie-details {
     margin: 3% 0;
-   
+
   }
   .left-box {
     color: #fff;

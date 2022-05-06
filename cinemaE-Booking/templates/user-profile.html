@@ -20,15 +20,19 @@
     </div>
     <div class="right">
         <div class="info">
-           <div style="line-height: 2.0">
-               <h1>Information </h1>
-               <h3><a href="{% url 'editprofile' %}"/> Edit Profile</h3></a>
-               {% if accountRemain != 0 %}
-                    <h3><a href="{% url 'add-card' %}"/> Add Payment Card</h3></a>
-               {% endif %}
-               <p>You have {{accountRemain}} new cards remaining.</p>
-           </div><br>
+
+          <h2>Information</h2>
+
             <div class="info_data">
+            <div class="data">
+                     <h2><a href="{% url 'editprofile' %}" style="text-decoration: none;color: #353c4e;"/> Edit Profile</h2></a>
+                 </div>
+                 <div class="data" style="text-decoration:none">
+                   <h2><a href="{% url 'add-card' %}" style="text-decoration: none;color: #353c4e;"/> Add Payment Card</h2></a>
+               <p style="margin-bottom:40px">You have {{accountRemain}} new cards remaining.</p>
+              </div>
+            </div>
+           <div class="info_data">
                  <div class="data">
                     <h2>Email</h2>
                     <p>{{ user.email }}</p>
@@ -37,7 +41,7 @@
                    <h2>Phone</h2>
                     <p>{{ profile.phone }}</p>
               </div>
-              
+
             </div>
 
         </div>
