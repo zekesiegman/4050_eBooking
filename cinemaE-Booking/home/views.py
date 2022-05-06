@@ -304,8 +304,9 @@ def booking(request):
     if request.method == 'GET':
         moviestring = request.GET.get('movie')
     movie = Movie.objects.get(title=moviestring)
+    genreStr = movie.cat.category
     showtimes = Showtime.objects.filter(movieID=movie)
-    context = {'movie': movie, 'showtimes': showtimes}
+    context = {'movie': movie, 'showtimes': showtimes, 'genre': genreStr}
     return render(request, '../templates/movieselect.html', context)
 
 
