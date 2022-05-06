@@ -209,7 +209,6 @@ def adminpage(request):
                 error = True
                 return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'error': error})
             elif overlap:
-                print(overlap)
                 return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'overlap': overlap})
             else:
                 form2.save()
