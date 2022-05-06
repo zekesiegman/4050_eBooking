@@ -28,7 +28,7 @@ from verify_email.email_handler import send_verification_email
 from django.contrib import messages
 from django.template import RequestContext
 from django.urls import reverse
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 # Create your views here.
@@ -193,12 +193,26 @@ def adminpage(request):
         form = AddMovie()
         form2 = ScheduleMovie(request.POST)
         if form2.is_valid():
-            # check that show time doesn't exist already
+            # check that show time doesn't exist already and no overlap
             time = request.POST.get('time')
             count = Showtime.objects.filter(time=time).count()
+
+            overlap = False
+            time_as_datetime = datetime.strptime(time, '%d/%m/%y %H:%M')
+            showtimes = Showtime.objects.filter(time=time)
+            print('datetime', time_as_datetime)
+            print('datetime + 2', (time_as_datetime + timedelta(hours=2)))
+            for showtime in showtimes:
+                date_time = datetime.strptime(showtime.time, '%d/%m/%y %H:%M')
+                if time_as_datetime < (date_time + timedelta(hours=2)) and time_as_datetime > date_time:
+                    overlap = True
+
             if count != 0:
                 error = True
                 return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'error': error})
+            elif overlap:
+                print(overlap)
+                return render(request, '../templates/admin.html', {'form': form, 'form2': form2, 'overlap': overlap})
             else:
                 form2.save()
                 # update movie info to now playing once movie is scheduled
