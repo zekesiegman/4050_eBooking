@@ -88,8 +88,9 @@ def logoutpage(request):
 def user_profile(request):
     users = request.user
     cards = Account.objects.filter(user=users)
+    firs = Account.objects.filter(user=users).first()
     cardList = []
-    if cards.count() == 0:
+    if cards.count() == 0 or len(firs.billingAdd) == 0:
         accountRemaining = 3
     else:
         accountRemaining = 3 - cards.count()
