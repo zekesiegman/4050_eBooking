@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, HttpResponse
 from .models import Account
 from .models import Movie
 from .models import Showtime
@@ -113,16 +113,10 @@ def editprofile(request):
     # update user info
     if request.method == 'POST':
         users = request.user
-        count = Account.objects.filter(user=users).count()
-        if count == 0:
-            accountRemaining = 3
-        else:
-            accountRemaining = 3 - count
-
         profile = Profile.objects.get(user=users)
         orders = Order.objects.filter(userID=users)
         cards = Account.objects.filter(user=users)
-        context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
+        context = {'users': users, 'profile': profile,
                    'orders': orders,'cards': cards}
         f = request.POST.get('fname')
         # if form element is filled out, update info
@@ -144,7 +138,7 @@ def editprofile(request):
         if len(t) != 0:
             profile.phone = request.POST.get('phone')
         users.save()
-        return render(request, '../templates/user-profile.html', context)
+        return HttpResponse(user_profile(request))
     return render(request, '../templates/editprofile.html', context)
 
 
@@ -179,18 +173,7 @@ def addCard(request):
             accounts.billingAdd = fullAddress
             accounts.save()
             users = request.user
-            count = Account.objects.filter(user=users).count()
-            if count == 0:
-                accountRemaining = 3
-            else:
-                accountRemaining = 3 - count
-
-            profile = Profile.objects.get(user=users)
-            orders = Order.objects.filter(userID=users)
-            cards = Account.objects.filter(user=users)
-            context = {'users': users, 'accountRemain': accountRemaining, 'profile': profile,
-                       'orders': orders, 'cards':cards}
-            return render(request, '../templates/user-profile.html',context)
+            return HttpResponse(user_profile(request))
     return render(request, '../templates/add-card.html', context)
 
 
