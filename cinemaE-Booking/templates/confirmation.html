@@ -70,7 +70,7 @@ justify-content: center
         <br>
         <div class="container">
           <div class="image">
-            <img class="img2" src="images/favorite/f1.jpg" width="200px"; height="200px"; >
+            <img class="img2" src="{{movie.trailer_picture}}" width="200px"; height="200px"; >
           </div>
           <div class="text">
           <p>Movie:{{movie.title}}</p>
@@ -78,10 +78,11 @@ justify-content: center
           <p>
               Tickets:
               {% for ticket in tickets %}
-                {{ticket.seatNum}}
+                {{ticket.seatNum}},
               {% endfor %}
           </p>
           <P>Booking Confirmation Number- {{order.orderID}}</P>
+          <p>Order Total: ${{order.total}} </p>
           </div>
         </div>
             <p><a href="{% url 'index' %}"/> Home</p></a>
