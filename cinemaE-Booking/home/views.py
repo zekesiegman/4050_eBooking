@@ -431,8 +431,9 @@ def checkout(request):
             order = Order.objects.get(showtimeID=showtime, userID=user)
             order.total = total
             order.save()
+            cardApplied = True
             context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-                       'tax': tax, 'total': total, 'accounts': accounts}
+                       'tax': tax, 'total': total, 'accounts': accounts, 'cardApplied': cardApplied}
             return render(request, '../templates/checkout.html', context)
     return render(request, '../templates/checkout.html', context)
 
