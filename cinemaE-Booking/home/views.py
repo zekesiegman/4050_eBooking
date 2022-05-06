@@ -362,8 +362,9 @@ def checkout(request):
         seatPrices += ticket.price
     tax = round((seatPrices * .07), 3)
     total = seatPrices + tax
+    cardApplied = False
     context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-               'tax': tax, 'total': total, 'accounts': accounts}
+               'tax': tax, 'total': total, 'accounts': accounts, 'cardApplied': cardApplied}
     if request.method == 'POST':
         formName = request.POST.get('name')
         if formName == 'cardsForm':
@@ -374,7 +375,10 @@ def checkout(request):
             for ticket in tickets:
                 ticket.order = order
                 ticket.save()
-            print('hey')
+            cardApplied = True
+            context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                       'tax': tax, 'total': total, 'accounts': accounts, 'cardApplied': cardApplied}
+            return render(request, '../templates/checkout.html', context)
         if formName == 'cardinfoForm' and numAccounts < 3:
             address = request.POST.get('address')
             city = request.POST.get('city')
@@ -389,28 +393,20 @@ def checkout(request):
                 cardNoEnc = fernet.encrypt(cardno).decode()
                 account = Account(cardNo=cardNoEnc, exp=exp, billingAdd=billingAdd, user=user)
                 account.save()
+                order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
+                order.save()
+                for ticket in tickets:
+                    ticket.order = order
+                    ticket.save()
+                cardApplied = True
+                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
+                           'tax': tax, 'total': total, 'accounts': accounts, 'cardApplied': cardApplied}
+                return render(request, '../templates/checkout.html', context)
             else:
                 errorNewCard = True
                 context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
                     'tax': tax, 'total': total, 'accounts': accounts, 'errorNewCard': errorNewCard}
                 return render(request, '../templates/checkout.html', context)
-            if formName == 'promoForm':
-                promoID = request.POST.get('promo')
-                promo = Promotion.objects.filter(promoID=promoID)
-                if promo.count() == 0:
-                    error = True
-                    context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-                               'tax': tax, 'total': total, 'accounts': accounts, 'error': error}
-                    return render(request, '../templates/checkout.html', context)
-                total = total - promo.amount
-                context = {'showtime': showtime, 'movie': movie, 'tickets': tickets, 'seatprices': seatPrices,
-                           'tax': tax, 'total': total, 'accounts': accounts}
-                return render(request, '../templates/checkout.html', context)
-            order = Order(total=total, numTickets=ticketCount, userID=user, showtimeID=showtime, accountID=account)
-            order.save()
-            for ticket in tickets:
-                ticket.order = order
-                ticket.save()
         if formName == 'promoForm':
             promoID = request.POST.get('promo')
             try:

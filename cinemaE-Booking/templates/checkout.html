@@ -163,9 +163,14 @@
           </div>
         </form>
         <p>Total <span class="price" style="color:black"><b>${{total}}</b></span></p>
-        {% with temp=showtime.time %}
-          <a class='btn' href="{% url 'orderconfirm' %}?time={{temp}}" style="text-decoration: none;">Book Now</a>
-        {% endwith %}
+        {% if cardApplied %}
+          {% with temp=showtime.time %}
+            <a class='btn' href="{% url 'orderconfirm' %}?time={{temp}}" style="text-decoration: none;">Book Now</a>
+          {% endwith %}
+        {% endif %}
+        {% if not cardApplied %}
+            <p>Select a saved card or add a new one to book!</p>
+        {% endif %}
       </div>
     </div>
   </div>
