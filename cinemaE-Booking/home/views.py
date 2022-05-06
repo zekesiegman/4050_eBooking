@@ -197,12 +197,17 @@ def adminpage(request):
             # check that show time doesn't exist already and no overlap
             time = request.POST.get('time')
             count = Showtime.objects.filter(time=time).count()
+            movietime = form2.cleaned_data['movie']
             overlap = False
             time_as_datetime = datetime.strptime(time, '%d/%m/%y %H:%M')
-            showtimes = Showtime.objects.all()
+            fu = time_as_datetime.month
+            showtimes = Showtime.objects.filter(movieID=movietime)
+            future = intervals.closed(time_as_datetime.time(), (time_as_datetime + timedelta(hours=2)).time())
             for showtime in showtimes:
                 date_time = datetime.strptime(showtime.time, '%d/%m/%y %H:%M')
-                if date_time < time_as_datetime < (date_time + timedelta(hours=2)):
+                current = intervals.closed(date_time.time(), (date_time + timedelta(hours=2)).time())
+                day = date_time.month
+                if future.overlaps(current) and fu == day:
                     overlap = True
             if count != 0:
                 error = True
