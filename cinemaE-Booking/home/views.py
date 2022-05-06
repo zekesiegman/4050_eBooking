@@ -199,7 +199,7 @@ def adminpage(request):
 
             overlap = False
             time_as_datetime = datetime.strptime(time, '%d/%m/%y %H:%M')
-            showtimes = Showtime.objects.filter(time=time)
+            showtimes = Showtime.objects.all()
             for showtime in showtimes:
                 date_time = datetime.strptime(showtime.time, '%d/%m/%y %H:%M')
                 if date_time < time_as_datetime < (date_time + timedelta(hours=2)):
